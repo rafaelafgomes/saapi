@@ -17,7 +17,7 @@ import javax.persistence.Id;
 public class Cargo {
 
     @Id
-    @GeneratedValue(strategy = Generation.Tyoe.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
