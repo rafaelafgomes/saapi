@@ -16,6 +16,10 @@ import javax.persistence.Id;
 
 public class Funcionario extends Pessoa {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String email;
     private Cargo cargo;
     private String dataAdmissao;
