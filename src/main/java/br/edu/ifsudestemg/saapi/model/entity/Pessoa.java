@@ -31,4 +31,5 @@ public abstract class Pessoa {
     private String estado;
     private String cep;
     private String dataNascimento;
+    private String aniversario;
 }
