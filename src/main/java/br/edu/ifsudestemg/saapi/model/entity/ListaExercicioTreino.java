@@ -17,9 +17,9 @@ public class ListaExercicioTreino {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int serie;
-    private int carga;
-    private int repeticao;
+    private Integer serie;
+    private Integer carga;
+    private Integer repeticao;
 
     @ManyToOne
     private Exercicio exercicio;

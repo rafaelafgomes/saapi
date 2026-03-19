@@ -24,7 +24,7 @@ public abstract class Pessoa {
     private String telefone;
     private boolean status;
     private String logradouro;
-    private int numero;
+    private Integer numero;
     private String complemento;
     private String bairro;
     private String cidade;

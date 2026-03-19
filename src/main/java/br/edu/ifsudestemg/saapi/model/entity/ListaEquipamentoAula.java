@@ -17,7 +17,7 @@ public class ListaEquipamentoAula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantidade;
+    private Integer quantidade;
 
     @ManyToOne
     private Equipamento equipamento;

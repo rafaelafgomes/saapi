@@ -21,7 +21,7 @@ public class Aula {
     private String dataAula;
     private String horaAula;
     private boolean status;
-    private int capacidade;
+    private Integer capacidade;
     private String descricao;
 
     @ManyToOne

@@ -23,7 +23,7 @@ public class Equipamento {
     private String nome;
     private String modelo;
     private String ultManutencao;
-    private int quantidade;
+    private Integer quantidade;
     private boolean disponivel;
     private String local;
     private String descricao;
