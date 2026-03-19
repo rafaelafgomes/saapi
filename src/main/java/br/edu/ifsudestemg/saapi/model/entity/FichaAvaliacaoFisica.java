@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -20,11 +17,14 @@ public class FichaAvaliacaoFisica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Cliente cliente;
-    private Funcionario funcionario;
     private String dataFicha;
     private float peso;
     private float altura;
     private String descricao;
+
+    @ManyToOne
+    private Cliente cliente;
+    @ManyToOne
+    private Funcionario funcionario;
 }
 

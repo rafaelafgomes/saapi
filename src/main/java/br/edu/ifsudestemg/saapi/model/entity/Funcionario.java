@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -21,7 +18,9 @@ public class Funcionario extends Pessoa {
     private Long id;
 
     private String email;
-    private Cargo cargo;
     private String dataAdmissao;
     private String observacao;
+
+    @ManyToOne
+    private Cargo cargo;
 }
