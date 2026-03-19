@@ -11,11 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Funcionario extends Pessoa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Funcionario extends Pessoa{
 
     private String email;
     private String dataAdmissao;
