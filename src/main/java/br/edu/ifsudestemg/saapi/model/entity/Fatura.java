@@ -18,8 +18,6 @@ public class Fatura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
     private String dataVencimento;
     private String dataPagamento;
     private float valor;
