@@ -1,8 +1,10 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
+import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +19,9 @@ public class AjusteFinanceiroDTO {
     private float valor;
     private String descricao;
 
+    public static AjusteFinanceiroDTO create(AjusteFinanceiro ajusteFinanceiro) {
+        ModelMapper modelMapper = new ModelMapper();
+        AjusteFinanceiroDTO dto = modelMapper.map(ajusteFinanceiro, AjusteFinanceiroDTO.class);
+        return dto;
+    }
 }
