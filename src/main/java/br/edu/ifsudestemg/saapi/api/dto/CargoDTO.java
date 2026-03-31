@@ -1,6 +1,5 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
-import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
 import br.edu.ifsudestemg.saapi.model.entity.Cargo;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,10 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
+import br.edu.ifsudestemg.saapi.model.entity.Plano;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @Data
 @NoArgsConstructor
@@ -15,4 +17,10 @@ public class PlanoDTO {
     private Integer duracao;
     private float valor;
     private String descricao;
+
+    public static PlanoDTO create(Plano plano) {
+        ModelMapper modelMapper = new ModelMapper();
+        PlanoDTO dto = modelMapper.map(plano, PlanoDTO.class);
+        return dto;
+    }
 }
