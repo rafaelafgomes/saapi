@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
+import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @Data
 @NoArgsConstructor
@@ -19,5 +21,16 @@ public class AulaDTO {
     private Integer capacidade;
     private String descricao;
     private Long idFuncionario;
+    private String nomeFuncionario;
+    private Long idCliente;
+    private String nomeCliente;
 
+    public static AulaDTO create(Aula aula) {
+        ModelMapper modelMapper = new ModelMapper();
+        AulaDTO dto = modelMapper.map(aula, AulaDTO.class);
+        dto.nomeFuncionario = aula.getFuncionario().getNome();
+        dto.nomeCliente = aula.getCliente().getNome();
+        return dto;
+    }
 }
+
