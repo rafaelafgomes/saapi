@@ -26,4 +26,6 @@ public class Aula {
 
     @ManyToOne
     private Funcionario funcionario;
+    @ManyToOne
+    private Cliente cliente;
 }
