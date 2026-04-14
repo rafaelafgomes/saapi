@@ -15,7 +15,8 @@ public class ClienteDTO {
     private String nome;
     private String cpf;
     private String telefone;
-    private boolean status;
+    private boolean statusSim;
+    private boolean statusNao;
     private String logradouro;
     private Integer numero;
     private String complemento;

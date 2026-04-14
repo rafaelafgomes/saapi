@@ -4,7 +4,9 @@ import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
 import br.edu.ifsudestemg.saapi.model.repository.AjusteFinanceiroRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,5 +24,17 @@ public class AjusteFinanceiroService {
 
     public Optional<AjusteFinanceiro> getAjusteFinanceiroById(Long id) {
         return repository.findById(id);
+    }
+
+    @Transactional
+    public AjusteFinanceiro salvar (AjusteFinanceiro ajusteFinanceiro) {
+        validar(ajusteFinanceiro);
+        return repository.save(ajusteFinanceiro);
+    }
+
+    @Transactional
+    public void excluir (AjusteFinanceiro ajusteFinanceiro) {
+        Objects.requireNonNull(ajusteFinanceiro.getId());
+        repository.delete(ajusteFinanceiro);
     }
 }

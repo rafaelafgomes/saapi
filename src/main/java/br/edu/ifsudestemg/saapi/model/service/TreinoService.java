@@ -4,7 +4,9 @@ import br.edu.ifsudestemg.saapi.model.entity.Treino;
 import br.edu.ifsudestemg.saapi.model.repository.TreinoRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,4 +24,16 @@ public class TreinoService {
     public Optional<Treino> getTreinoById(Long id) {
         return repository.findById(id);
     }
+
+    @Transactional
+      public Treino salvar (Treino treino) {
+           validar(treino);
+            return repository.save(treino);
+        }
+
+      @Transactional
+        public void excluir (Treino treino) {
+            Objects.requireNonNull(treino.getId());
+           repository.delete(treino);
+       }
 }

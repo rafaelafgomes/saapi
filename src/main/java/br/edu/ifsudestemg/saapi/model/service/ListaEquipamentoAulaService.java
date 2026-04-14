@@ -4,7 +4,9 @@ import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
 import br.edu.ifsudestemg.saapi.model.repository.ListaEquipamentoAulaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,18 @@ public class ListaEquipamentoAulaService {
 
     public Optional<ListaEquipamentoAula> getListaEquipamentoAulaById(Long id) {
         return repository.findById(id);
+    }
+
+    @Transactional
+    public ListaEquipamentoAula salvar (ListaEquipamentoAula listaEquipamentoAula) {
+        validar(listaEquipamentoAula);
+        return repository.save(listaEquipamentoAula);
+    }
+
+    @Transactional
+    public void excluir (ListaEquipamentoAula listaEquipamentoAula) {
+        Objects.requireNonNull(listaEquipamentoAula.getId());
+        repository.delete(listaEquipamentoAula);
     }
 
 }

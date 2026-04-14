@@ -22,7 +22,8 @@ public abstract class Pessoa {
     private String nome;
     private String cpf;
     private String telefone;
-    private boolean status;
+    private boolean statusSim;
+    private boolean statusNao;
     private String logradouro;
     private Integer numero;
     private String complemento;
@@ -31,4 +32,5 @@ public abstract class Pessoa {
     private String estado;
     private String cep;
     private String dataNascimento;
+
 }

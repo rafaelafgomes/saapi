@@ -4,7 +4,9 @@ import br.edu.ifsudestemg.saapi.model.entity.Cargo;
 import br.edu.ifsudestemg.saapi.model.repository.CargoRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,5 +24,17 @@ public class CargoService {
 
     public Optional<Cargo> getCargoById(Long id) {
         return repository.findById(id);
+    }
+
+    @Transactional
+    public Cargo salvar (Cargo cargo) {
+        validar(cargo);
+        return repository.save(cargo);
+    }
+
+    @Transactional
+    public void excluir (Cargo cargo) {
+        Objects.requireNonNull(cargo.getId());
+        repository.delete(cargo);
     }
 }
