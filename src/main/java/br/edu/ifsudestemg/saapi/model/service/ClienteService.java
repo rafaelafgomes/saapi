@@ -44,7 +44,7 @@ public class ClienteService {
             throw new RegraNegocioException("Nome inválido");
         }
 
-        if (cliente.getCpf() == null || cliente.getCpf().trim().equals("")) {
+        if (cliente.getCpf() == null || cliente.getCpf().trim().isEmpty() || cliente.getCpf().length() != 11) {
             throw new RegraNegocioException("Cpf inválido");
         }
 
@@ -80,7 +80,7 @@ public class ClienteService {
             throw new RegraNegocioException("Estado Inválido");
         }
 
-        if (cliente.getCep() == null || cliente.getCep().trim().equals("")) {
+        if (cliente.getCep() == null || cliente.getCep().trim().isEmpty() || cliente.getCep().length() != 8) {
             throw new RegraNegocioException("CEP inválido");
         }
 

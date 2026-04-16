@@ -57,7 +57,7 @@ public class FuncionarioService {
             throw new RegraNegocioException("Nome inválido");
         }
 
-        if (funcionario.getCpf() == null || funcionario.getCpf().trim().equals("")) {
+        if (funcionario.getCpf() == null || funcionario.getCpf().trim().isEmpty() || funcionario.getCpf().length() != 11) {
             throw new RegraNegocioException("Cpf inválido");
         }
 
@@ -93,7 +93,7 @@ public class FuncionarioService {
             throw new RegraNegocioException("Estado Inválido");
         }
 
-        if (funcionario.getCep() == null || funcionario.getCep().trim().equals("")) {
+        if (funcionario.getCep() == null || funcionario.getCep().trim().isEmpty() || funcionario.getCep().length() != 8) {
             throw new RegraNegocioException("CEP inválido");
         }
 
