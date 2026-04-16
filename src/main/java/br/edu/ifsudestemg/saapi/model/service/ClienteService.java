@@ -88,9 +88,8 @@ public class ClienteService {
             throw new RegraNegocioException("Data de Nascimento inválida");
         }
 
-        //private Long idPlano;
-        //if (aluno.getCurso() == null || aluno.getCurso().getId() == null || aluno.getCurso().getId() == 0) {
-        //            throw new RegraNegocioException("Curso inválido");
-
+        if(cliente.getPlano() == null || cliente.getPlano().getId() == null || cliente.getPlano().getId() == 0) {
+            throw new RegraNegocioException("Plano inválido");
+        }
     }
 }
