@@ -52,13 +52,9 @@ public class ClienteService {
             throw new RegraNegocioException("Telefone inválido");
         }
 
-        if (cliente.getStatusSim() == null) {
+        if (cliente.getStatus() == null || cliente.getStatus() == "") {
             throw new RegraNegocioException("Status válido");
         }
-        if (cliente.getStatusNao() == null) {
-            throw new RegraNegocioException("Status inválido");
-        }
-
 
         if (cliente.getLogradouro() == null || cliente.getLogradouro().trim().equals("")) {
             throw new RegraNegocioException("Logradouro inválido");
