@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 public class FaturaDTO {
-    private Long id;
 
+    private Long id;
     private String dataVencimento;
     private String dataPagamento;
-    private float valor;
-
+    private Float valor;
     private Long idCliente;
     private String nomeCliente;
     private String planoCliente;

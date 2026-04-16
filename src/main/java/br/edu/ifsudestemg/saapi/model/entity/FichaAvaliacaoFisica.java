@@ -18,8 +18,8 @@ public class FichaAvaliacaoFisica {
     private Long id;
 
     private String dataFicha;
-    private float peso;
-    private float altura;
+    private Float peso;
+    private Float altura;
     private String descricao;
 
     @ManyToOne

@@ -37,4 +37,12 @@ public class ListaAjusteFinanceiroFaturaService {
         repository.delete(listaAjusteFinanceiroFatura);
     }
 
+    public void validar (ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura){
+
+    }
+    //private Long idAjusteFinanceiro;
+    //private String nomeAjusteFinanceiro;
+    //private Long idFatura;
+    //private String nomeFatura;
+
 }

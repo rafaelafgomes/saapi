@@ -13,8 +13,8 @@ public class FichaAvaliacaoFisicaDTO {
     private Long id;
 
     private String dataFicha;
-    private float peso;
-    private float altura;
+    private Float peso;
+    private Float altura;
     private String descricao;
 
     private Long idCliente;

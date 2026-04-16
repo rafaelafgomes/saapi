@@ -22,6 +22,6 @@ public class Plano {
 
     private String nome;
     private Integer duracao;
-    private float valor;
+    private Float valor;
     private String descricao;
 }

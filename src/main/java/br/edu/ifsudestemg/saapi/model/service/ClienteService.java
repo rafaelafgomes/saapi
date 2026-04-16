@@ -27,18 +27,18 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente salvar (Cliente cliente) {
+    public Cliente salvar(Cliente cliente) {
         validar(cliente);
         return repository.save(cliente);
     }
 
     @Transactional
-    public void excluir (Cliente cliente) {
+    public void excluir(Cliente cliente) {
         Objects.requireNonNull(cliente.getId());
         repository.delete(cliente);
     }
 
-    public void validar (Cliente cliente) {
+    public void validar(Cliente cliente) {
 
         if (cliente.getNome() == null || cliente.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
@@ -53,31 +53,31 @@ public class ClienteService {
         }
 
         if (cliente.getStatus() == null || cliente.getStatus() == "") {
-            throw new RegraNegocioException("Status válido");
+            throw new RegraNegocioException("Status inválido");
         }
 
         if (cliente.getLogradouro() == null || cliente.getLogradouro().trim().equals("")) {
             throw new RegraNegocioException("Logradouro inválido");
         }
 
-        if(cliente.getNumero() == null || cliente.getNumero() == 0) {
+        if (cliente.getNumero() == null || cliente.getNumero() == 0) {
             throw new RegraNegocioException("Numero inválido");
-
-
-        if(cliente.getComplemento() == null || cliente.getComplemento().trim().equals("")){
-            throw new RegraNegocioException("Complemento Inválido")
         }
 
-        if(cliente.getBairro() == null || cliente.getBairro().trim().equals("")){
-            throw new RegraNegocioException("Bairro Inválido")
+        if (cliente.getComplemento() == null || cliente.getComplemento().trim().equals("")) {
+            throw new RegraNegocioException("Complemento Inválido");
         }
 
-        if(cliente.getCidade() == null || cliente.getCidade().trim().equals("")){
-            throw new RegraNegocioException("Cidade Inválido")
+        if (cliente.getBairro() == null || cliente.getBairro().trim().equals("")) {
+            throw new RegraNegocioException("Bairro Inválido");
         }
 
-        if(cliente.getEstado() == null || cliente.getEstado().trim().equals("")){
-            throw new RegraNegocioException("Estado Inválido")
+        if (cliente.getCidade() == null || cliente.getCidade().trim().equals("")) {
+            throw new RegraNegocioException("Cidade Inválido");
+        }
+
+        if (cliente.getEstado() == null || cliente.getEstado().trim().equals("")) {
+            throw new RegraNegocioException("Estado Inválido");
         }
 
         if (cliente.getCep() == null || cliente.getCep().trim().equals("")) {
@@ -88,20 +88,9 @@ public class ClienteService {
             throw new RegraNegocioException("Data de Nascimento inválida");
         }
 
-
-            private boolean status;
-            private String logradouro;
-            private Integer numero;
-            private String complemento;
-            private String bairro;
-            private String cidade;
-            private String estado;
-            private String cep;
-            private String dataNascimento;
-            private Long idPlano;
-        } else {
-            throw new RegraNegocioException("Status inválido");
-        }
+        //private Long idPlano;
+        //if (aluno.getCurso() == null || aluno.getCurso().getId() == null || aluno.getCurso().getId() == 0) {
+        //            throw new RegraNegocioException("Curso inválido");
 
     }
 }

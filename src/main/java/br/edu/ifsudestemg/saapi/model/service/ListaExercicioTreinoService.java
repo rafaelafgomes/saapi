@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.ListaExercicioTreino;
 import br.edu.ifsudestemg.saapi.model.repository.ListaExercicioTreinoRepository;
 import org.springframework.stereotype.Service;
@@ -36,4 +37,24 @@ public class ListaExercicioTreinoService {
         Objects.requireNonNull(listaExercicioTreino.getId());
         repository.delete(listaExercicioTreino);
     }
+
+    public void validar (ListaExercicioTreino listaExercicioTreino) {
+        if (listaExercicioTreino.getSerie() == null || listaExercicioTreino.getSerie() == 0) {
+            throw new RegraNegocioException("Série inválido");
+        }
+
+        if (listaExercicioTreino.getCarga() == null || listaExercicioTreino.getCarga() == 0) {
+            throw new RegraNegocioException("Carga inválido");
+        }
+
+        if (listaExercicioTreino.getRepeticao() == null || listaExercicioTreino.getRepeticao() == 0) {
+            throw new RegraNegocioException("Repetição inválido");
+        }
+    }
+
+
+    //private Long idxercicio;
+    //private String nomeExercicio;
+    //private Long idTreino;
+    //private String nomeTreino;
 }

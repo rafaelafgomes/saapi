@@ -23,6 +23,6 @@ public class AjusteFinanceiro {
     private String nome;
     private String tipo;
     private String unidade;
-    private float valor;
+    private Float valor;
     private String descricao;
 }

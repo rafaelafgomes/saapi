@@ -1,7 +1,7 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
 
-import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import br.edu.ifsudestemg.saapi.model.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
@@ -28,14 +28,80 @@ public class FuncionarioService {
     }
 
     @Transactional
-    public Funcionario salvar (Funcionario funcionario) {
+    public Funcionario salvar(Funcionario funcionario) {
         validar(funcionario);
         return repository.save(funcionario);
     }
 
     @Transactional
-    public void excluir (Funcionario funcionario) {
+    public void excluir(Funcionario funcionario) {
         Objects.requireNonNull(funcionario.getId());
         repository.delete(funcionario);
+    }
+
+    public void validar(Funcionario funcionario) {
+
+        if (funcionario.getEmail() == null || funcionario.getEmail().trim().equals("")) {
+            throw new RegraNegocioException("Email inválido");
+        }
+
+        if (funcionario.getDataAdmissao() == null || funcionario.getDataAdmissao().trim().equals("")) {
+            throw new RegraNegocioException("Data de Admissão inválida");
+        }
+
+        if (funcionario.getObservacao() == null || funcionario.getObservacao().trim().equals("")) {
+            throw new RegraNegocioException("Observação inválida");
+        }
+
+        if (funcionario.getNome() == null || funcionario.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Nome inválido");
+        }
+
+        if (funcionario.getCpf() == null || funcionario.getCpf().trim().equals("")) {
+            throw new RegraNegocioException("Cpf inválido");
+        }
+
+        if (funcionario.getTelefone() == null || funcionario.getTelefone().trim().equals("")) {
+            throw new RegraNegocioException("Telefone inválido");
+        }
+
+        if (funcionario.getStatus() == null || funcionario.getStatus() == "") {
+            throw new RegraNegocioException("Status inválido");
+        }
+
+        if (funcionario.getLogradouro() == null || funcionario.getLogradouro().trim().equals("")) {
+            throw new RegraNegocioException("Logradouro inválido");
+        }
+
+        if (funcionario.getNumero() == null || funcionario.getNumero() == 0) {
+            throw new RegraNegocioException("Numero Inválido");
+        }
+
+        if (funcionario.getComplemento() == null || funcionario.getComplemento().trim().equals("")) {
+            throw new RegraNegocioException("Complemento Inválido");
+        }
+
+        if (funcionario.getBairro() == null || funcionario.getBairro().trim().equals("")) {
+            throw new RegraNegocioException("Bairro Inválido");
+        }
+
+        if (funcionario.getCidade() == null || funcionario.getCidade().trim().equals("")) {
+            throw new RegraNegocioException("Cidade Inválido");
+        }
+
+        if (funcionario.getEstado() == null || funcionario.getEstado().trim().equals("")) {
+            throw new RegraNegocioException("Estado Inválido");
+        }
+
+        if (funcionario.getCep() == null || funcionario.getCep().trim().equals("")) {
+            throw new RegraNegocioException("CEP inválido");
+        }
+
+        if (funcionario.getDataNascimento() == null || funcionario.getDataNascimento().trim().equals("")) {
+            throw new RegraNegocioException("Data de Nascimento inválida");
+        }
+
+        //private Long idCargo;
+        //private String nomeCargo;
     }
 }

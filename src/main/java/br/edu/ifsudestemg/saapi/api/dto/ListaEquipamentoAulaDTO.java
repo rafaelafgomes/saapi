@@ -16,12 +16,12 @@ import javax.persistence.ManyToOne;
 
 public class ListaEquipamentoAulaDTO{
 
-private Long id;
-private Integer quantidade;
-private Long idEquipamento;
-private String nomeEquipamento;
-private Long idAula;
-private String nomeAula;
+    private Long id;
+    private Integer quantidade;
+    private Long idEquipamento;
+    private String nomeEquipamento;
+    private Long idAula;
+    private String nomeAula;
 
     public static ListaEquipamentoAulaDTO create(ListaEquipamentoAula listaEquipamentoAula) {
         ModelMapper modelMapper = new ModelMapper();

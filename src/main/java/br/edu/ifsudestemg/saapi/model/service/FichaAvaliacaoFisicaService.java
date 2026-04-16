@@ -1,6 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
-import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.FichaAvaliacaoFisica;
 import br.edu.ifsudestemg.saapi.model.repository.FichaAvaliacaoFisicaRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +37,27 @@ public class FichaAvaliacaoFisicaService {
         Objects.requireNonNull(fichaAvaliacaoFisica.getId());
         repository.delete(fichaAvaliacaoFisica);
     }
+
+    public void validar (FichaAvaliacaoFisica fichaAvaliacaoFisica) {
+        if (fichaAvaliacaoFisica.getDataFicha() == null || fichaAvaliacaoFisica.getDataFicha().trim().equals("")) {
+            throw new RegraNegocioException("Data inválido");
+        }
+
+        if (fichaAvaliacaoFisica.getPeso() == null || fichaAvaliacaoFisica.getPeso() == 0) {
+            throw new RegraNegocioException("Peso inválido");
+        }
+
+        if (fichaAvaliacaoFisica.getAltura() == null || fichaAvaliacaoFisica.getAltura() == 0) {
+            throw new RegraNegocioException("Altura inválido");
+        }
+
+        if (fichaAvaliacaoFisica.getDescricao() == null || fichaAvaliacaoFisica.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválido");
+        }
+
+    }
+
+    //private Long idCliente;
+    //private Long idFuncionario;
 
 }

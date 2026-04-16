@@ -1,6 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
-import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Exercicio;
 import br.edu.ifsudestemg.saapi.model.repository.ExercicioRepository;
 import org.springframework.stereotype.Service;
@@ -36,5 +36,15 @@ public class ExercicioService {
     public void excluir (Exercicio exercicio) {
         Objects.requireNonNull(exercicio.getId());
         repository.delete(exercicio);
+    }
+
+    public void validar (Exercicio exercicio){
+        if (exercicio.getNome() == null || exercicio.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Nome inválido");
+        }
+
+        if (exercicio.getDescricao() == null || exercicio.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválido");
+        }
     }
 }

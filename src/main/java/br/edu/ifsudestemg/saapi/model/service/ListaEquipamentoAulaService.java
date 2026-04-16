@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
 import br.edu.ifsudestemg.saapi.model.repository.ListaEquipamentoAulaRepository;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,14 @@ public class ListaEquipamentoAulaService {
         repository.delete(listaEquipamentoAula);
     }
 
+    public void validar (ListaEquipamentoAula listaEquipamentoAula) {
+        if (listaEquipamentoAula.getQuantidade() == null || listaEquipamentoAula.getQuantidade() == 0) {
+            throw new RegraNegocioException("Quantidade inválido");
+        }
+    }
+    /*
+    private Long idEquipamento;
+    private String nomeEquipamento;
+    private Long idAula;
+    private String nomeAula;*/
 }

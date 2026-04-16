@@ -16,7 +16,7 @@ public class AjusteFinanceiroDTO {
     private String nome;
     private String tipo;
     private String unidade;
-    private float valor;
+    private Float valor;
     private String descricao;
 
     public static AjusteFinanceiroDTO create(AjusteFinanceiro ajusteFinanceiro) {

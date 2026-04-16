@@ -38,4 +38,12 @@ public class ListaClienteAulaService {
         repository.delete(listaClienteAula);
     }
 
+    public void validar (ListaClienteAula listaClienteAula){
+
+    }
+    /*private Long idCliente;
+    private String nomeCliente;
+    private Long idAula;
+    private String nomeAula;*/
+
 }

@@ -20,7 +20,7 @@ public class Aula {
     private String nome;
     private String dataAula;
     private String horaAula;
-    private boolean status;
+    private String status;
     private Integer capacidade;
     private String descricao;
 

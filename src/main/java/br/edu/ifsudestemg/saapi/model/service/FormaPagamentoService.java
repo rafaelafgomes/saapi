@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.FormaPagamento;
 import br.edu.ifsudestemg.saapi.model.repository.FormaPagamentoRepository;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,14 @@ public class FormaPagamentoService {
         Objects.requireNonNull(formaPagamento.getId());
         repository.delete(formaPagamento);
     }
+    
+    public void validar (FormaPagamento formaPagamento) {
+        if (formaPagamento.getNome() == null || formaPagamento.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Nome inválido");
+        }
 
+        if (formaPagamento.getDescricao() == null || formaPagamento.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválida");
+        }
+    }
 }

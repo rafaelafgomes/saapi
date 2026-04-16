@@ -1,6 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
-import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.repository.AulaRepository;
 import org.springframework.stereotype.Service;
@@ -37,4 +37,33 @@ public class AulaService {
         Objects.requireNonNull(aula.getId());
         repository.delete(aula);
     }
+
+    public void validar (Aula aula){
+        if (aula.getNome() == null || aula.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Aula inválido");
+        }
+
+        if (aula.getDataAula() == null){
+            throw new RegraNegocioException("Data inválido");
+        }
+
+        if (aula.getHoraAula() == null){
+            throw new RegraNegocioException("Hora inválido");
+        }
+
+        if (aula.getStatus() == null) {
+            throw new RegraNegocioException("Status inválido");
+        }
+
+        if (aula.getCapacidade() == null || aula.getCapacidade() == 0) {
+            throw new RegraNegocioException("Capacidade inválido");
+        }
+
+        if (aula.getDescricao() == null || aula.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválido");
+        }
+    }
+
+    //private Long idFuncionario;
+    //private Long idCliente;
 }

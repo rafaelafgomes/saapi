@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Fatura;
 import br.edu.ifsudestemg.saapi.model.repository.FaturaRepository;
 import org.springframework.stereotype.Service;
@@ -37,4 +38,20 @@ public class FaturaService {
         repository.delete(fatura);
     }
 
+    public void validar (Fatura fatura){
+        if (fatura.getDataVencimento() == null || fatura.getDataVencimento().trim().equals("")) {
+            throw new RegraNegocioException("Data inválida");
+        }
+
+        if (fatura.getDataPagamento() == null || fatura.getDataPagamento().trim().equals("")) {
+            throw new RegraNegocioException("Data inválida");
+        }
+
+        if (fatura.getValor() == null || fatura.getValor() == 0) {
+            throw new RegraNegocioException("Valor inválido");
+        }
+    }
+
+    //private Long idCliente;
+    //private Long idFormaPagamento;
 }

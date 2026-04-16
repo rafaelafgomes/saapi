@@ -15,7 +15,7 @@ public class PlanoDTO {
     private Long id;
     private String nome;
     private Integer duracao;
-    private float valor;
+    private Float valor;
     private String descricao;
 
     public static PlanoDTO create(Plano plano) {

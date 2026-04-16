@@ -1,8 +1,10 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.entity.Plano;
+import br.edu.ifsudestemg.saapi.model.entity.Treino;
 import br.edu.ifsudestemg.saapi.model.repository.PlanoRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +30,33 @@ public class PlanoService {
     }
 
     @Transactional
-    public Plano salvar (Plano plano) {
+    public Plano salvar(Plano plano) {
         validar(plano);
         return repository.save(plano);
     }
 
     @Transactional
-    public void excluir (Plano plano) {
+    public void excluir(Plano plano) {
         Objects.requireNonNull(plano.getId());
         repository.delete(plano);
     }
 
+    public void validar(Plano plano) {
+
+        if (plano.getNome() == null || plano.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Nome inválido");
+        }
+
+        if (plano.getDuracao() == null || plano.getDuracao() == 0) {
+            throw new RegraNegocioException("Duração inválida");
+        }
+
+        if (plano.getValor() == null || plano.getValor() == 0) {
+            throw new RegraNegocioException("Valor inválido");
+        }
+
+        if (plano.getDescricao() == null || plano.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválida");
+        }
+    }
 }

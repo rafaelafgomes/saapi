@@ -1,5 +1,7 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
 import br.edu.ifsudestemg.saapi.model.entity.Cargo;
 import br.edu.ifsudestemg.saapi.model.repository.CargoRepository;
 import org.springframework.stereotype.Service;
@@ -27,14 +29,26 @@ public class CargoService {
     }
 
     @Transactional
-    public Cargo salvar (Cargo cargo) {
+    public Cargo salvar(Cargo cargo) {
         validar(cargo);
         return repository.save(cargo);
     }
 
     @Transactional
-    public void excluir (Cargo cargo) {
+    public void excluir(Cargo cargo) {
         Objects.requireNonNull(cargo.getId());
         repository.delete(cargo);
     }
+
+    public void validar(Cargo cargo) {
+
+        if (cargo.getNome() == null || cargo.getNome().trim().equals("")) {
+            throw new RegraNegocioException("Nome inválido");
+        }
+
+        if (cargo.getDescricao() == null || cargo.getDescricao().trim().equals("")) {
+            throw new RegraNegocioException("Descrição inválida");
+        }
+    }
 }
+

@@ -20,7 +20,7 @@ public class Fatura {
 
     private String dataVencimento;
     private String dataPagamento;
-    private float valor;
+    private Float valor;
 
     @ManyToOne
     private Cliente cliente;
