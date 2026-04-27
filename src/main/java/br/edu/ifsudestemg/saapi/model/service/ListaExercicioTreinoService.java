@@ -50,11 +50,13 @@ public class ListaExercicioTreinoService {
         if (listaExercicioTreino.getRepeticao() == null || listaExercicioTreino.getRepeticao() == 0) {
             throw new RegraNegocioException("Repetição inválido");
         }
+
+        if(listaExercicioTreino.getExercicio() == null || listaExercicioTreino.getExercicio().getId() == null || listaExercicioTreino.getExercicio().getId() == 0) {
+            throw new RegraNegocioException("Exercicio inválido");
+        }
+
+        if(listaExercicioTreino.getTreino() == null || listaExercicioTreino.getTreino().getId() == null || listaExercicioTreino.getTreino().getId() == 0) {
+            throw new RegraNegocioException("Treino inválido");
+        }
     }
-
-
-    //private Long idxercicio;
-    //private String nomeExercicio;
-    //private Long idTreino;
-    //private String nomeTreino;
 }

@@ -62,8 +62,13 @@ public class AulaService {
         if (aula.getDescricao() == null || aula.getDescricao().trim().equals("")) {
             throw new RegraNegocioException("Descrição inválido");
         }
-    }
 
-    //private Long idFuncionario;
-    //private Long idCliente;
+        if (aula.getFuncionario() == null || aula.getFuncionario().getId() == null || aula.getFuncionario().getId() == 0) {
+            throw new RegraNegocioException("Funcionário inválido");
+        }
+
+        if(aula.getCliente() == null || aula.getCliente().getId() == null || aula.getCliente().getId() == 0) {
+            throw new RegraNegocioException("Cliente inválido");
+        }
+    }
 }

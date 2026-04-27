@@ -53,10 +53,13 @@ public class TreinoService {
             throw new RegraNegocioException("Descrição inválida");
         }
 
+        if(treino.getCliente() == null || treino.getCliente().getId() == null || treino.getCliente().getId() == 0) {
+            throw new RegraNegocioException("Cliente inválido");
+        }
 
-        //private Long idCliente;
-        //private String nomeCliente;
-        //private Long idFuncionario;
-        // private String nomeFuncionario;
+        if(treino.getFuncionario() == null || treino.getFuncionario().getId() == null || treino.getFuncionario().getId() == 0) {
+            throw new RegraNegocioException("Funcionário inválido");
+        }
+
     }
 }

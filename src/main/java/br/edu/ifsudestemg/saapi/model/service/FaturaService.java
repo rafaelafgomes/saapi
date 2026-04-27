@@ -50,8 +50,14 @@ public class FaturaService {
         if (fatura.getValor() == null || fatura.getValor() == 0) {
             throw new RegraNegocioException("Valor inválido");
         }
+
+        if (fatura.getCliente() == null || fatura.getCliente().getId() == null || fatura.getCliente().getId() == 0) {
+            throw new RegraNegocioException("Cliente inválido");
+        }
+
+        if (fatura.getFormaPagamento() == null || fatura.getFormaPagamento().getId() == null || fatura.getFormaPagamento().getId() == 0) {
+            throw new RegraNegocioException("Forma de pagamento inválido");
+        }
     }
 
-    //private Long idCliente;
-    //private Long idFormaPagamento;
 }

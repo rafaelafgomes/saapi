@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.entity.ListaClienteAula;
 import br.edu.ifsudestemg.saapi.model.repository.ListaClienteAulaRepository;
@@ -40,10 +41,13 @@ public class ListaClienteAulaService {
 
     public void validar (ListaClienteAula listaClienteAula){
 
+        if(listaClienteAula.getCliente() == null || listaClienteAula.getCliente().getId() == null || listaClienteAula.getCliente().getId() == 0){
+            throw new RegraNegocioException("Cliente inválido");
+        }
+
+        if(listaClienteAula.getAula() == null || listaClienteAula.getAula().getId() == null || listaClienteAula.getAula().getId() == 0){
+            throw new RegraNegocioException("Aula inválida");
+        }
     }
-    /*private Long idCliente;
-    private String nomeCliente;
-    private Long idAula;
-    private String nomeAula;*/
 
 }

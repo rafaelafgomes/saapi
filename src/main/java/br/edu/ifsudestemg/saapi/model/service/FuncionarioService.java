@@ -101,7 +101,8 @@ public class FuncionarioService {
             throw new RegraNegocioException("Data de Nascimento inválida");
         }
 
-        //private Long idCargo;
-        //private String nomeCargo;
+        if(funcionario.getCargo() == null || funcionario.getCargo().getId() == null || funcionario.getCargo().getId() == 0){
+            throw new RegraNegocioException("Cargo inválido");
+        }
     }
 }

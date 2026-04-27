@@ -1,5 +1,6 @@
 package br.edu.ifsudestemg.saapi.model.service;
 
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.ListaAjusteFinanceiroFatura;
 import br.edu.ifsudestemg.saapi.model.repository.ListaAjusteFinanceiroFaturaRepository;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,14 @@ public class ListaAjusteFinanceiroFaturaService {
 
     public void validar (ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura){
 
+        if(listaAjusteFinanceiroFatura.getAjusteFinanceiro() == null || listaAjusteFinanceiroFatura.getAjusteFinanceiro().getId() == null || listaAjusteFinanceiroFatura.getAjusteFinanceiro().getId() == 0) {
+            throw new RegraNegocioException("Ajuste financeiro inválido");
+        }
+
+        if(listaAjusteFinanceiroFatura.getFatura() == null || listaAjusteFinanceiroFatura.getFatura().getId() == null || listaAjusteFinanceiroFatura.getFatura().getId() == 0) {
+            throw new RegraNegocioException("Fatura inválida");
+        }
+
     }
-    //private Long idAjusteFinanceiro;
-    //private String nomeAjusteFinanceiro;
-    //private Long idFatura;
-    //private String nomeFatura;
 
 }

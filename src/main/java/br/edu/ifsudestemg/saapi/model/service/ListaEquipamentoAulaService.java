@@ -42,10 +42,13 @@ public class ListaEquipamentoAulaService {
         if (listaEquipamentoAula.getQuantidade() == null || listaEquipamentoAula.getQuantidade() == 0) {
             throw new RegraNegocioException("Quantidade inválido");
         }
+
+        if(listaEquipamentoAula.getEquipamento() == null || listaEquipamentoAula.getEquipamento().getId() == null || listaEquipamentoAula.getEquipamento().getId() == 0) {
+            throw new RegraNegocioException("Equipamento inválido");
+        }
+
+        if(listaEquipamentoAula.getAula() == null || listaEquipamentoAula.getAula().getId() == null || listaEquipamentoAula.getAula().getId() == 0) {
+            throw new RegraNegocioException("Aula inválida");
+        }
     }
-    /*
-    private Long idEquipamento;
-    private String nomeEquipamento;
-    private Long idAula;
-    private String nomeAula;*/
 }

@@ -55,9 +55,14 @@ public class FichaAvaliacaoFisicaService {
             throw new RegraNegocioException("Descrição inválido");
         }
 
-    }
+        if(fichaAvaliacaoFisica.getCliente() == null || fichaAvaliacaoFisica.getCliente().getId() == null || fichaAvaliacaoFisica.getCliente().getId() == 0) {
+            throw new RegraNegocioException("Cliente inválido");
+        }
 
-    //private Long idCliente;
-    //private Long idFuncionario;
+        if(fichaAvaliacaoFisica.getFuncionario() == null || fichaAvaliacaoFisica.getFuncionario().getId() == null || fichaAvaliacaoFisica.getFuncionario().getId() == 0) {
+            throw new RegraNegocioException("Funcionário inválido");
+        }
+
+    }
 
 }
