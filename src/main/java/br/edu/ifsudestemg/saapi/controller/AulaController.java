@@ -28,10 +28,10 @@ public class AulaController {
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
-        Optional<Aula> aluno = service.getAulaById(id);
-        if (!aluno.isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        Optional<Aula> aula = service.getAulaById(id);
+        if (!aula.isPresent()) {
+            return new ResponseEntity("Aula não encontrado", HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(aluno.map(AlunoDTO::create));
+        return ResponseEntity.ok(aula.map(AulaDTO::create));
     }
 }
