@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/listaclienteaulas")
+@RequestMapping("/api/v1/listasclientesaulas")
 @RequiredArgsConstructor
 @CrossOrigin
 

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/ajustefinanceiros")
+@RequestMapping("/api/v1/ajustesfinanceiros")
 @RequiredArgsConstructor
 @CrossOrigin
 public class AjusteFinanceiroController {

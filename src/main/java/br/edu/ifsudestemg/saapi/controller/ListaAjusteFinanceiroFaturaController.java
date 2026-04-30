@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/listaajustefinanceirofaturas")
+@RequestMapping("/api/v1/listasajustesfinanceirosfaturas")
 @RequiredArgsConstructor
 @CrossOrigin
 
