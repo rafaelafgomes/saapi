@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/fichaAvaliacaoFisica")
+@RequestMapping("/api/v1/fichaavaliacaofisica")
 @RequiredArgsConstructor
 @CrossOrigin
 
