@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.EquipamentoDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Equipamento;
 import br.edu.ifsudestemg.saapi.model.service.EquipamentoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,23 @@ public class EquipamentoController {
             return new ResponseEntity("Equipamento não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(equipamento.map(EquipamentoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody EquipamentoDTO dto) {
+        try{
+            Equipamento equipamento = converter(dto);
+            equipamento = service.salvar(equipamento);
+            return new ResponseEntity(equipamento, HttpStatus.CREATED);
+        } catch (RegraNegocioException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Equipamento converter(EquipamentoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Equipamento equipamento = modelMapper.map(dto, Equipamento.class);
+        return equipamento;
     }
 
 }

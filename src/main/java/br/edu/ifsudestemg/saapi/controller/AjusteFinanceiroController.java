@@ -1,4 +1,7 @@
 package br.edu.ifsudestemg.saapi.controller;
+
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import org.modelmapper.ModelMapper;
 import br.edu.ifsudestemg.saapi.api.dto.AjusteFinanceiroDTO;
 import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
 import br.edu.ifsudestemg.saapi.model.service.AjusteFinanceiroService;
@@ -44,10 +47,11 @@ public class AjusteFinanceiroController {
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
 
-        public AjusteFinanceiro converter(AjusteFinanceiroDTO dto) {
-            ModelMapper modelMapper = new ModelMapper();
-            AjusteFinanceiro ajusteFinanceiro = modelMapper.map(dto, AjusteFinanceiro.class);
-            return ajusteFinanceiro;
-        }
+    public AjusteFinanceiro converter(AjusteFinanceiroDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        AjusteFinanceiro ajusteFinanceiro = modelMapper.map(dto, AjusteFinanceiro.class);
+        return ajusteFinanceiro;
+    }
 }

@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.CargoDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Cargo;
 import br.edu.ifsudestemg.saapi.model.service.CargoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +35,22 @@ public class CargoController {
             return new ResponseEntity("Cargo não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(cargo.map(CargoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody CargoDTO dto) {
+        try{
+            Cargo cargo = converter(dto);
+            cargo = service.salvar(cargo);
+            return new ResponseEntity(cargo, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Cargo converter(CargoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Cargo cargo = modelMapper.map(dto, Cargo.class);
+        return cargo;
     }
 }

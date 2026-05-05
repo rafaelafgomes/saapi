@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.FormaPagamentoDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.FormaPagamento;
 import br.edu.ifsudestemg.saapi.model.service.FormaPagamentoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +34,22 @@ public class FormaPagamentoController {
             return new ResponseEntity("Forma de pagamento não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(formaPagamento.map(FormaPagamentoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody FormaPagamentoDTO dto) {
+        try{
+            FormaPagamento formaPagamento = converter(dto);
+            formaPagamento = service.salvar(formaPagamento);
+            return new ResponseEntity(formaPagamento, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public FormaPagamento converter(FormaPagamentoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        FormaPagamento formaPagamento = modelMapper.map(dto, FormaPagamento.class);
+        return formaPagamento;
     }
 }

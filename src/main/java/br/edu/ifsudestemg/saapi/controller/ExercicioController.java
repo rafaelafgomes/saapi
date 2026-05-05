@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.controller;
 import br.edu.ifsudestemg.saapi.api.dto.ExercicioDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Exercicio;
 import br.edu.ifsudestemg.saapi.model.service.ExercicioService;
 //import com.example.saapi.api.dto.ExercicioDTO;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +36,22 @@ public class ExercicioController {
             return new ResponseEntity("Exercicio não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(exercicio.map(ExercicioDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ExercicioDTO dto) {
+        try{
+            Exercicio exercicio = converter(dto);
+            exercicio = service.salvar(exercicio);
+            return new ResponseEntity(exercicio, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Exercicio converter (ExercicioDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Exercicio exercicio = modelMapper.map(dto, Exercicio.class);
+        return exercicio;
     }
 }
