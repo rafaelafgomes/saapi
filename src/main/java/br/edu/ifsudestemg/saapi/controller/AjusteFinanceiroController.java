@@ -34,4 +34,20 @@ public class AjusteFinanceiroController {
         }
         return ResponseEntity.ok(ajusteFinanceiro.map(AjusteFinanceiroDTO::create));
     }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AjusteFinanceiroDTO dto) {
+        try {
+            AjusteFinanceiro ajusteFinanceiro = converter(dto);
+            ajusteFinanceiro = service.salvar(ajusteFinanceiro);
+            return new ResponseEntity(ajusteFinanceiro, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+        public AjusteFinanceiro converter(AjusteFinanceiroDTO dto) {
+            ModelMapper modelMapper = new ModelMapper();
+            AjusteFinanceiro ajusteFinanceiro = modelMapper.map(dto, AjusteFinanceiro.class);
+            return ajusteFinanceiro;
+        }
 }
