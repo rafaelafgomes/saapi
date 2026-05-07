@@ -9,7 +9,6 @@ import org.modelmapper.ModelMapper;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class FormaPagamentoDTO {
 
     private Long id;

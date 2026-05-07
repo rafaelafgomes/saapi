@@ -2,9 +2,15 @@ package br.edu.ifsudestemg.saapi.controller;
 //import com.example.saapi.api.dto.AulaDTO;
 
 import br.edu.ifsudestemg.saapi.api.dto.AulaDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.model.entity.Cliente;
+import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import br.edu.ifsudestemg.saapi.model.service.AulaService;
+import br.edu.ifsudestemg.saapi.model.service.ClienteService;
+import br.edu.ifsudestemg.saapi.model.service.FuncionarioService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +25,8 @@ import java.util.stream.Collectors;
 @CrossOrigin
 public class AulaController {
     private final AulaService service;
+    private final FuncionarioService funcionarioService;
+    private final ClienteService clienteService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -34,4 +42,39 @@ public class AulaController {
         }
         return ResponseEntity.ok(aula.map(AulaDTO::create));
     }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody AulaDTO dto) {
+        try{
+            Aula aula = converter(dto);
+            aula = service.salvar(aula);
+            return new ResponseEntity(aula, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Aula converter (AulaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Aula aula = modelMapper.map(dto, Aula.class);
+
+        if(dto.getIdFuncionario() != null) {
+            Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
+            if(!funcionario.isPresent()) {
+                aula.setFuncionario(null);
+            } else {
+                aula.setFuncionario(funcionario.get());
+            }
+        }
+        if(dto.getIdCliente() != null) {
+            Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
+            if(!cliente.isPresent()) {
+                aula.setCliente(null);
+            } else {
+                aula.setCliente(cliente.get());
+            }
+        }
+        return aula;
+    }
 }
+

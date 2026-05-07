@@ -58,7 +58,7 @@ public class EquipamentoService {
             throw new RegraNegocioException("Quantidade inválida");
         }
 
-        if (equipamento.getDisponivel() == null || equipamento.getDisponivel().trim().equals("")) {
+        if (equipamento.getDisponivel() == null) {
             throw new RegraNegocioException("Disponibilidade inválida");
         }
 

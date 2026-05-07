@@ -24,7 +24,7 @@ public class Equipamento {
     private String modelo;
     private String ultManutencao;
     private Integer quantidade;
-    private String disponivel;
+    private Boolean disponivel;
     private String local;
     private String descricao;
 }

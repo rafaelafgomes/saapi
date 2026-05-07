@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EquipamentoDTO {
     private Long id;
 
@@ -13,7 +16,7 @@ public class EquipamentoDTO {
     private String modelo;
     private String ultManutencao;
     private Integer quantidade;
-    private String disponivel;
+    private Boolean disponivel;
     private String local;
     private String descricao;
 
