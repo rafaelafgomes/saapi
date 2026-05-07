@@ -66,14 +66,6 @@ public class AulaController {
                 aula.setFuncionario(funcionario.get());
             }
         }
-        if(dto.getIdCliente() != null) {
-            Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
-            if(!cliente.isPresent()) {
-                aula.setCliente(null);
-            } else {
-                aula.setCliente(cliente.get());
-            }
-        }
         return aula;
     }
 }

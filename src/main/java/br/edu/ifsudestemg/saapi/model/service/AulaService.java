@@ -66,9 +66,5 @@ public class AulaService {
         if (aula.getFuncionario() == null || aula.getFuncionario().getId() == null || aula.getFuncionario().getId() == 0) {
             throw new RegraNegocioException("Funcionário inválido");
         }
-
-        if(aula.getCliente() == null || aula.getCliente().getId() == null || aula.getCliente().getId() == 0) {
-            throw new RegraNegocioException("Cliente inválido");
-        }
     }
 }

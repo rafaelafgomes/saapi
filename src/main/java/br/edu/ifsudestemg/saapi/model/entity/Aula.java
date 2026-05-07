@@ -20,12 +20,10 @@ public class Aula {
     private String nome;
     private String dataAula;
     private String horaAula;
-    private String status;
+    private Boolean status;
     private Integer capacidade;
     private String descricao;
 
     @ManyToOne
     private Funcionario funcionario;
-    @ManyToOne
-    private Cliente cliente;
 }
