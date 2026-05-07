@@ -2,9 +2,13 @@ package br.edu.ifsudestemg.saapi.controller;
 
 
 import br.edu.ifsudestemg.saapi.api.dto.ClienteDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Cliente;
+import br.edu.ifsudestemg.saapi.model.entity.Plano;
 import br.edu.ifsudestemg.saapi.model.service.ClienteService;
+import br.edu.ifsudestemg.saapi.model.service.PlanoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 
 public class ClienteController {
     private final ClienteService service;
+    private final PlanoService planoService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -34,5 +39,30 @@ public class ClienteController {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(cliente.map(ClienteDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ClienteDTO dto) {
+        try {
+            Cliente cliente = converter(dto);
+            cliente = service.salvar(cliente);
+            return new ResponseEntity(cliente, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Cliente converter(ClienteDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Cliente cliente = modelMapper.map(dto, Cliente.class);
+        if (dto.getIdPlano() != null) {
+            Optional<Plano> plano = planoService.getPlanoById(dto.getIdPlano());
+            if (!plano.isPresent()) {
+                cliente.setPlano(null);
+            } else {
+                cliente.setPlano(plano.get());
+            }
+        }
+        return cliente;
     }
 }

@@ -65,7 +65,7 @@ public class FuncionarioService {
             throw new RegraNegocioException("Telefone inválido");
         }
 
-        if (funcionario.getStatus() == null || funcionario.getStatus() == "") {
+        if (funcionario.getStatus() == null) {
             throw new RegraNegocioException("Status inválido");
         }
 

@@ -52,7 +52,7 @@ public class ClienteService {
             throw new RegraNegocioException("Telefone inválido");
         }
 
-        if (cliente.getStatus() == null || cliente.getStatus() == "") {
+        if (cliente.getStatus() == null) {
             throw new RegraNegocioException("Status inválido");
         }
 
