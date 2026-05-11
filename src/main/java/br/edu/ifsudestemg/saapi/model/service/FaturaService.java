@@ -27,7 +27,7 @@ public class FaturaService {
     }
 
     @Transactional
-    public Fatura fatura (Fatura fatura) {
+    public Fatura salvar (Fatura fatura) {
         validar(fatura);
         return repository.save(fatura);
     }
