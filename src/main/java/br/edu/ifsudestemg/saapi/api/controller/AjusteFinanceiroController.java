@@ -48,6 +48,21 @@ public class AjusteFinanceiroController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AjusteFinanceiroDTO dto) {
+        if(!service.getAjusteFinanceiroById(id).isPresent()) {
+            return new ResponseEntity("Ajuste Financeiro não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AjusteFinanceiro ajusteFinanceiro = converter(dto);
+            ajusteFinanceiro.setId(id);
+            service.salvar(ajusteFinanceiro);
+            return ResponseEntity.ok(ajusteFinanceiro);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public AjusteFinanceiro converter(AjusteFinanceiroDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         AjusteFinanceiro ajusteFinanceiro = modelMapper.map(dto, AjusteFinanceiro.class);
