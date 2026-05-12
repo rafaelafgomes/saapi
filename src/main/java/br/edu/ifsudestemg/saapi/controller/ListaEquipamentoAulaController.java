@@ -3,7 +3,11 @@ package br.edu.ifsudestemg.saapi.controller;
 import br.edu.ifsudestemg.saapi.api.dto.CargoDTO;
 import br.edu.ifsudestemg.saapi.api.dto.ListaEquipamentoAulaDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.model.entity.Equipamento;
 import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
+import br.edu.ifsudestemg.saapi.model.service.AulaService;
+import br.edu.ifsudestemg.saapi.model.service.EquipamentoService;
 import br.edu.ifsudestemg.saapi.model.service.ListaEquipamentoAulaService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +26,8 @@ import java.util.stream.Collectors;
 
 public class ListaEquipamentoAulaController {
     private final ListaEquipamentoAulaService service;
+    private final EquipamentoService equipamentoService;
+    private final AulaService aulaService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -53,6 +59,23 @@ public class ListaEquipamentoAulaController {
     public ListaEquipamentoAula converter(ListaEquipamentoAulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaEquipamentoAula listaEquipamentoAula = modelMapper.map(dto, ListaEquipamentoAula.class);
+
+        if(dto.getIdEquipamento() != null) {
+            Optional<Equipamento> equipamento = equipamentoService.getEquipamentoById(dto.getIdEquipamento());
+            if (!equipamento.isPresent()) {
+                listaEquipamentoAula.setEquipamento(null);
+            } else {
+                listaEquipamentoAula.setEquipamento(equipamento.get());
+            }
+        }
+        if(dto.getIdAula() != null) {
+            Optional<Aula> aula = aulaService.getAulaById(dto.getIdAula());
+            if (!aula.isPresent()) {
+                listaEquipamentoAula.setAula(null);
+            } else {
+                listaEquipamentoAula.setAula(aula.get());
+            }
+        }
         return listaEquipamentoAula;
     }
 }

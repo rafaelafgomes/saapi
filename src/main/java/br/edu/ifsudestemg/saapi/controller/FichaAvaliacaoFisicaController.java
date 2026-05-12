@@ -3,8 +3,12 @@ package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.FichaAvaliacaoFisicaDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.Cliente;
 import br.edu.ifsudestemg.saapi.model.entity.FichaAvaliacaoFisica;
+import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
+import br.edu.ifsudestemg.saapi.model.service.ClienteService;
 import br.edu.ifsudestemg.saapi.model.service.FichaAvaliacaoFisicaService;
+import br.edu.ifsudestemg.saapi.model.service.FuncionarioService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,9 @@ import java.util.stream.Collectors;
 
 public class FichaAvaliacaoFisicaController {
     private final FichaAvaliacaoFisicaService service;
+    private final ClienteService clienteService;
+    private final FuncionarioService funcionarioService;
+
     @GetMapping()
     public ResponseEntity get() {
         List<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisica();
@@ -51,6 +58,23 @@ public class FichaAvaliacaoFisicaController {
     public FichaAvaliacaoFisica converter(FichaAvaliacaoFisicaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         FichaAvaliacaoFisica fichaAvaliacaoFisica = modelMapper.map(dto, FichaAvaliacaoFisica.class);
+
+        if(dto.getIdCliente() != null) {
+            Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
+            if(!cliente.isPresent()) {
+                fichaAvaliacaoFisica.setCliente(null);
+            } else {
+                fichaAvaliacaoFisica.setCliente(cliente.get());
+            }
+        }
+        if(dto.getIdFuncionario() != null) {
+            Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
+            if(!funcionario.isPresent()) {
+                fichaAvaliacaoFisica.setFuncionario(null);
+            } else {
+                fichaAvaliacaoFisica.setFuncionario(funcionario.get());
+            }
+        }
         return fichaAvaliacaoFisica;
     }
 }
