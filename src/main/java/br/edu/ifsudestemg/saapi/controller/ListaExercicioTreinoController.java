@@ -1,9 +1,11 @@
 package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.ListaExercicioTreinoDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.ListaExercicioTreino;
 import br.edu.ifsudestemg.saapi.model.service.ListaExercicioTreinoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +35,22 @@ public class ListaExercicioTreinoController {
             return new ResponseEntity("Lista exercicio de treino não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaExercicioTreino.map(ListaExercicioTreinoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ListaExercicioTreinoDTO dto) {
+        try {
+            ListaExercicioTreino listaExercicioTreino = converter(dto);
+            listaExercicioTreino = service.salvar(listaExercicioTreino);
+            return new ResponseEntity(listaExercicioTreino, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public ListaExercicioTreino converter(ListaExercicioTreinoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        ListaExercicioTreino listaExercicioTreino = modelMapper.map(dto, ListaExercicioTreino.class);
+        return listaExercicioTreino;
     }
 }

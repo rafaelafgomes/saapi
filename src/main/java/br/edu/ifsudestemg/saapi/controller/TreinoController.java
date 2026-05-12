@@ -2,9 +2,11 @@ package br.edu.ifsudestemg.saapi.controller;
 
 
 import br.edu.ifsudestemg.saapi.api.dto.TreinoDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Treino;
 import br.edu.ifsudestemg.saapi.model.service.TreinoService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +36,22 @@ public class TreinoController {
             return new ResponseEntity("Treino não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(treino.map(TreinoDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody TreinoDTO dto) {
+        try {
+            Treino treino = converter(dto);
+            treino = service.salvar(treino);
+            return new ResponseEntity(treino, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Treino converter(TreinoDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Treino treino = modelMapper.map(dto, Treino.class);
+        return treino;
     }
 }

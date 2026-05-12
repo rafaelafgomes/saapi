@@ -2,9 +2,11 @@ package br.edu.ifsudestemg.saapi.controller;
 
 import br.edu.ifsudestemg.saapi.api.dto.CargoDTO;
 import br.edu.ifsudestemg.saapi.api.dto.ListaEquipamentoAulaDTO;
+import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
 import br.edu.ifsudestemg.saapi.model.service.ListaEquipamentoAulaService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +37,22 @@ public class ListaEquipamentoAulaController {
         }
         return ResponseEntity.ok(listaEquipamentoAula.map(ListaEquipamentoAulaDTO::create));
 
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ListaEquipamentoAulaDTO dto) {
+        try {
+            ListaEquipamentoAula listaEquipamentoAula = converter(dto);
+            listaEquipamentoAula = service.salvar(listaEquipamentoAula);
+            return new ResponseEntity(listaEquipamentoAula, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public ListaEquipamentoAula converter(ListaEquipamentoAulaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        ListaEquipamentoAula listaEquipamentoAula = modelMapper.map(dto, ListaEquipamentoAula.class);
+        return listaEquipamentoAula;
     }
 }
