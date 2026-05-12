@@ -13,8 +13,7 @@ import javax.persistence.*;
 
 public class ListaEquipamentoAula {
 
-    public String nomeEquipamento;
-    public String nomeAula;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

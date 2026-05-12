@@ -20,7 +20,7 @@ public class ListaExercicioTreinoDTO {
     private Integer serie;
     private Integer carga;
     private Integer repeticao;
-    private Long idxercicio;
+    private Long idExercicio;
     private String nomeExercicio;
     private Long idTreino;
     private String nomeTreino;
