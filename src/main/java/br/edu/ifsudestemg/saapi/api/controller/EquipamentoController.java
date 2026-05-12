@@ -39,11 +39,26 @@ public class EquipamentoController {
 
     @PostMapping()
     public ResponseEntity post(@RequestBody EquipamentoDTO dto) {
-        try{
+        try {
             Equipamento equipamento = converter(dto);
             equipamento = service.salvar(equipamento);
             return new ResponseEntity(equipamento, HttpStatus.CREATED);
-        } catch (RegraNegocioException e){
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EquipamentoDTO dto) {
+        if (!service.getEquipamentoById(id).isPresent()) {
+            return new ResponseEntity("Equipamento não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Equipamento equipamento = converter(dto);
+            equipamento.setId(id);
+            service.salvar(equipamento);
+            return ResponseEntity.ok(equipamento);
+        } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -38,7 +38,7 @@ public class TreinoController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Treino> treino = service.getTreinoById(id);
-        if (!treino .isPresent()) {
+        if (!treino.isPresent()) {
             return new ResponseEntity("Treino não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(treino.map(TreinoDTO::create));
@@ -55,12 +55,27 @@ public class TreinoController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TreinoDTO dto) {
+        if (!service.getTreinoById(id).isPresent()) {
+            return new ResponseEntity("Treino não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Treino treino = converter(dto);
+            treino.setId(id);
+            service.salvar(treino);
+            return ResponseEntity.ok(treino);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Treino converter(TreinoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Treino treino = modelMapper.map(dto, Treino.class);
-        if(dto.getIdCliente() != null) {
-            Optional<Cliente> cliente =clienteService.getClienteById(dto.getIdCliente());
-            if(!cliente.isPresent()) {
+        if (dto.getIdCliente() != null) {
+            Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
+            if (!cliente.isPresent()) {
                 treino.setCliente(null);
             } else {
                 treino.setCliente(cliente.get());
@@ -68,7 +83,7 @@ public class TreinoController {
         }
         if (dto.getIdFuncionario() != null) {
             Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
-            if(!funcionario.isPresent()) {
+            if (!funcionario.isPresent()) {
                 treino.setFuncionario(null);
             } else {
                 treino.setFuncionario(funcionario.get());

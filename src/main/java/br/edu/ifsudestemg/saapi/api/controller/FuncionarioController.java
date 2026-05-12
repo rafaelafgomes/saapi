@@ -36,7 +36,7 @@ public class FuncionarioController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);
-        if (!funcionario .isPresent()) {
+        if (!funcionario.isPresent()) {
             return new ResponseEntity("Funcionario(a) não encontrado(a)", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(funcionario.map(FuncionarioDTO::create));
@@ -53,12 +53,27 @@ public class FuncionarioController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FuncionarioDTO dto) {
+        if (!service.getFuncionarioById(id).isPresent()) {
+            return new ResponseEntity("Funcionario (a) não encontrado(a)", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Funcionario funcionario = converter(dto);
+            funcionario.setId(id);
+            service.salvar(funcionario);
+            return ResponseEntity.ok(funcionario);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Funcionario converter(FuncionarioDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Funcionario funcionario = modelMapper.map(dto, Funcionario.class);
-        if(dto.getIdCargo() != null) {
+        if (dto.getIdCargo() != null) {
             Optional<Cargo> cargo = cargoService.getCargoById(dto.getIdCargo());
-            if(!cargo.isPresent()) {
+            if (!cargo.isPresent()) {
                 funcionario.setCargo(null);
             } else {
                 funcionario.setCargo(cargo.get());

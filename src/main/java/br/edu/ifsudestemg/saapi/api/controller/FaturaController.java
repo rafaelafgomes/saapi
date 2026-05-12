@@ -45,8 +45,8 @@ public class FaturaController {
     }
 
     @PostMapping()
-    public ResponseEntity post (@RequestBody FaturaDTO dto) {
-        try{
+    public ResponseEntity post(@RequestBody FaturaDTO dto) {
+        try {
             Fatura fatura = converter(dto);
             fatura = service.salvar(fatura);
             return new ResponseEntity(fatura, HttpStatus.CREATED);
@@ -55,21 +55,36 @@ public class FaturaController {
         }
     }
 
-    public Fatura converter (FaturaDTO dto) {
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FaturaDTO dto) {
+        if (!service.getFaturaById(id).isPresent()) {
+            return new ResponseEntity("Fatura não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Fatura fatura = converter(dto);
+            fatura.setId(id);
+            service.salvar(fatura);
+            return ResponseEntity.ok(fatura);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Fatura converter(FaturaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Fatura fatura = modelMapper.map(dto, Fatura.class);
 
-        if(dto.getIdCliente() != null) {
+        if (dto.getIdCliente() != null) {
             Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
-            if(!cliente.isPresent()) {
+            if (!cliente.isPresent()) {
                 fatura.setCliente(null);
             } else {
                 fatura.setCliente(cliente.get());
             }
         }
-        if(dto.getIdFormaPagamento() != null) {
+        if (dto.getIdFormaPagamento() != null) {
             Optional<FormaPagamento> formaPagamento = formaPagamentoService.getFormaPagamentoById(dto.getIdFormaPagamento());
-            if(!formaPagamento.isPresent()) {
+            if (!formaPagamento.isPresent()) {
                 fatura.setFormaPagamento(null);
             } else {
                 fatura.setFormaPagamento(formaPagamento.get());

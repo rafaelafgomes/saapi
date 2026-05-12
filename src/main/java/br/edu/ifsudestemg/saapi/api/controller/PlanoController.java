@@ -31,7 +31,7 @@ public class PlanoController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
-        if (!plano .isPresent()) {
+        if (!plano.isPresent()) {
             return new ResponseEntity("Plano não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(plano.map(PlanoDTO::create));
@@ -43,6 +43,21 @@ public class PlanoController {
             Plano plano = converter(dto);
             plano = service.salvar(plano);
             return new ResponseEntity(plano, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PlanoDTO dto) {
+        if (!service.getPlanoById(id).isPresent()) {
+            return new ResponseEntity("Plano não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Plano plano = converter(dto);
+            plano.setId(id);
+            service.salvar(plano);
+            return ResponseEntity.ok(plano);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

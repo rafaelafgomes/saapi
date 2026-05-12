@@ -38,7 +38,7 @@ public class FichaAvaliacaoFisicaController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisicaById(id);
-        if (!fichaAvaliacaoFisica .isPresent()) {
+        if (!fichaAvaliacaoFisica.isPresent()) {
             return new ResponseEntity("Ficha de avaliação não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(fichaAvaliacaoFisica.map(FichaAvaliacaoFisicaDTO::create));
@@ -55,21 +55,36 @@ public class FichaAvaliacaoFisicaController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FichaAvaliacaoFisicaDTO dto) {
+        if (!service.getFichaAvaliacaoFisicaById(id).isPresent()) {
+            return new ResponseEntity("Ficha de Avaliacao Fisica não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            FichaAvaliacaoFisica fichaAvaliacaoFisica = converter(dto);
+            fichaAvaliacaoFisica.setId(id);
+            service.salvar(fichaAvaliacaoFisica);
+            return ResponseEntity.ok(fichaAvaliacaoFisica);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public FichaAvaliacaoFisica converter(FichaAvaliacaoFisicaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         FichaAvaliacaoFisica fichaAvaliacaoFisica = modelMapper.map(dto, FichaAvaliacaoFisica.class);
 
-        if(dto.getIdCliente() != null) {
+        if (dto.getIdCliente() != null) {
             Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
-            if(!cliente.isPresent()) {
+            if (!cliente.isPresent()) {
                 fichaAvaliacaoFisica.setCliente(null);
             } else {
                 fichaAvaliacaoFisica.setCliente(cliente.get());
             }
         }
-        if(dto.getIdFuncionario() != null) {
+        if (dto.getIdFuncionario() != null) {
             Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
-            if(!funcionario.isPresent()) {
+            if (!funcionario.isPresent()) {
                 fichaAvaliacaoFisica.setFuncionario(null);
             } else {
                 fichaAvaliacaoFisica.setFuncionario(funcionario.get());

@@ -38,7 +38,7 @@ public class ListaExercicioTreinoController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaExercicioTreino> listaExercicioTreino = service.getListaExercicioTreinoById(id);
         if (!listaExercicioTreino.isPresent()) {
-            return new ResponseEntity("Lista exercicio de treino não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Lista exercicio de treino não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaExercicioTreino.map(ListaExercicioTreinoDTO::create));
     }
@@ -54,21 +54,36 @@ public class ListaExercicioTreinoController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaExercicioTreinoDTO dto) {
+        if (!service.getListaExercicioTreinoById(id).isPresent()) {
+            return new ResponseEntity("Lista exercicio de treino não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ListaExercicioTreino listaExercicioTreino = converter(dto);
+            listaExercicioTreino.setId(id);
+            service.salvar(listaExercicioTreino);
+            return ResponseEntity.ok(listaExercicioTreino);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaExercicioTreino converter(ListaExercicioTreinoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaExercicioTreino listaExercicioTreino = modelMapper.map(dto, ListaExercicioTreino.class);
 
-        if(dto.getIdExercicio() != null) {
+        if (dto.getIdExercicio() != null) {
             Optional<Exercicio> exercicio = exercicioService.getExercicioById(dto.getIdExercicio());
-            if(!exercicio.isPresent()) {
+            if (!exercicio.isPresent()) {
                 listaExercicioTreino.setExercicio(null);
             } else {
                 listaExercicioTreino.setExercicio(exercicio.get());
             }
         }
-        if(dto.getIdTreino() != null) {
+        if (dto.getIdTreino() != null) {
             Optional<Treino> treino = treinoService.getTreinoById(dto.getIdTreino());
-            if(!treino.isPresent()) {
+            if (!treino.isPresent()) {
                 listaExercicioTreino.setTreino(null);
             } else {
                 listaExercicioTreino.setTreino(treino.get());

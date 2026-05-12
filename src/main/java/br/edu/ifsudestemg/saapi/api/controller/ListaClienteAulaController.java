@@ -35,22 +35,37 @@ public class ListaClienteAulaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable ("id") Long id) {
+    public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
         if (!listaClienteAula.isPresent()) {
-            return new ResponseEntity("Lista cliente por aula não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Lista cliente por aula não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaClienteAula.map(ListaClienteAulaDTO::create));
 
     }
 
     @PostMapping()
-    public ResponseEntity   post(@RequestBody ListaClienteAulaDTO dto) {
-        try{
+    public ResponseEntity post(@RequestBody ListaClienteAulaDTO dto) {
+        try {
             ListaClienteAula listaClienteAula = converter(dto);
             listaClienteAula = service.salvar(listaClienteAula);
             return new ResponseEntity(listaClienteAula, HttpStatus.CREATED);
-        } catch (RegraNegocioException e){
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaClienteAulaDTO dto) {
+        if (!service.getListaClienteAulaById(id).isPresent()) {
+            return new ResponseEntity("Lista cliente por aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ListaClienteAula listaClienteAula = converter(dto);
+            listaClienteAula.setId(id);
+            service.salvar(listaClienteAula);
+            return ResponseEntity.ok(listaClienteAula);
+        } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -59,20 +74,20 @@ public class ListaClienteAulaController {
         ModelMapper modelMapper = new ModelMapper();
         ListaClienteAula listaClienteAula = modelMapper.map(dto, ListaClienteAula.class);
 
-        if(dto.getIdCliente() != null) {
+        if (dto.getIdCliente() != null) {
             Optional<Cliente> cliente = clienteService.getClienteById(dto.getIdCliente());
-            if(!cliente.isPresent()) {
+            if (!cliente.isPresent()) {
                 listaClienteAula.setCliente(null);
             } else {
                 listaClienteAula.setCliente(cliente.get());
             }
 
         }
-        if(dto.getIdAula() != null) {
+        if (dto.getIdAula() != null) {
             Optional<Aula> aula = aulaService.getAulaById(dto.getIdAula());
-            if(!aula.isPresent()) {
+            if (!aula.isPresent()) {
                 listaClienteAula.setAula(null);
-            }else {
+            } else {
                 listaClienteAula.setAula(aula.get());
             }
         }

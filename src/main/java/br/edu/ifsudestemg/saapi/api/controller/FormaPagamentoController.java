@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class FormaPagamentoController {
     private final FormaPagamentoService service;
+
     @GetMapping()
     public ResponseEntity get() {
         List<FormaPagamento> formaPagamento = service.getFormaPagamento();
@@ -30,7 +31,7 @@ public class FormaPagamentoController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formaPagamento = service.getFormaPagamentoById(id);
-        if (!formaPagamento .isPresent()) {
+        if (!formaPagamento.isPresent()) {
             return new ResponseEntity("Forma de pagamento não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(formaPagamento.map(FormaPagamentoDTO::create));
@@ -38,10 +39,25 @@ public class FormaPagamentoController {
 
     @PostMapping()
     public ResponseEntity post(@RequestBody FormaPagamentoDTO dto) {
-        try{
+        try {
             FormaPagamento formaPagamento = converter(dto);
             formaPagamento = service.salvar(formaPagamento);
             return new ResponseEntity(formaPagamento, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FormaPagamentoDTO dto) {
+        if (!service.getFormaPagamentoById(id).isPresent()) {
+            return new ResponseEntity("Forma de Pagamento não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            FormaPagamento formaPagamento = converter(dto);
+            formaPagamento.setId(id);
+            service.salvar(formaPagamento);
+            return ResponseEntity.ok(formaPagamento);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

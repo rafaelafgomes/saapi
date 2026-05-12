@@ -43,7 +43,7 @@ public class AulaController {
 
     @PostMapping()
     public ResponseEntity post(@RequestBody AulaDTO dto) {
-        try{
+        try {
             Aula aula = converter(dto);
             aula = service.salvar(aula);
             return new ResponseEntity(aula, HttpStatus.CREATED);
@@ -52,13 +52,28 @@ public class AulaController {
         }
     }
 
-    public Aula converter (AulaDTO dto) {
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaDTO dto) {
+        if (!service.getAulaById(id).isPresent()) {
+            return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Aula aula = converter(dto);
+            aula.setId(id);
+            service.salvar(aula);
+            return ResponseEntity.ok(aula);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Aula converter(AulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aula aula = modelMapper.map(dto, Aula.class);
 
-        if(dto.getIdFuncionario() != null) {
+        if (dto.getIdFuncionario() != null) {
             Optional<Funcionario> funcionario = funcionarioService.getFuncionarioById(dto.getIdFuncionario());
-            if(!funcionario.isPresent()) {
+            if (!funcionario.isPresent()) {
                 aula.setFuncionario(null);
             } else {
                 aula.setFuncionario(funcionario.get());

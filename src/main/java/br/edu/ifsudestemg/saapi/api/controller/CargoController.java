@@ -39,10 +39,25 @@ public class CargoController {
 
     @PostMapping()
     public ResponseEntity post(@RequestBody CargoDTO dto) {
-        try{
+        try {
             Cargo cargo = converter(dto);
             cargo = service.salvar(cargo);
             return new ResponseEntity(cargo, HttpStatus.CREATED);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CargoDTO dto) {
+        if (!service.getCargoById(id).isPresent()) {
+            return new ResponseEntity("Cargo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Cargo cargo = converter(dto);
+            cargo.setId(id);
+            service.salvar(cargo);
+            return ResponseEntity.ok(cargo);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

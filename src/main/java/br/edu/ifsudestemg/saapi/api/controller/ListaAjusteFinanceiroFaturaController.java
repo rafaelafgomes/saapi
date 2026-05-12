@@ -39,28 +39,43 @@ public class ListaAjusteFinanceiroFaturaController {
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFaturaById(id);
-        if (!listaAjusteFinanceiro .isPresent()) {
-            return new ResponseEntity("Lista de ajustes financeiros não encontrada", HttpStatus.NOT_FOUND);
+        if (!listaAjusteFinanceiro.isPresent()) {
+            return new ResponseEntity("Lista de ajuste financeiro não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaAjusteFinanceiro.map(ListaAjusteFinanceiroFaturaDTO::create));
     }
 
     @PostMapping()
-    public ResponseEntity post (@RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
-        try{
+    public ResponseEntity post(@RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
+        try {
             ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura = converter(dto);
             listaAjusteFinanceiroFatura = service.salvar(listaAjusteFinanceiroFatura);
-            return  new ResponseEntity(listaAjusteFinanceiroFatura, HttpStatus.CREATED);
+            return new ResponseEntity(listaAjusteFinanceiroFatura, HttpStatus.CREATED);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ListaAjusteFinanceiroFatura converter (ListaAjusteFinanceiroFaturaDTO dto) {
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
+        if (!service.getListaAjusteFinanceiroFaturaById(id).isPresent()) {
+            return new ResponseEntity("Lista de ajuste financeiro não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura = converter(dto);
+            listaAjusteFinanceiroFatura.setId(id);
+            service.salvar(listaAjusteFinanceiroFatura);
+            return ResponseEntity.ok(listaAjusteFinanceiroFatura);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public ListaAjusteFinanceiroFatura converter(ListaAjusteFinanceiroFaturaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura = modelMapper.map(dto, ListaAjusteFinanceiroFatura.class);
 
-        if(dto.getIdAjusteFinanceiro() != null) {
+        if (dto.getIdAjusteFinanceiro() != null) {
             Optional<AjusteFinanceiro> ajusteFinanceiro = ajusteFinanceiroService.getAjusteFinanceiroById(dto.getIdAjusteFinanceiro());
             if (!ajusteFinanceiro.isPresent()) {
                 listaAjusteFinanceiroFatura.setAjusteFinanceiro(null);

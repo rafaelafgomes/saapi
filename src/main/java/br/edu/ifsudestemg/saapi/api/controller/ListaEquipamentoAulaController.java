@@ -38,7 +38,7 @@ public class ListaEquipamentoAulaController {
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaEquipamentoAula> listaEquipamentoAula = service.getListaEquipamentoAulaById(id);
         if (!listaEquipamentoAula.isPresent()) {
-            return new ResponseEntity("Lista Equipamento por Aula não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Lista Equipamento por Aula não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaEquipamentoAula.map(ListaEquipamentoAulaDTO::create));
 
@@ -55,11 +55,26 @@ public class ListaEquipamentoAulaController {
         }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaEquipamentoAulaDTO dto) {
+        if (!service.getListaEquipamentoAulaById(id).isPresent()) {
+            return new ResponseEntity("Lista Equipamento por Aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            ListaEquipamentoAula listaEquipamentoAula = converter(dto);
+            listaEquipamentoAula.setId(id);
+            service.salvar(listaEquipamentoAula);
+            return ResponseEntity.ok(listaEquipamentoAula);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaEquipamentoAula converter(ListaEquipamentoAulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaEquipamentoAula listaEquipamentoAula = modelMapper.map(dto, ListaEquipamentoAula.class);
 
-        if(dto.getIdEquipamento() != null) {
+        if (dto.getIdEquipamento() != null) {
             Optional<Equipamento> equipamento = equipamentoService.getEquipamentoById(dto.getIdEquipamento());
             if (!equipamento.isPresent()) {
                 listaEquipamentoAula.setEquipamento(null);
@@ -67,7 +82,7 @@ public class ListaEquipamentoAulaController {
                 listaEquipamentoAula.setEquipamento(equipamento.get());
             }
         }
-        if(dto.getIdAula() != null) {
+        if (dto.getIdAula() != null) {
             Optional<Aula> aula = aulaService.getAulaById(dto.getIdAula());
             if (!aula.isPresent()) {
                 listaEquipamentoAula.setAula(null);

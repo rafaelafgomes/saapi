@@ -40,7 +40,7 @@ public class ExercicioController {
 
     @PostMapping()
     public ResponseEntity post(@RequestBody ExercicioDTO dto) {
-        try{
+        try {
             Exercicio exercicio = converter(dto);
             exercicio = service.salvar(exercicio);
             return new ResponseEntity(exercicio, HttpStatus.CREATED);
@@ -49,7 +49,22 @@ public class ExercicioController {
         }
     }
 
-    public Exercicio converter (ExercicioDTO dto) {
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ExercicioDTO dto) {
+        if (!service.getExercicioById(id).isPresent()) {
+            return new ResponseEntity("Exercicio não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Exercicio exercicio = converter(dto);
+            exercicio.setId(id);
+            service.salvar(exercicio);
+            return ResponseEntity.ok(exercicio);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Exercicio converter(ExercicioDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Exercicio exercicio = modelMapper.map(dto, Exercicio.class);
         return exercicio;
