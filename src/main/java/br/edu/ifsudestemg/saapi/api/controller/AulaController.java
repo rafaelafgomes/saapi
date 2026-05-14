@@ -67,6 +67,20 @@ public class AulaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Aula> aula = service.getAulaById(id);
+        if (!aula.isPresent()) {
+            return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(aula.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Aula converter(AulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Aula aula = modelMapper.map(dto, Aula.class);

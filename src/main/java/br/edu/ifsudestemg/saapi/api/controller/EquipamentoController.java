@@ -63,6 +63,20 @@ public class EquipamentoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Equipamento> equipamento = service.getEquipamentoById(id);
+        if (!equipamento.isPresent()) {
+            return new ResponseEntity("Equipamento não encontrado ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(equipamento.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Equipamento converter(EquipamentoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Equipamento equipamento = modelMapper.map(dto, Equipamento.class);

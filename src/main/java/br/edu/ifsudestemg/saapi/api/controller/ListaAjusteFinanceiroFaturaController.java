@@ -71,6 +71,20 @@ public class ListaAjusteFinanceiroFaturaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiroFatura = service.getListaAjusteFinanceiroFaturaById(id);
+        if (!listaAjusteFinanceiroFatura.isPresent()) {
+            return new ResponseEntity("Lista de ajuste financeiro não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(listaAjusteFinanceiroFatura.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaAjusteFinanceiroFatura converter(ListaAjusteFinanceiroFaturaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura = modelMapper.map(dto, ListaAjusteFinanceiroFatura.class);

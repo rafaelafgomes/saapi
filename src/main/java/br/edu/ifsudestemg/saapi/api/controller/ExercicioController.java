@@ -64,6 +64,20 @@ public class ExercicioController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Exercicio> exercicio = service.getExercicioById(id);
+        if (!exercicio.isPresent()) {
+            return new ResponseEntity("Exercicio não encontrado ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(exercicio.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Exercicio converter(ExercicioDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Exercicio exercicio = modelMapper.map(dto, Exercicio.class);

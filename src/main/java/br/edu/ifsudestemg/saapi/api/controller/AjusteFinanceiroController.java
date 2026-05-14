@@ -50,7 +50,7 @@ public class AjusteFinanceiroController {
 
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AjusteFinanceiroDTO dto) {
-        if(!service.getAjusteFinanceiroById(id).isPresent()) {
+        if (!service.getAjusteFinanceiroById(id).isPresent()) {
             return new ResponseEntity("Ajuste Financeiro não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
@@ -58,6 +58,20 @@ public class AjusteFinanceiroController {
             ajusteFinanceiro.setId(id);
             service.salvar(ajusteFinanceiro);
             return ResponseEntity.ok(ajusteFinanceiro);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
+        if (!ajusteFinanceiro.isPresent()) {
+            return new ResponseEntity("Ajuste financeiro não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(ajusteFinanceiro.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

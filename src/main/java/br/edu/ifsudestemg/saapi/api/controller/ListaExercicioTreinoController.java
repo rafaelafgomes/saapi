@@ -69,6 +69,20 @@ public class ListaExercicioTreinoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ListaExercicioTreino> listaExercicioTreino = service.getListaExercicioTreinoById(id);
+        if (!listaExercicioTreino.isPresent()) {
+            return new ResponseEntity("Lista de exercícios com treino não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(listaExercicioTreino.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaExercicioTreino converter(ListaExercicioTreinoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaExercicioTreino listaExercicioTreino = modelMapper.map(dto, ListaExercicioTreino.class);

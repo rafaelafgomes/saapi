@@ -70,6 +70,20 @@ public class TreinoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Treino> treino = service.getTreinoById(id);
+        if (!treino.isPresent()) {
+            return new ResponseEntity("Treino não encontrado ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(treino.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Treino converter(TreinoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Treino treino = modelMapper.map(dto, Treino.class);

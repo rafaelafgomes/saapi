@@ -63,6 +63,20 @@ public class FormaPagamentoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<FormaPagamento> formaPagamento = service.getFormaPagamentoById(id);
+        if (!formaPagamento.isPresent()) {
+            return new ResponseEntity("Forma de pagamento não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(formaPagamento.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public FormaPagamento converter(FormaPagamentoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         FormaPagamento formaPagamento = modelMapper.map(dto, FormaPagamento.class);

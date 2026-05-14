@@ -70,6 +70,20 @@ public class FichaAvaliacaoFisicaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisicaById(id);
+        if (!fichaAvaliacaoFisica.isPresent()) {
+            return new ResponseEntity("Ficha de avaliação fisica não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(fichaAvaliacaoFisica.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public FichaAvaliacaoFisica converter(FichaAvaliacaoFisicaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         FichaAvaliacaoFisica fichaAvaliacaoFisica = modelMapper.map(dto, FichaAvaliacaoFisica.class);

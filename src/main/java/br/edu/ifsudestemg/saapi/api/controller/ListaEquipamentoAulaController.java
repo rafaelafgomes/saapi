@@ -70,6 +70,20 @@ public class ListaEquipamentoAulaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ListaEquipamentoAula> listaEquipamentoAula = service.getListaEquipamentoAulaById(id);
+        if (!listaEquipamentoAula.isPresent()) {
+            return new ResponseEntity("Lista de equipamentos com aula não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(listaEquipamentoAula.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaEquipamentoAula converter(ListaEquipamentoAulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaEquipamentoAula listaEquipamentoAula = modelMapper.map(dto, ListaEquipamentoAula.class);

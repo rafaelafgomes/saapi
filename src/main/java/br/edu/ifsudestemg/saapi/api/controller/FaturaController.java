@@ -70,6 +70,20 @@ public class FaturaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Fatura> fatura = service.getFaturaById(id);
+        if (!fatura.isPresent()) {
+            return new ResponseEntity("Fatura não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(fatura.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Fatura converter(FaturaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Fatura fatura = modelMapper.map(dto, Fatura.class);

@@ -70,6 +70,20 @@ public class ListaClienteAulaController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
+        if (!listaClienteAula.isPresent()) {
+            return new ResponseEntity("Lista de cliente com aula não encontrada ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(listaClienteAula.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ListaClienteAula converter(ListaClienteAulaDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         ListaClienteAula listaClienteAula = modelMapper.map(dto, ListaClienteAula.class);

@@ -63,6 +63,20 @@ public class PlanoController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Plano> plano = service.getPlanoById(id);
+        if (!plano.isPresent()) {
+            return new ResponseEntity("Plano não encontrado ", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(plano.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public Plano converter(PlanoDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Plano plano = modelMapper.map(dto, Plano.class);
