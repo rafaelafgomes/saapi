@@ -1,6 +1,10 @@
 package br.edu.ifsudestemg.saapi.api.controller;
 
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
 import br.edu.ifsudestemg.saapi.api.dto.AjusteFinanceiroDTO;
 import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/ajustesfinanceiros")
 @RequiredArgsConstructor
+@Api("API de Ajustes Financeiros")
 @CrossOrigin
 public class AjusteFinanceiroController {
     private final AjusteFinanceiroService service;
@@ -29,6 +34,12 @@ public class AjusteFinanceiroController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um ajuste financeiro")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
+            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
         if (!ajusteFinanceiro.isPresent()) {
@@ -38,6 +49,11 @@ public class AjusteFinanceiroController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo ajuste financeiro")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "ajuste financeiro salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o ajuste financeiro")
+    })
     public ResponseEntity post(@RequestBody AjusteFinanceiroDTO dto) {
         try {
             AjusteFinanceiro ajusteFinanceiro = converter(dto);

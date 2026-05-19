@@ -9,6 +9,10 @@ import br.edu.ifsudestemg.saapi.model.entity.FormaPagamento;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.FaturaService;
 import br.edu.ifsudestemg.saapi.service.FormaPagamentoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/faturas")
 @RequiredArgsConstructor
+@Api("API de Faturas")
 @CrossOrigin
 
 public class FaturaController {
@@ -36,6 +41,12 @@ public class FaturaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma fatura")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fatura encontrada"),
+            @ApiResponse(code = 404, message = "Fatura não encontrada")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);
         if (!fatura.isPresent()) {
@@ -45,6 +56,11 @@ public class FaturaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova fatura")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Fatura salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o(a) fatura")
+    })
     public ResponseEntity post(@RequestBody FaturaDTO dto) {
         try {
             Fatura fatura = converter(dto);

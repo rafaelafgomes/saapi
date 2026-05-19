@@ -7,6 +7,10 @@ import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import br.edu.ifsudestemg.saapi.service.AulaService;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.FuncionarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/aulas")
 @RequiredArgsConstructor
+@Api("API de Aulas")
 @CrossOrigin
 public class AulaController {
     private final AulaService service;
@@ -33,15 +38,25 @@ public class AulaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma aula")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula encontrada"),
+            @ApiResponse(code = 404, message = "Aula não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Aula> aula = service.getAulaById(id);
         if (!aula.isPresent()) {
-            return new ResponseEntity("Aula não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(aula.map(AulaDTO::create));
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova aula")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Aula salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a aula")
+    })
     public ResponseEntity post(@RequestBody AulaDTO dto) {
         try {
             Aula aula = converter(dto);

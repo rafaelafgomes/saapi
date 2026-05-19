@@ -4,6 +4,10 @@ import br.edu.ifsudestemg.saapi.api.dto.EquipamentoDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Equipamento;
 import br.edu.ifsudestemg.saapi.service.EquipamentoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/equipamentos")
 @RequiredArgsConstructor
+@Api("API de Equipamentos")
 @CrossOrigin
 
 public class EquipamentoController {
@@ -29,6 +34,12 @@ public class EquipamentoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um equipamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Equipamento encontrado"),
+            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);
         if (!equipamento.isPresent()) {
@@ -38,6 +49,11 @@ public class EquipamentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo equipamento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Equipamento salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o(a) equipamento")
+    })
     public ResponseEntity post(@RequestBody EquipamentoDTO dto) {
         try {
             Equipamento equipamento = converter(dto);

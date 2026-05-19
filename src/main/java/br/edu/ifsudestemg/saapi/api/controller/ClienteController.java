@@ -7,6 +7,10 @@ import br.edu.ifsudestemg.saapi.model.entity.Cliente;
 import br.edu.ifsudestemg.saapi.model.entity.Plano;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.PlanoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/clientes")
 @RequiredArgsConstructor
+@Api("API de Clientes")
 @CrossOrigin
 
 public class ClienteController {
@@ -33,6 +38,12 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um cliente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cliente encontrado(a)"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
         if (!cliente.isPresent()) {
@@ -42,6 +53,11 @@ public class ClienteController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo(a) cliente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cliente salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o(a) cliente")
+    })
     public ResponseEntity post(@RequestBody ClienteDTO dto) {
         try {
             Cliente cliente = converter(dto);

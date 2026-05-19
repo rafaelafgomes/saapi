@@ -4,6 +4,10 @@ import br.edu.ifsudestemg.saapi.api.dto.CargoDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Cargo;
 import br.edu.ifsudestemg.saapi.service.CargoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,18 +21,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/cargos")
 @RequiredArgsConstructor
+@Api("API de Cargos")
 @CrossOrigin
 public class CargoController {
     private final CargoService service;
 
-
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os cargo")
     public ResponseEntity get() {
         List<Cargo> cargos = service.getCargo();
         return ResponseEntity.ok(cargos.stream().map(CargoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um cargo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cargo encontrado"),
+            @ApiResponse(code = 404, message = "Cargo não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);
         if (!cargo.isPresent()) {
@@ -38,6 +48,11 @@ public class CargoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo cargo")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cargo salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o cargo")
+    })
     public ResponseEntity post(@RequestBody CargoDTO dto) {
         try {
             Cargo cargo = converter(dto);
@@ -48,6 +63,7 @@ public class CargoController {
         }
     }
 
+    @ApiOperation("Alterar um cargo")
     @PutMapping("{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CargoDTO dto) {
         if (!service.getCargoById(id).isPresent()) {
@@ -63,6 +79,7 @@ public class CargoController {
         }
     }
 
+    @ApiOperation("Deletar um cargo")
     @DeleteMapping("{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);

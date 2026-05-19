@@ -4,6 +4,10 @@ import br.edu.ifsudestemg.saapi.api.dto.ExercicioDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Exercicio;
 import br.edu.ifsudestemg.saapi.service.ExercicioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/exercicios")
 @RequiredArgsConstructor
+@Api("API de Exercícios")
 @CrossOrigin
 
 public class ExercicioController {
@@ -30,6 +35,12 @@ public class ExercicioController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um exercício")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exercício encontrado"),
+            @ApiResponse(code = 404, message = "Exercício não encontrado")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);
         if (!exercicio.isPresent()) {
@@ -39,6 +50,11 @@ public class ExercicioController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um novo exercício")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Exercício salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o(a) exercício")
+    })
     public ResponseEntity post(@RequestBody ExercicioDTO dto) {
         try {
             Exercicio exercicio = converter(dto);
