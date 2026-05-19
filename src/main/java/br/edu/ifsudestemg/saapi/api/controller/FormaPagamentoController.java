@@ -4,6 +4,10 @@ import br.edu.ifsudestemg.saapi.api.dto.FormaPagamentoDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.FormaPagamento;
 import br.edu.ifsudestemg.saapi.service.FormaPagamentoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/formaspagamentos")
 @RequiredArgsConstructor
+@Api("API de Forma de Pagamento")
 @CrossOrigin
 
 public class FormaPagamentoController {
@@ -29,6 +34,12 @@ public class FormaPagamentoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Forma de pagamento encontrada"),
+            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formaPagamento = service.getFormaPagamentoById(id);
         if (!formaPagamento.isPresent()) {
@@ -38,6 +49,11 @@ public class FormaPagamentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova forma de pagamento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Forma de pagamento salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a forma de pagamento")
+    })
     public ResponseEntity post(@RequestBody FormaPagamentoDTO dto) {
         try {
             FormaPagamento formaPagamento = converter(dto);

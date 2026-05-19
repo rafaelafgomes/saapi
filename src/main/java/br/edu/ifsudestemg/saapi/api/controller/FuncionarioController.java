@@ -7,6 +7,10 @@ import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import br.edu.ifsudestemg.saapi.service.CargoService;
 import br.edu.ifsudestemg.saapi.service.FuncionarioService;
 import br.edu.ifsudestemg.saapi.service.PlanoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/funcionarios")
+@Api("API de Funcionário(a)")
 @RequiredArgsConstructor
 @CrossOrigin
 
@@ -34,6 +39,12 @@ public class FuncionarioController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um(a) funcionário(a)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
+            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);
         if (!funcionario.isPresent()) {
@@ -43,6 +54,11 @@ public class FuncionarioController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva um(a) novo(a) funcionário(a)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Funcionário(a) salvo(a) com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar funcionário(a)")
+    })
     public ResponseEntity post(@RequestBody FuncionarioDTO dto) {
         try {
             Funcionario funcionario = converter(dto);

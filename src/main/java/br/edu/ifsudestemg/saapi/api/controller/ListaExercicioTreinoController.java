@@ -8,6 +8,10 @@ import br.edu.ifsudestemg.saapi.model.entity.Treino;
 import br.edu.ifsudestemg.saapi.service.ExercicioService;
 import br.edu.ifsudestemg.saapi.service.ListaExercicioTreinoService;
 import br.edu.ifsudestemg.saapi.service.TreinoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/listasexerciciostreinos")
 @RequiredArgsConstructor
+@Api("API de Lista de exercícios em treinos")
 @CrossOrigin
 
 public class ListaExercicioTreinoController {
@@ -35,6 +40,12 @@ public class ListaExercicioTreinoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de exercícios em treinos encontradas"),
+            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontradas")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaExercicioTreino> listaExercicioTreino = service.getListaExercicioTreinoById(id);
         if (!listaExercicioTreino.isPresent()) {
@@ -44,6 +55,11 @@ public class ListaExercicioTreinoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova lista de exercícios em treinos")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Lista de exercícios em treinos salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de exercícios em treinos")
+    })
     public ResponseEntity post(@RequestBody ListaExercicioTreinoDTO dto) {
         try {
             ListaExercicioTreino listaExercicioTreino = converter(dto);

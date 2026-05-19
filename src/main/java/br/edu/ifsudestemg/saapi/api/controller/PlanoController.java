@@ -4,6 +4,10 @@ import br.edu.ifsudestemg.saapi.api.dto.PlanoDTO;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Plano;
 import br.edu.ifsudestemg.saapi.service.PlanoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/planos")
 @RequiredArgsConstructor
+@Api("API de Planos")
 @CrossOrigin
 
 public class PlanoController {
@@ -29,6 +34,12 @@ public class PlanoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um plano")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
+            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
         if (!plano.isPresent()) {
@@ -38,6 +49,11 @@ public class PlanoController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova lista de planos")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Lista de planos salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de planos em treinos")
+    })
     public ResponseEntity post(@RequestBody PlanoDTO dto) {
         try {
             Plano plano = converter(dto);

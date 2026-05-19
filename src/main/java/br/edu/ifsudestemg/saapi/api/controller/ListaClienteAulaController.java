@@ -8,6 +8,10 @@ import br.edu.ifsudestemg.saapi.model.entity.ListaClienteAula;
 import br.edu.ifsudestemg.saapi.service.AulaService;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.ListaClienteAulaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/listasclientesaulas")
 @RequiredArgsConstructor
+@Api("API de Lista de clientes com aulas")
 @CrossOrigin
 
 public class ListaClienteAulaController {
@@ -35,6 +40,11 @@ public class ListaClienteAulaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma lista de clientes com aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
         if (!listaClienteAula.isPresent()) {
@@ -43,8 +53,12 @@ public class ListaClienteAulaController {
         return ResponseEntity.ok(listaClienteAula.map(ListaClienteAulaDTO::create));
 
     }
-
     @PostMapping()
+    @ApiOperation("Salva uma nova lista de clientes com aulas")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Lista de clientes com aulas salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de clientes com aulas")
+    })
     public ResponseEntity post(@RequestBody ListaClienteAulaDTO dto) {
         try {
             ListaClienteAula listaClienteAula = converter(dto);

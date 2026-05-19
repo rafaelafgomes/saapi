@@ -9,6 +9,10 @@ import br.edu.ifsudestemg.saapi.service.AjusteFinanceiroService;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.FaturaService;
 import br.edu.ifsudestemg.saapi.service.ListaAjusteFinanceiroFaturaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/listasajustesfinanceirosfaturas")
 @RequiredArgsConstructor
+@Api("API de Lista de ajustes financeiros e faturas")
 @CrossOrigin
 
 public class ListaAjusteFinanceiroFaturaController {
@@ -37,6 +42,12 @@ public class ListaAjusteFinanceiroFaturaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma lista de ajustes financeiros e faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFaturaById(id);
         if (!listaAjusteFinanceiro.isPresent()) {
@@ -46,6 +57,11 @@ public class ListaAjusteFinanceiroFaturaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova lista de ajustes financeiros e faturas")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Lista de ajustes financeiros e faturas salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de ajustes financeiros e faturas")
+    })
     public ResponseEntity post(@RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
         try {
             ListaAjusteFinanceiroFatura listaAjusteFinanceiroFatura = converter(dto);

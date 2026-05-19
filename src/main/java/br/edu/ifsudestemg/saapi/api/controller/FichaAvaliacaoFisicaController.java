@@ -9,6 +9,10 @@ import br.edu.ifsudestemg.saapi.model.entity.Funcionario;
 import br.edu.ifsudestemg.saapi.service.ClienteService;
 import br.edu.ifsudestemg.saapi.service.FichaAvaliacaoFisicaService;
 import br.edu.ifsudestemg.saapi.service.FuncionarioService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/fichasavaliacaofisica")
 @RequiredArgsConstructor
+@Api("API de Ficha de avaliação física")
 @CrossOrigin
 
 public class FichaAvaliacaoFisicaController {
@@ -36,6 +41,12 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma ficha de avaliação física")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
+            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisicaById(id);
         if (!fichaAvaliacaoFisica.isPresent()) {
@@ -45,6 +56,11 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova ficha de avaliação física")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Ficha de avaliação física salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a ficha de avaliação física")
+    })
     public ResponseEntity post(@RequestBody FichaAvaliacaoFisicaDTO dto) {
         try {
             FichaAvaliacaoFisica fichaAvaliacaoFisica = converter(dto);

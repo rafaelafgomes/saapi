@@ -8,6 +8,10 @@ import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
 import br.edu.ifsudestemg.saapi.service.AulaService;
 import br.edu.ifsudestemg.saapi.service.EquipamentoService;
 import br.edu.ifsudestemg.saapi.service.ListaEquipamentoAulaService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/listasequipamentosaulas")
 @RequiredArgsConstructor
+@Api("API de Lista de equipamentos em aulas")
 @CrossOrigin
 
 public class ListaEquipamentoAulaController {
@@ -35,6 +40,12 @@ public class ListaEquipamentoAulaController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+    })
+
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaEquipamentoAula> listaEquipamentoAula = service.getListaEquipamentoAulaById(id);
         if (!listaEquipamentoAula.isPresent()) {
@@ -45,6 +56,11 @@ public class ListaEquipamentoAulaController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma nova lista de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Lista de equipamentos em aulas salva com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de equipamentos em aulas")
+    })
     public ResponseEntity post(@RequestBody ListaEquipamentoAulaDTO dto) {
         try {
             ListaEquipamentoAula listaEquipamentoAula = converter(dto);
