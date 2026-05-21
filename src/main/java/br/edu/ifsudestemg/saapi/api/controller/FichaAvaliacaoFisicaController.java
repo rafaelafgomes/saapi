@@ -35,6 +35,11 @@ public class FichaAvaliacaoFisicaController {
     private final FuncionarioService funcionarioService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todas as fichas de avaliação física")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
+            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
+    })
     public ResponseEntity get() {
         List<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisica();
         return ResponseEntity.ok(fichaAvaliacaoFisica.stream().map(FichaAvaliacaoFisicaDTO::create).collect(Collectors.toList()));
@@ -72,6 +77,11 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza uma ficha de avaliação física")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
+            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FichaAvaliacaoFisicaDTO dto) {
         if (!service.getFichaAvaliacaoFisicaById(id).isPresent()) {
             return new ResponseEntity("Ficha de Avaliacao Fisica não encontrada", HttpStatus.NOT_FOUND);
@@ -87,6 +97,11 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma ficha de avaliação física")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
+            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisicaById(id);
         if (!fichaAvaliacaoFisica.isPresent()) {

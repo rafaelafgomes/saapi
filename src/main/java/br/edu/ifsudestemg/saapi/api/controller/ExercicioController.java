@@ -29,6 +29,11 @@ public class ExercicioController {
     private final ExercicioService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os exercícios")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exercício encontrado"),
+            @ApiResponse(code = 404, message = "Exercício não encontrado")
+    })
     public ResponseEntity get() {
         List<Exercicio> exercicios = service.getExercicio();
         return ResponseEntity.ok(exercicios.stream().map(ExercicioDTO::create).collect(Collectors.toList()));
@@ -40,7 +45,6 @@ public class ExercicioController {
             @ApiResponse(code = 200, message = "Exercício encontrado"),
             @ApiResponse(code = 404, message = "Exercício não encontrado")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);
         if (!exercicio.isPresent()) {
@@ -66,6 +70,11 @@ public class ExercicioController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar um exercício")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exercício encontrado"),
+            @ApiResponse(code = 404, message = "Exercício não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ExercicioDTO dto) {
         if (!service.getExercicioById(id).isPresent()) {
             return new ResponseEntity("Exercicio não encontrado", HttpStatus.NOT_FOUND);
@@ -81,6 +90,11 @@ public class ExercicioController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir um exercício")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exercício encontrado"),
+            @ApiResponse(code = 404, message = "Exercício não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);
         if (!exercicio.isPresent()) {

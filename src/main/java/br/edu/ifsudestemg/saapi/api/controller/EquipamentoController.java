@@ -28,6 +28,11 @@ public class EquipamentoController {
     private final EquipamentoService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os equipamentos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Equipamento encontrado"),
+            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+    })
     public ResponseEntity get() {
         List<Equipamento> equipamentos = service.getEquipamento();
         return ResponseEntity.ok(equipamentos.stream().map(EquipamentoDTO::create).collect(Collectors.toList()));
@@ -39,7 +44,6 @@ public class EquipamentoController {
             @ApiResponse(code = 200, message = "Equipamento encontrado"),
             @ApiResponse(code = 404, message = "Equipamento não encontrado")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);
         if (!equipamento.isPresent()) {
@@ -65,6 +69,11 @@ public class EquipamentoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar um equipamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Equipamento encontrado"),
+            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EquipamentoDTO dto) {
         if (!service.getEquipamentoById(id).isPresent()) {
             return new ResponseEntity("Equipamento não encontrado", HttpStatus.NOT_FOUND);
@@ -80,6 +89,11 @@ public class EquipamentoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um equipamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Equipamento encontrado"),
+            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);
         if (!equipamento.isPresent()) {

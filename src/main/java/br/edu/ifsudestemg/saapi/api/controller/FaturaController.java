@@ -35,6 +35,11 @@ public class FaturaController {
     private final FormaPagamentoService formaPagamentoService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todas as faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fatura encontrada"),
+            @ApiResponse(code = 404, message = "Fatura não encontrada")
+    })
     public ResponseEntity get() {
         List<Fatura> faturas = service.getFatura();
         return ResponseEntity.ok(faturas.stream().map(FaturaDTO::create).collect(Collectors.toList()));
@@ -46,7 +51,6 @@ public class FaturaController {
             @ApiResponse(code = 200, message = "Fatura encontrada"),
             @ApiResponse(code = 404, message = "Fatura não encontrada")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);
         if (!fatura.isPresent()) {
@@ -72,6 +76,11 @@ public class FaturaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar uma fatura")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fatura encontrada"),
+            @ApiResponse(code = 404, message = "Fatura não encontrada")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FaturaDTO dto) {
         if (!service.getFaturaById(id).isPresent()) {
             return new ResponseEntity("Fatura não encontrada", HttpStatus.NOT_FOUND);
@@ -87,6 +96,11 @@ public class FaturaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir uma fatura")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Fatura encontrada"),
+            @ApiResponse(code = 404, message = "Fatura não encontrada")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);
         if (!fatura.isPresent()) {
