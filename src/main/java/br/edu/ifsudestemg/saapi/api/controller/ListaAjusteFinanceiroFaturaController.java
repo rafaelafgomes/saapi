@@ -36,7 +36,13 @@ public class ListaAjusteFinanceiroFaturaController {
     private final FaturaService faturaService;
 
     @GetMapping()
-    public ResponseEntity get() {
+    @ApiOperation("Obter detalhes de todas as listas de ajustes financeiros e faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+    })
+    public ResponseEntity get()
+    {
         List<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFatura();
         return ResponseEntity.ok(listaAjusteFinanceiro.stream().map(ListaAjusteFinanceiroFaturaDTO::create).collect(Collectors.toList()));
     }
@@ -73,6 +79,11 @@ public class ListaAjusteFinanceiroFaturaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar uma lista de ajustes financeiros e faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
         if (!service.getListaAjusteFinanceiroFaturaById(id).isPresent()) {
             return new ResponseEntity("Lista de ajuste financeiro não encontrada", HttpStatus.NOT_FOUND);
@@ -88,6 +99,11 @@ public class ListaAjusteFinanceiroFaturaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir uma lista de ajustes financeiros e faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiroFatura = service.getListaAjusteFinanceiroFaturaById(id);
         if (!listaAjusteFinanceiroFatura.isPresent()) {

@@ -33,6 +33,11 @@ public class FuncionarioController {
     private final CargoService cargoService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os funcionários")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
+            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+    })
     public ResponseEntity get() {
         List<Funcionario> funcionario = service.getFuncionario();
         return ResponseEntity.ok(funcionario.stream().map(FuncionarioDTO::create).collect(Collectors.toList()));
@@ -70,6 +75,11 @@ public class FuncionarioController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar um(a) funcionário(a)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
+            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FuncionarioDTO dto) {
         if (!service.getFuncionarioById(id).isPresent()) {
             return new ResponseEntity("Funcionario (a) não encontrado(a)", HttpStatus.NOT_FOUND);
@@ -85,6 +95,11 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir um(a) funcionário(a)")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
+            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);
         if (!funcionario.isPresent()) {

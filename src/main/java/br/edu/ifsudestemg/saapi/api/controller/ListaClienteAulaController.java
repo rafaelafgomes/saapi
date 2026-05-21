@@ -34,6 +34,11 @@ public class ListaClienteAulaController {
     private final AulaService aulaService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos as listas de clientes com aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+    })
     public ResponseEntity get() {
         List<ListaClienteAula> listaClienteAulas = service.getListaClienteAula();
         return ResponseEntity.ok(listaClienteAulas.stream().map(ListaClienteAulaDTO::create).collect(Collectors.toList()));
@@ -70,6 +75,11 @@ public class ListaClienteAulaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar uma lista de clientes com aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaClienteAulaDTO dto) {
         if (!service.getListaClienteAulaById(id).isPresent()) {
             return new ResponseEntity("Lista cliente por aula não encontrada", HttpStatus.NOT_FOUND);
@@ -85,6 +95,11 @@ public class ListaClienteAulaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir uma lista de clientes com aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
         if (!listaClienteAula.isPresent()) {

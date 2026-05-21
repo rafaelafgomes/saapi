@@ -34,6 +34,11 @@ public class ListaEquipamentoAulaController {
     private final AulaService aulaService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todas as listas de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+    })
     public ResponseEntity get() {
         List<ListaEquipamentoAula> listaEquipamentoAulas = service.getListaEquipamentoAula();
         return ResponseEntity.ok(listaEquipamentoAulas.stream().map(ListaEquipamentoAulaDTO::create).collect(Collectors.toList()));
@@ -72,6 +77,11 @@ public class ListaEquipamentoAulaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar uma lista de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaEquipamentoAulaDTO dto) {
         if (!service.getListaEquipamentoAulaById(id).isPresent()) {
             return new ResponseEntity("Lista Equipamento por Aula não encontrada", HttpStatus.NOT_FOUND);
@@ -87,6 +97,11 @@ public class ListaEquipamentoAulaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir uma lista de equipamentos em aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaEquipamentoAula> listaEquipamentoAula = service.getListaEquipamentoAulaById(id);
         if (!listaEquipamentoAula.isPresent()) {

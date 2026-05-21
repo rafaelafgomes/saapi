@@ -68,7 +68,7 @@ public class CargoController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation("Alterar um cargo")
+    @ApiOperation("Atualizar um cargo")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo encontrado"),
             @ApiResponse(code = 404, message = "Cargo não encontrado")
@@ -88,7 +88,7 @@ public class CargoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Deletar um cargo")
+    @ApiOperation("Excluir um cargo")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo encontrado"),
             @ApiResponse(code = 404, message = "Cargo não encontrado")

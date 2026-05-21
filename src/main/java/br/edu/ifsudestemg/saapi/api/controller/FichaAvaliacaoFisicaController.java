@@ -77,7 +77,7 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @PutMapping("{id}")
-    @ApiOperation("Atualiza uma ficha de avaliação física")
+    @ApiOperation("Atualizar uma ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
             @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
@@ -97,7 +97,7 @@ public class FichaAvaliacaoFisicaController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Exclui uma ficha de avaliação física")
+    @ApiOperation("Excluir uma ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
             @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")

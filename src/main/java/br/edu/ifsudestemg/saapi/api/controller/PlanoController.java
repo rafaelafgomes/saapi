@@ -28,6 +28,11 @@ public class PlanoController {
     private final PlanoService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os plano")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
+            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+    })
     public ResponseEntity get() {
         List<Plano> plano = service.getPlano();
         return ResponseEntity.ok(plano.stream().map(PlanoDTO::create).collect(Collectors.toList()));
@@ -65,6 +70,11 @@ public class PlanoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar detalhes de um plano")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
+            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PlanoDTO dto) {
         if (!service.getPlanoById(id).isPresent()) {
             return new ResponseEntity("Plano não encontrado", HttpStatus.NOT_FOUND);
@@ -80,6 +90,11 @@ public class PlanoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir detalhes de um plano")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
+            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
         if (!plano.isPresent()) {
