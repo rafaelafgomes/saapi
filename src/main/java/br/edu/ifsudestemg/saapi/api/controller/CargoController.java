@@ -28,6 +28,10 @@ public class CargoController {
 
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os cargo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cargo encontrado"),
+            @ApiResponse(code = 404, message = "Cargo não encontrado")
+    })
     public ResponseEntity get() {
         List<Cargo> cargos = service.getCargo();
         return ResponseEntity.ok(cargos.stream().map(CargoDTO::create).collect(Collectors.toList()));
@@ -63,8 +67,12 @@ public class CargoController {
         }
     }
 
-    @ApiOperation("Alterar um cargo")
     @PutMapping("{id}")
+    @ApiOperation("Alterar um cargo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cargo encontrado"),
+            @ApiResponse(code = 404, message = "Cargo não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CargoDTO dto) {
         if (!service.getCargoById(id).isPresent()) {
             return new ResponseEntity("Cargo não encontrado", HttpStatus.NOT_FOUND);
@@ -79,8 +87,12 @@ public class CargoController {
         }
     }
 
-    @ApiOperation("Deletar um cargo")
     @DeleteMapping("{id}")
+    @ApiOperation("Deletar um cargo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Cargo encontrado"),
+            @ApiResponse(code = 404, message = "Cargo não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);
         if (!cargo.isPresent()) {

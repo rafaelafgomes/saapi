@@ -28,6 +28,11 @@ public class AjusteFinanceiroController {
 
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os ajustes financeiros")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
+            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+    })
     public ResponseEntity get() {
         List<AjusteFinanceiro> ajusteFinanceiros = service.getAjusteFinanceiros();
         return ResponseEntity.ok(ajusteFinanceiros.stream().map(AjusteFinanceiroDTO::create).collect(Collectors.toList()));
@@ -65,6 +70,11 @@ public class AjusteFinanceiroController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar um ajuste financeiro")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
+            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AjusteFinanceiroDTO dto) {
         if (!service.getAjusteFinanceiroById(id).isPresent()) {
             return new ResponseEntity("Ajuste Financeiro não encontrado", HttpStatus.NOT_FOUND);
@@ -80,6 +90,11 @@ public class AjusteFinanceiroController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir um ajuste financeiro")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
+            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
         if (!ajusteFinanceiro.isPresent()) {

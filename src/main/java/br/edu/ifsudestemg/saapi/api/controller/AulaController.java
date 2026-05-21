@@ -32,6 +32,11 @@ public class AulaController {
     private final ClienteService clienteService;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todas as aulas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula encontrada"),
+            @ApiResponse(code = 404, message = "Aula não encontrada")
+    })
     public ResponseEntity get() {
         List<Aula> alunos = service.getAula();
         return ResponseEntity.ok(alunos.stream().map(AulaDTO::create).collect(Collectors.toList()));
@@ -68,6 +73,11 @@ public class AulaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar uma aula")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula encontrada"),
+            @ApiResponse(code = 404, message = "Aula não encontrada")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaDTO dto) {
         if (!service.getAulaById(id).isPresent()) {
             return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
@@ -83,6 +93,11 @@ public class AulaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir uma aula")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Aula encontrada"),
+            @ApiResponse(code = 404, message = "Aula não encontrada")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Aula> aula = service.getAulaById(id);
         if (!aula.isPresent()) {
