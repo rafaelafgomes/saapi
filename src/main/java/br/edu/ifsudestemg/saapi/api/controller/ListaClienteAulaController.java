@@ -97,7 +97,7 @@ public class ListaClienteAulaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de clientes com aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 204, message = "Lista de clientes com aulas encontradas"),
             @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

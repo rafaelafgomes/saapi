@@ -99,7 +99,7 @@ public class FichaAvaliacaoFisicaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma ficha de avaliação física")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
+            @ApiResponse(code = 204, message = "Ficha de avaliação física encontrada"),
             @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

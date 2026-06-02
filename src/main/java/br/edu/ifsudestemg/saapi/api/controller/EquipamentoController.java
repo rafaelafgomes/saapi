@@ -91,7 +91,7 @@ public class EquipamentoController {
     @DeleteMapping("{id}")
     @ApiOperation("Deletar um equipamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Equipamento encontrado"),
+            @ApiResponse(code = 204, message = "Equipamento encontrado"),
             @ApiResponse(code = 404, message = "Equipamento não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

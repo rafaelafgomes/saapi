@@ -92,7 +92,7 @@ public class ExercicioController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um exercício")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Exercício encontrado"),
+            @ApiResponse(code = 204, message = "Exercício encontrado"),
             @ApiResponse(code = 404, message = "Exercício não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

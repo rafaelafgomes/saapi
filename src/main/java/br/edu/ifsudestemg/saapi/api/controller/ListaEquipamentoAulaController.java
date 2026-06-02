@@ -99,7 +99,7 @@ public class ListaEquipamentoAulaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de equipamentos em aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 204, message = "Lista de equipamentos em aulas encontradas"),
             @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

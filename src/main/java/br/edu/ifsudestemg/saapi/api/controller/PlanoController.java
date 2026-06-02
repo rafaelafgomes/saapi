@@ -92,7 +92,7 @@ public class PlanoController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir detalhes de um plano")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
+            @ApiResponse(code = 204, message = "Lista de planos encontrada"),
             @ApiResponse(code = 404, message = "Lista de planos não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

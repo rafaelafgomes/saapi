@@ -95,7 +95,7 @@ public class AulaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma aula")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Aula encontrada"),
+            @ApiResponse(code = 204, message = "Aula encontrada"),
             @ApiResponse(code = 404, message = "Aula não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

@@ -101,7 +101,7 @@ public class ListaAjusteFinanceiroFaturaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de ajustes financeiros e faturas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 204, message = "Lista de ajustes financeiros e faturas encontradas"),
             @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

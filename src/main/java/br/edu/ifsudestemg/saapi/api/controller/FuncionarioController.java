@@ -77,7 +77,7 @@ public class FuncionarioController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um(a) funcionário(a)")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
+            @ApiResponse(code = 204, message = "Funcionário(a) encontrado(a)"),
             @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FuncionarioDTO dto) {

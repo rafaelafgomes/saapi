@@ -99,7 +99,7 @@ public class TreinoController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir detalhes de um treino")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de treinos encontrada"),
+            @ApiResponse(code = 204, message = "Lista de treinos encontrada"),
             @ApiResponse(code = 404, message = "Lista de planos não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

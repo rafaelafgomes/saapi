@@ -98,7 +98,7 @@ public class FaturaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma fatura")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Fatura encontrada"),
+            @ApiResponse(code = 204, message = "Fatura encontrada"),
             @ApiResponse(code = 404, message = "Fatura não encontrada")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {

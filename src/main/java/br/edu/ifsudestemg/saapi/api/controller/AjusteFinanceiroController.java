@@ -92,7 +92,7 @@ public class AjusteFinanceiroController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um ajuste financeiro")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
+            @ApiResponse(code = 204, message = "Ajuste financeiro encontrado"),
             @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
