@@ -46,7 +46,7 @@ public class  SwaggerConfig {
         return new Contact("Lucas do Carmo Silva" +
                 "Rafaela Freitas Gomes" +
                 "Sabrina Roriz"
-                , "http://github.com/",
+                , "https://github.com/rafaelafgomes/saapi",
                 "contato@dev-lucas.com" +
                         "rafaelafgomes@yahoo.com.br" +
                             "sabrinardroriz@gmail.com");

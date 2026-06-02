@@ -3,6 +3,8 @@ package br.edu.ifsudestemg.saapi.service;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Fatura;
 import br.edu.ifsudestemg.saapi.model.repository.FaturaRepository;
+import br.edu.ifsudestemg.saapi.model.repository.ListaAjusteFinanceiroFaturaRepository;
+import br.edu.ifsudestemg.saapi.model.repository.ListaExercicioTreinoRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,9 +15,11 @@ import java.util.Optional;
 @Service
 public class FaturaService {
     private FaturaRepository repository;
+    private final ListaAjusteFinanceiroFaturaRepository listaAjusteFinanceiroFaturaRepository;
 
-    public FaturaService(FaturaRepository repository) {
+    public FaturaService(FaturaRepository repository, ListaAjusteFinanceiroFaturaRepository listaAjusteFinanceiroFaturaRepository) {
         this.repository = repository;
+        this.listaAjusteFinanceiroFaturaRepository = listaAjusteFinanceiroFaturaRepository;
     }
 
     public List<Fatura> getFatura() {
@@ -35,6 +39,7 @@ public class FaturaService {
     @Transactional
     public void excluir (Fatura fatura) {
         Objects.requireNonNull(fatura.getId());
+        listaAjusteFinanceiroFaturaRepository.deleteAllByFatura(fatura);
         repository.delete(fatura);
     }
 

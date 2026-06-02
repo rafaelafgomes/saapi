@@ -3,6 +3,7 @@ package br.edu.ifsudestemg.saapi.service;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Cliente;
 import br.edu.ifsudestemg.saapi.model.entity.Treino;
+import br.edu.ifsudestemg.saapi.model.repository.ListaExercicioTreinoRepository;
 import br.edu.ifsudestemg.saapi.model.repository.TreinoRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class TreinoService {
     private TreinoRepository repository;
+    private final ListaExercicioTreinoRepository listaExercicioTreinoRepository;
 
-    public TreinoService(TreinoRepository repository) {
+    public TreinoService(TreinoRepository repository, ListaExercicioTreinoRepository listaExercicioTreinoRepository) {
         this.repository = repository;
+        this.listaExercicioTreinoRepository = listaExercicioTreinoRepository;
     }
 
     public List<Treino> getTreino() {
@@ -36,6 +39,7 @@ public class TreinoService {
     @Transactional
     public void excluir(Treino treino) {
         Objects.requireNonNull(treino.getId());
+        listaExercicioTreinoRepository.deleteAllByTreino(treino);
         repository.delete(treino);
     }
 

@@ -3,6 +3,8 @@ package br.edu.ifsudestemg.saapi.service;
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
 import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.repository.AulaRepository;
+import br.edu.ifsudestemg.saapi.model.repository.ListaClienteAulaRepository;
+import br.edu.ifsudestemg.saapi.model.repository.ListaEquipamentoAulaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,9 +15,13 @@ import java.util.Optional;
 @Service
 public class AulaService {
     private AulaRepository repository;
+    private final ListaClienteAulaRepository listaClienteAulaRepository;
+    private final ListaEquipamentoAulaRepository listaEquipamentoAulaRepository;
 
-    public AulaService(AulaRepository repository) {
+    public AulaService(AulaRepository repository, ListaClienteAulaRepository listaClienteAulaRepository,ListaEquipamentoAulaRepository listaEquipamentoAulaRepository) {
         this.repository = repository;
+        this.listaClienteAulaRepository = listaClienteAulaRepository;
+        this.listaEquipamentoAulaRepository = listaEquipamentoAulaRepository;
     }
 
     public List<Aula> getAula() {
@@ -35,6 +41,8 @@ public class AulaService {
     @Transactional
     public void excluir (Aula aula) {
         Objects.requireNonNull(aula.getId());
+        listaClienteAulaRepository.deleteAllByAula(aula);
+        listaEquipamentoAulaRepository.deleteAllByAula(aula);
         repository.delete(aula);
     }
 
