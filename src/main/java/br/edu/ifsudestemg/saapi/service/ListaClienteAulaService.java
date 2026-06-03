@@ -27,6 +27,10 @@ public class ListaClienteAulaService {
         return repository.findById(id);
     }
 
+    public List<ListaClienteAula> getListaClienteAulaByAula(Aula aula) {
+        return repository.findAllByAula(aula);
+    }
+
     @Transactional
     public ListaClienteAula salvar (ListaClienteAula listaClienteAula) {
         validar(listaClienteAula);

@@ -1,6 +1,7 @@
 package br.edu.ifsudestemg.saapi.service;
 
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.Aula;
 import br.edu.ifsudestemg.saapi.model.entity.ListaEquipamentoAula;
 import br.edu.ifsudestemg.saapi.model.repository.ListaEquipamentoAulaRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class ListaEquipamentoAulaService {
 
     public List<ListaEquipamentoAula> getListaEquipamentoAula() {
         return repository.findAll();
+    }
+
+    public List<ListaEquipamentoAula> getListaEquipamentoAulaByAula(Aula aula) {
+        return repository.findAllByAula(aula);
     }
 
     public Optional<ListaEquipamentoAula> getListaEquipamentoAulaById(Long id) {

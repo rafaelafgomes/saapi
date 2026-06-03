@@ -56,8 +56,24 @@ public class ListaClienteAulaController {
             return new ResponseEntity("Lista cliente por aula não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(listaClienteAula.map(ListaClienteAulaDTO::create));
-
     }
+
+    @GetMapping("aula/{id}")
+    @ApiOperation("Obter detalhes de uma lista de clientes em aulas pelo id da Aula")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+    })
+    public ResponseEntity getByaula(@PathVariable("id") Long id) {
+        Optional<Aula> aula = aulaService.getAulaById(id);
+        if (!aula.isPresent()) {
+            return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<ListaClienteAula> listaClienteAulas = service.getListaClienteAulaByAula(aula.get());
+        return ResponseEntity.ok(listaClienteAulas.stream().map(ListaClienteAulaDTO::create).collect(Collectors.toList()));
+    }
+
+
     @PostMapping()
     @ApiOperation("Salva uma nova lista de clientes com aulas")
     @ApiResponses({

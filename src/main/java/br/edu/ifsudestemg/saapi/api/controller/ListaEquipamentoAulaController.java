@@ -44,6 +44,23 @@ public class ListaEquipamentoAulaController {
         return ResponseEntity.ok(listaEquipamentoAulas.stream().map(ListaEquipamentoAulaDTO::create).collect(Collectors.toList()));
     }
 
+    @GetMapping("aula/{id}")
+    @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas pelo id da Aula")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+    })
+
+    public ResponseEntity getByaula(@PathVariable("id") Long id) {
+        Optional<Aula> aula = aulaService.getAulaById(id);
+        if (!aula.isPresent()) {
+            return new ResponseEntity("Aula não encontrada", HttpStatus.NOT_FOUND);
+        }
+
+        List<ListaEquipamentoAula> listaEquipamentoAulas = service.getListaEquipamentoAulaByAula(aula.get());
+        return ResponseEntity.ok(listaEquipamentoAulas.stream().map(ListaEquipamentoAulaDTO::create).collect(Collectors.toList()));
+    }
+
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
     @ApiResponses({
