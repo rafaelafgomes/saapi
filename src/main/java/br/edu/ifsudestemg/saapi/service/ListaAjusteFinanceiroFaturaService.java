@@ -1,6 +1,8 @@
 package br.edu.ifsudestemg.saapi.service;
 
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.Aula;
+import br.edu.ifsudestemg.saapi.model.entity.Fatura;
 import br.edu.ifsudestemg.saapi.model.entity.ListaAjusteFinanceiroFatura;
 import br.edu.ifsudestemg.saapi.model.repository.ListaAjusteFinanceiroFaturaRepository;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class ListaAjusteFinanceiroFaturaService {
 
     public List<ListaAjusteFinanceiroFatura> getListaAjusteFinanceiroFatura() {
         return repository.findAll();
+    }
+
+    public List<ListaAjusteFinanceiroFatura> getListaAjusteFinanceiroFaturaByFatura(Fatura fatura) {
+        return repository.findAllByFatura(fatura);
     }
 
     public Optional<ListaAjusteFinanceiroFatura> getListaAjusteFinanceiroFaturaById(Long id) {

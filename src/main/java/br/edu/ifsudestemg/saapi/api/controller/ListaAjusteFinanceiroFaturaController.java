@@ -47,6 +47,24 @@ public class ListaAjusteFinanceiroFaturaController {
         return ResponseEntity.ok(listaAjusteFinanceiro.stream().map(ListaAjusteFinanceiroFaturaDTO::create).collect(Collectors.toList()));
     }
 
+
+    @GetMapping("fatura/{id}")
+    @ApiOperation("Obter detalhes de uma lista de ajustes financeiros pelo id de faturas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+    })
+
+    public ResponseEntity getByfatura(@PathVariable("id") Long id) {
+        Optional<Fatura> fatura = faturaService.getFaturaById(id);
+        if (!fatura.isPresent()) {
+            return new ResponseEntity("Fatura não encontrada", HttpStatus.NOT_FOUND);
+        }
+        List<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFaturaByFatura(fatura.get());
+        return ResponseEntity.ok(listaAjusteFinanceiro.stream().map(ListaAjusteFinanceiroFaturaDTO::create).collect(Collectors.toList()));
+    }
+
+
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de ajustes financeiros e faturas")
     @ApiResponses({
