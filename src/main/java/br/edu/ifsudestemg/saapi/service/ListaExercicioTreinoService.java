@@ -1,7 +1,9 @@
 package br.edu.ifsudestemg.saapi.service;
 
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.Fatura;
 import br.edu.ifsudestemg.saapi.model.entity.ListaExercicioTreino;
+import br.edu.ifsudestemg.saapi.model.entity.Treino;
 import br.edu.ifsudestemg.saapi.model.repository.ListaExercicioTreinoRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,10 @@ public class ListaExercicioTreinoService {
 
     public List<ListaExercicioTreino> getListaExercicioTreino() {
         return repository.findAll();
+    }
+
+    public List<ListaExercicioTreino> getListaExercicioTreinoByTreino(Treino treino) {
+        return repository.findAllByTreino(treino);
     }
 
     public Optional<ListaExercicioTreino> getListaExercicioTreinoById(Long id) {

@@ -44,6 +44,25 @@ public class ListaExercicioTreinoController {
         return ResponseEntity.ok(listaExercicioTreinos.stream().map(ListaExercicioTreinoDTO::create).collect(Collectors.toList()));
     }
 
+
+    @GetMapping("treino/{id}")
+    @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas pelo id de treino")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de exercícios em treinos encontradas"),
+            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontradas")
+    })
+
+    public ResponseEntity getBytreino(@PathVariable("id") Long id) {
+        Optional<Treino> treino = treinoService.getTreinoById(id);
+        if (!treino.isPresent()) {
+            return new ResponseEntity("Treino não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<ListaExercicioTreino> listaExercicioTreinos = service.getListaExercicioTreinoByTreino(treino.get());
+        return ResponseEntity.ok(listaExercicioTreinos.stream().map(ListaExercicioTreinoDTO::create).collect(Collectors.toList()));
+
+    }
+
+
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
     @ApiResponses({
@@ -58,6 +77,7 @@ public class ListaExercicioTreinoController {
         }
         return ResponseEntity.ok(listaExercicioTreino.map(ListaExercicioTreinoDTO::create));
     }
+
 
     @PostMapping()
     @ApiOperation("Salva uma nova lista de exercícios em treinos")
