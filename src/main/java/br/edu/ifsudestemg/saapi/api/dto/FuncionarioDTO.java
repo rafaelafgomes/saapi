@@ -12,11 +12,6 @@ import org.modelmapper.ModelMapper;
 
 public class FuncionarioDTO {
 
-    private String email;
-    private String dataAdmissao;
-    private String observacao;
-    private Long idCargo;
-    private String nomeCargo;
     private Long id;
     private String nome;
     private String cpf;
@@ -30,6 +25,11 @@ public class FuncionarioDTO {
     private String estado;
     private String cep;
     private String dataNascimento;
+    private String email;
+    private String dataAdmissao;
+    private String observacao;
+    private Long idCargo;
+    private String nomeCargo;
 
     public static FuncionarioDTO create(Funcionario funcionario) {
         ModelMapper modelMapper = new ModelMapper();
