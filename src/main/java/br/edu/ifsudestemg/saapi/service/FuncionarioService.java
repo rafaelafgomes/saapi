@@ -49,10 +49,6 @@ public class FuncionarioService {
             throw new RegraNegocioException("Data de Admissão inválida");
         }
 
-        if (funcionario.getObservacao() == null || funcionario.getObservacao().trim().equals("")) {
-            throw new RegraNegocioException("Observação inválida");
-        }
-
         if (funcionario.getNome() == null || funcionario.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
@@ -75,10 +71,6 @@ public class FuncionarioService {
 
         if (funcionario.getNumero() == null || funcionario.getNumero() == 0) {
             throw new RegraNegocioException("Numero Inválido");
-        }
-
-        if (funcionario.getComplemento() == null || funcionario.getComplemento().trim().equals("")) {
-            throw new RegraNegocioException("Complemento Inválido");
         }
 
         if (funcionario.getBairro() == null || funcionario.getBairro().trim().equals("")) {
