@@ -136,4 +136,10 @@ public class FaturaController {
         }
         return fatura;
     }
+
+    @PostMapping("/calcular")
+    public ResponseEntity calcularValor(@RequestBody FaturaDTO dto) {
+        Float valor = service.calcularValorFatura(dto.getIdCliente(), dto.getIdsAjustesFinanceiros());
+        return ResponseEntity.ok(valor);
+    }
 }

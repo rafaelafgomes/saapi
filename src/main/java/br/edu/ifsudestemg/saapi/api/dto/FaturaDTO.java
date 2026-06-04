@@ -1,9 +1,7 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
-import br.edu.ifsudestemg.saapi.model.entity.Cliente;
 import br.edu.ifsudestemg.saapi.model.entity.Fatura;
-import br.edu.ifsudestemg.saapi.model.entity.FormaPagamento;
-
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +21,7 @@ public class FaturaDTO {
     private String planoCliente;
     private Long idFormaPagamento;
     private String nomeFormaPagamento;
+    private List<Long> idsAjustesFinanceiros;
 
     public static FaturaDTO create (Fatura fatura) {
         ModelMapper modelMapper = new ModelMapper();
