@@ -1,7 +1,10 @@
 package br.edu.ifsudestemg.saapi.service;
 
 import br.edu.ifsudestemg.saapi.exception.RegraNegocioException;
+import br.edu.ifsudestemg.saapi.model.entity.AjusteFinanceiro;
+import br.edu.ifsudestemg.saapi.model.entity.Cliente;
 import br.edu.ifsudestemg.saapi.model.entity.Fatura;
+import br.edu.ifsudestemg.saapi.model.repository.AjusteFinanceiroRepository;
 import br.edu.ifsudestemg.saapi.model.repository.FaturaRepository;
 import br.edu.ifsudestemg.saapi.model.repository.ListaAjusteFinanceiroFaturaRepository;
 import br.edu.ifsudestemg.saapi.model.repository.ListaExercicioTreinoRepository;
@@ -14,12 +17,16 @@ import java.util.Optional;
 
 @Service
 public class FaturaService {
+    private final ClienteService clienteService;
     private FaturaRepository repository;
     private final ListaAjusteFinanceiroFaturaRepository listaAjusteFinanceiroFaturaRepository;
+    private final AjusteFinanceiroRepository ajusteFinanceiroRepository;
 
-    public FaturaService(FaturaRepository repository, ListaAjusteFinanceiroFaturaRepository listaAjusteFinanceiroFaturaRepository) {
+    public FaturaService(FaturaRepository repository, ListaAjusteFinanceiroFaturaRepository listaAjusteFinanceiroFaturaRepository, AjusteFinanceiroRepository ajusteFinanceiroRepository, ClienteService clienteService) {
         this.repository = repository;
         this.listaAjusteFinanceiroFaturaRepository = listaAjusteFinanceiroFaturaRepository;
+        this.ajusteFinanceiroRepository = ajusteFinanceiroRepository;
+        this.clienteService = clienteService;
     }
 
     public List<Fatura> getFatura() {
@@ -48,10 +55,6 @@ public class FaturaService {
             throw new RegraNegocioException("Data inválida");
         }
 
-        if (fatura.getDataPagamento() == null || fatura.getDataPagamento().trim().equals("")) {
-            throw new RegraNegocioException("Data inválida");
-        }
-
         if (fatura.getValor() == null || fatura.getValor() == 0) {
             throw new RegraNegocioException("Valor inválido");
         }
@@ -63,6 +66,30 @@ public class FaturaService {
         if (fatura.getFormaPagamento() == null || fatura.getFormaPagamento().getId() == null || fatura.getFormaPagamento().getId() == 0) {
             throw new RegraNegocioException("Forma de pagamento inválido");
         }
+    }
+
+    public Float calcularValorFatura(Long idCliente, List<Long> idsAjustes) {
+        Optional<Cliente> clienteOptional = clienteService.getClienteById(idCliente);
+        if(!clienteOptional.isPresent()){
+            throw new RegraNegocioException("Cliente não encontrado");
+        }
+        Cliente cliente = clienteOptional.get();
+        Float total = cliente.getPlano().getValor();
+        if(idsAjustes != null){
+            for(Long idAjuste: idsAjustes){
+                Optional<AjusteFinanceiro> ajusteOptional = ajusteFinanceiroRepository.findById(idAjuste);
+                if(!ajusteOptional.isPresent()){
+                    continue;
+                }
+                AjusteFinanceiro ajuste = ajusteOptional.get();
+                if("DESCONTO".equalsIgnoreCase(ajuste.getTipo())){
+                    total -= ajuste.getValor();
+                } else {
+                    total += ajuste.getValor();
+                }
+            }
+        }
+        return total;
     }
 
 }
