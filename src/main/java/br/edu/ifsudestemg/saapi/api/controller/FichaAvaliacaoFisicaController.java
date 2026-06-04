@@ -76,6 +76,24 @@ public class FichaAvaliacaoFisicaController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/calcular-imc")
+    @ApiOperation("Calcular IMC")
+    public ResponseEntity calcularIMC(@RequestBody FichaAvaliacaoFisicaDTO dto) {
+        try {
+            if (dto.getPeso() == null || dto.getPeso() <= 0) {
+                return ResponseEntity.badRequest().body("Peso inválido");
+            }
+            if (dto.getAltura() == null || dto.getAltura() <= 0) {
+                return ResponseEntity.badRequest().body("Altura inválida");
+            }
+            String resultado = service.calcularIMC(dto.getPeso(), dto.getAltura());
+            return ResponseEntity.ok(resultado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma ficha de avaliação física")
     @ApiResponses({

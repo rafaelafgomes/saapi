@@ -51,10 +51,6 @@ public class FichaAvaliacaoFisicaService {
             throw new RegraNegocioException("Altura inválido");
         }
 
-        if (fichaAvaliacaoFisica.getDescricao() == null || fichaAvaliacaoFisica.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválido");
-        }
-
         if(fichaAvaliacaoFisica.getCliente() == null || fichaAvaliacaoFisica.getCliente().getId() == null || fichaAvaliacaoFisica.getCliente().getId() == 0) {
             throw new RegraNegocioException("Cliente inválido");
         }
@@ -62,7 +58,18 @@ public class FichaAvaliacaoFisicaService {
         if(fichaAvaliacaoFisica.getFuncionario() == null || fichaAvaliacaoFisica.getFuncionario().getId() == null || fichaAvaliacaoFisica.getFuncionario().getId() == 0) {
             throw new RegraNegocioException("Funcionário inválido");
         }
-
     }
 
+    public String calcularIMC(Float peso, Float altura) {
+        float imc = peso / (altura * altura);
+        String classificacao;
+        if (imc < 18.5f) { classificacao = "Abaixo do peso";
+        } else if (imc < 25f) { classificacao = "Peso normal";
+        } else if (imc < 30f) { classificacao = "Sobrepeso";
+        } else if (imc < 35f) { classificacao = "Obesidade Grau I";
+        } else if (imc < 40f) { classificacao = "Obesidade Grau II";
+        } else { classificacao = "Obesidade Grau III";
+        }
+        return String.format("IMC: %.2f - %s", imc, classificacao);
+    }
 }
