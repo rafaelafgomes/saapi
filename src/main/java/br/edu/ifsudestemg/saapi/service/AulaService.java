@@ -48,7 +48,7 @@ public class AulaService {
 
     public void validar (Aula aula){
         if (aula.getNome() == null || aula.getNome().trim().equals("")) {
-            throw new RegraNegocioException("Aula inválido");
+            throw new RegraNegocioException("Nome inválido");
         }
 
         if (aula.getDataAula() == null){
@@ -65,10 +65,6 @@ public class AulaService {
 
         if (aula.getCapacidade() == null || aula.getCapacidade() == 0) {
             throw new RegraNegocioException("Capacidade inválido");
-        }
-
-        if (aula.getDescricao() == null || aula.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválido");
         }
 
         if (aula.getFuncionario() == null || aula.getFuncionario().getId() == null || aula.getFuncionario().getId() == 0) {

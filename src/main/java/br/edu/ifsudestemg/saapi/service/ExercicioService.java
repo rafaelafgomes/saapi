@@ -43,8 +43,5 @@ public class ExercicioService {
             throw new RegraNegocioException("Nome inválido");
         }
 
-        if (exercicio.getDescricao() == null || exercicio.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválido");
-        }
     }
 }

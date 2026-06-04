@@ -50,10 +50,6 @@ public class EquipamentoService {
             throw new RegraNegocioException("Modelo inválido");
         }
 
-        if (equipamento.getUltManutencao() == null || equipamento.getUltManutencao().trim().equals("")) {
-            throw new RegraNegocioException("Última Manutenção inválida");
-        }
-
         if (equipamento.getQuantidade() == null || equipamento.getQuantidade() == 0) {
             throw new RegraNegocioException("Quantidade inválida");
         }
@@ -64,10 +60,6 @@ public class EquipamentoService {
 
         if (equipamento.getLocal() == null || equipamento.getLocal().trim().equals("")) {
             throw new RegraNegocioException("Local inválido");
-        }
-
-        if (equipamento.getDescricao() == null || equipamento.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição Inválida");
         }
 
     }

@@ -58,8 +58,5 @@ public class AjusteFinanceiroService {
             throw new RegraNegocioException("Valor inválido");
         }
 
-        if (ajusteFinanceiro.getDescricao() == null || ajusteFinanceiro.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválida");
-        }
     }
 }

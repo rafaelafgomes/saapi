@@ -55,8 +55,5 @@ public class PlanoService {
             throw new RegraNegocioException("Valor inválido");
         }
 
-        if (plano.getDescricao() == null || plano.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválida");
-        }
     }
 }

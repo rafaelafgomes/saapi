@@ -44,8 +44,5 @@ public class FormaPagamentoService {
             throw new RegraNegocioException("Nome inválido");
         }
 
-        if (formaPagamento.getDescricao() == null || formaPagamento.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválida");
-        }
     }
 }

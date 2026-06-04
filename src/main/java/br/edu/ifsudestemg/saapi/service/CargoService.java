@@ -45,10 +45,6 @@ public class CargoService {
         if (cargo.getNome() == null || cargo.getNome().trim().equals("")) {
             throw new RegraNegocioException("Nome inválido");
         }
-
-        if (cargo.getDescricao() == null || cargo.getDescricao().trim().equals("")) {
-            throw new RegraNegocioException("Descrição inválida");
-        }
     }
 }
 

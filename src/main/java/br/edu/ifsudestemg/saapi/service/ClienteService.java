@@ -64,10 +64,6 @@ public class ClienteService {
             throw new RegraNegocioException("Numero inválido");
         }
 
-        if (cliente.getComplemento() == null || cliente.getComplemento().trim().equals("")) {
-            throw new RegraNegocioException("Complemento Inválido");
-        }
-
         if (cliente.getBairro() == null || cliente.getBairro().trim().equals("")) {
             throw new RegraNegocioException("Bairro Inválido");
         }

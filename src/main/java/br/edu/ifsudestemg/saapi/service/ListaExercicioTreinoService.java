@@ -45,17 +45,6 @@ public class ListaExercicioTreinoService {
     }
 
     public void validar (ListaExercicioTreino listaExercicioTreino) {
-        if (listaExercicioTreino.getSerie() == null || listaExercicioTreino.getSerie() == 0) {
-            throw new RegraNegocioException("Série inválido");
-        }
-
-        if (listaExercicioTreino.getCarga() == null || listaExercicioTreino.getCarga() == 0) {
-            throw new RegraNegocioException("Carga inválido");
-        }
-
-        if (listaExercicioTreino.getRepeticao() == null || listaExercicioTreino.getRepeticao() == 0) {
-            throw new RegraNegocioException("Repetição inválido");
-        }
 
         if(listaExercicioTreino.getExercicio() == null || listaExercicioTreino.getExercicio().getId() == null || listaExercicioTreino.getExercicio().getId() == 0) {
             throw new RegraNegocioException("Exercicio inválido");
