@@ -52,6 +52,17 @@ public class EquipamentoController {
         return ResponseEntity.ok(equipamento.map(EquipamentoDTO::create));
     }
 
+    @GetMapping("/ativos")
+    @ApiOperation("Obter equipamentos ativos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Equipamentos ativos encontrados"),
+            @ApiResponse(code = 404, message = "Equipamento ativos não encontrados")
+    })
+    public ResponseEntity getEquipamentosAtivos() {
+        List<Equipamento> equipamentos = service.getEquipamentosAtivos();
+        return ResponseEntity.ok(equipamentos.stream().map(EquipamentoDTO::create).collect(Collectors.toList()));
+    }
+
     @PostMapping()
     @ApiOperation("Salva um novo equipamento")
     @ApiResponses({

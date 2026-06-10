@@ -48,13 +48,23 @@ public class ClienteController {
             @ApiResponse(code = 200, message = "Cliente encontrado(a)"),
             @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
         if (!cliente.isPresent()) {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(cliente.map(ClienteDTO::create));
+    }
+
+    @GetMapping("/ativos")
+    @ApiOperation("Obter clientes ativos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Clientes ativos encontrados"),
+            @ApiResponse(code = 404, message = "Clientes não encontrados")
+    })
+    public ResponseEntity getClientesAtivos() {
+        List<Cliente> clientes = service.getClientesAtivos();
+        return ResponseEntity.ok(clientes.stream().map(ClienteDTO::create).collect(Collectors.toList()));
     }
 
     @PostMapping()

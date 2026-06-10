@@ -23,6 +23,10 @@ public class FuncionarioService {
         return repository.findAll();
     }
 
+    public List<Funcionario> getFuncionariosAtivos() {
+        return repository.findByStatusTrue();
+    }
+
     public Optional<Funcionario> getFuncionarioById(Long id) {
         return repository.findById(id);
     }

@@ -22,6 +22,10 @@ public class ClienteService {
         return repository.findAll();
     }
 
+    public List<Cliente> getClientesAtivos() {
+        return repository.findByStatusTrue();
+    }
+
     public Optional<Cliente> getClienteById(Long id) {
         return repository.findById(id);
     }

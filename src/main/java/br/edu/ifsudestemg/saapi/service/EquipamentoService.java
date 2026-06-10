@@ -24,6 +24,10 @@ public class EquipamentoService {
         return repository.findAll();
     }
 
+    public List<Equipamento> getEquipamentosAtivos() {
+        return repository.findByDisponivelTrue();
+    }
+
     public Optional<Equipamento> getEquipamentoById(Long id) {
         return repository.findById(id);
     }

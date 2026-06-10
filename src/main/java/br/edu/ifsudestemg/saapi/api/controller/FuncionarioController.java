@@ -49,13 +49,23 @@ public class FuncionarioController {
             @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
             @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);
         if (!funcionario.isPresent()) {
             return new ResponseEntity("Funcionario(a) não encontrado(a)", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(funcionario.map(FuncionarioDTO::create));
+    }
+
+    @GetMapping("/ativos")
+    @ApiOperation("Obter funcionários ativos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Funcionários ativos encontrados"),
+            @ApiResponse(code = 404, message = "Funcionários ativos não encontrados")
+    })
+    public ResponseEntity getFuncionariosAtivos() {
+        List<Funcionario> funcionario = service.getFuncionariosAtivos();
+        return ResponseEntity.ok(funcionario.stream().map(FuncionarioDTO::create).collect(Collectors.toList()));
     }
 
     @PostMapping()
