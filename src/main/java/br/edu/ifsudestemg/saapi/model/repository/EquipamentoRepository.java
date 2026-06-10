@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface EquipamentoRepository extends JpaRepository<Equipamento, Long> {
     List<Equipamento> findByDisponivelTrue();
+
+    Long countByDisponivelTrue();
+
+    Long countByDisponivelFalse();
 }
