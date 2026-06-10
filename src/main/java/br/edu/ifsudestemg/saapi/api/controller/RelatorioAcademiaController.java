@@ -19,8 +19,7 @@ public class RelatorioAcademiaController {
     }
 
     @GetMapping("/mensal")
-    public ResponseEntity<RelatorioAcademiaDTO> getMensal(@RequestParam String mes) {
-        return ResponseEntity.ok(service.gerarRelatorioMensal(mes));
+    public ResponseEntity<RelatorioAcademiaDTO> getMensal(@RequestParam String mes,@RequestParam Integer ano) {
+        return ResponseEntity.ok(service.gerarRelatorioMensal(mes, ano));
     }
-
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,8 +28,10 @@ public class RelatorioAcademiaDTO {
 
     private Integer clientesTotais;
     private Integer aulasMes;
-    private Integer faturasAtrasadas;
+    private Integer inadimplentes;
 
     private Float receitaMes;
-    private Float crescimentoMesAnterior;
+    private Float crescimento;
+
+    private List<Float> receitaAnual;
 }
