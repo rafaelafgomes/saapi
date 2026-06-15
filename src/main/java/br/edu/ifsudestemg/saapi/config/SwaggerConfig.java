@@ -35,7 +35,7 @@ public class  SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("SAA API")
+                .title("SA API")
                 .description("API do Sistema de Academia")
                 .version("1.0")
                 .contact(contact())
@@ -43,12 +43,14 @@ public class  SwaggerConfig {
     }
 
     private Contact contact() {
-        return new Contact("Lucas do Carmo Silva" +
-                "Rafaela Freitas Gomes" +
-                "Sabrina Roriz"
-                , "https://github.com/rafaelafgomes/saapi",
-                "contato@dev-lucas.com" +
-                        "rafaelafgomes@yahoo.com.br" +
-                            "sabrinardroriz@gmail.com");
+        return new Contact(
+                "Lucas do Carmo Silva - \n" +
+                        " Rafaela Freitas Gomes - \n" +
+                        " Sabrina Roriz",
+                "https://github.com/rafaelafgomes/saapi",
+                "contato@dev-lucas.com - \n" +
+                        " rafaelafgomes@yahoo.com.br - \n" +
+                        " sabrinardroriz@gmail.com"
+        );
     }
 }
