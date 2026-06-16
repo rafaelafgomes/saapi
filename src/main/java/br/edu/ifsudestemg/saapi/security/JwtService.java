@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+
 @service
 public class JwtService {
     @Value("${security.jwt.expiracao}")
