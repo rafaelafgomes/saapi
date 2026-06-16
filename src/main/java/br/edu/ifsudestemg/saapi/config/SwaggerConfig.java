@@ -30,6 +30,8 @@ public class  SwaggerConfig {
                         .basePackage("br.edu.ifsudestemg.saapi.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
                 .apiInfo(apiInfo());
     }
 
@@ -52,5 +54,27 @@ public class  SwaggerConfig {
                         " rafaelafgomes@yahoo.com.br - \n" +
                         " sabrinardroriz@gmail.com"
         );
+    }
+
+    public ApiKey apiKey(){
+        return new ApiKey("JWT", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext(){
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope = new AuthorizationScope(
+                "global", "accessEverything");
+        AuthorizationScope[] scopes = new AuthorizationScope[1];
+        scopes[0] = authorizationScope;
+        SecurityReference reference = new SecurityReference("JWT", scopes);
+        List<SecurityReference> auths = new ArrayList<>();
+        auths.add(reference);
+        return auths;
     }
 }
