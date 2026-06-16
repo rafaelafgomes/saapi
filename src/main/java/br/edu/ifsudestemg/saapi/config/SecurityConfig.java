@@ -52,25 +52,58 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/alunos/**")
-                .permitAll()
-                //.authenticated()
-                .antMatchers("/api/v1/atividadescomplementares/**")
-                .permitAll()
-                .antMatchers("/api/v1/concedentes/**")
-                .permitAll()
-                .antMatchers("/api/v1/professores/**")
-                .permitAll()
-                .antMatchers("/api/v1/cursos/**")
-                .permitAll()
-                .antMatchers("/api/v1/categorias/**")
-                .permitAll()
-                .antMatchers("/api/v1/estagios/**")
+
+                .antMatchers("/api/v1/ajustesfinanceiros/**")
                 .hasAnyRole("ADMIN")
-                .antMatchers("/api/v1/vagas/**")
-                .hasAnyRole("USER", "ADMIN")
+                //.authenticated()
+                .antMatchers("/api/v1/aulas/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/cargos/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/clientes/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/equipamentos/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/exercicios/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/faturas/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/fichasavaliacaofisica/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/formaspagamentos/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/funcionarios/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/listasajustesfinanceirosfaturas/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/listasclientesaulas/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/listasequipamentosaulas/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/listasexerciciostreinos/**")
+                .permitAll()
+
+                .antMatchers("/api/v1/planos/**")
+                .hasAnyRole("ADMIN")
+
+                .antMatchers("/api/v1/treinos/**")
+                .permitAll()
+
                 .antMatchers( "/api/v1/usuarios/**")
                 .permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
