@@ -7,13 +7,16 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Service;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 
-@service
+@Service
 public class JwtService {
     @Value("${security.jwt.expiracao}")
     private String expiracao;
