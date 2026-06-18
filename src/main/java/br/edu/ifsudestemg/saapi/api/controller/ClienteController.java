@@ -34,8 +34,8 @@ public class ClienteController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os clientes")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cliente encontrado(a)"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
+            @ApiResponse(code = 200, message = "Lista de Clientes encontrados"),
+            @ApiResponse(code = 404, message = "Lista de Clientes não encontrados")
     })
     public ResponseEntity get() {
         List<Cliente> clientes = service.getCliente();
@@ -60,7 +60,7 @@ public class ClienteController {
     @ApiOperation("Obter clientes ativos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Clientes ativos encontrados"),
-            @ApiResponse(code = 404, message = "Clientes não encontrados")
+            @ApiResponse(code = 404, message = "Clientes ativos não encontrados")
     })
     public ResponseEntity getClientesAtivos() {
         List<Cliente> clientes = service.getClientesAtivos();
@@ -86,8 +86,8 @@ public class ClienteController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um cliente")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cliente encontrado(a)"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
+            @ApiResponse(code = 200, message = "Cliente atualizado(a)"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o(a) cliente")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ClienteDTO dto) {
         if (!service.getClienteById(id).isPresent()) {
@@ -106,8 +106,8 @@ public class ClienteController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um cliente")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Cliente encontrado(a)"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
+            @ApiResponse(code = 204, message = "Cliente excluído(a)"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o(a) cliente")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);

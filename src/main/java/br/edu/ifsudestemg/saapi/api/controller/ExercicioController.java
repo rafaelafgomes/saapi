@@ -31,8 +31,8 @@ public class ExercicioController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os exercícios")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Exercício encontrado"),
-            @ApiResponse(code = 404, message = "Exercício não encontrado")
+            @ApiResponse(code = 200, message = "Lista de Exercícios encontrados"),
+            @ApiResponse(code = 404, message = "Lista de Exercícios não encontrados")
     })
     public ResponseEntity get() {
         List<Exercicio> exercicios = service.getExercicio();
@@ -57,7 +57,7 @@ public class ExercicioController {
     @ApiOperation("Salva um novo exercício")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Exercício salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o(a) exercício")
+            @ApiResponse(code = 400, message = "Erro ao salvar o exercício")
     })
     public ResponseEntity post(@RequestBody ExercicioDTO dto) {
         try {
@@ -72,8 +72,8 @@ public class ExercicioController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um exercício")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Exercício encontrado"),
-            @ApiResponse(code = 404, message = "Exercício não encontrado")
+            @ApiResponse(code = 200, message = "Exercício atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o exercício")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ExercicioDTO dto) {
         if (!service.getExercicioById(id).isPresent()) {
@@ -92,8 +92,8 @@ public class ExercicioController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um exercício")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Exercício encontrado"),
-            @ApiResponse(code = 404, message = "Exercício não encontrado")
+            @ApiResponse(code = 204, message = "Exercício excluído"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o exercício")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);

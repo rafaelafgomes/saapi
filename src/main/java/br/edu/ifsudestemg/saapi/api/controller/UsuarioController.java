@@ -8,6 +8,9 @@ import br.edu.ifsudestemg.saapi.exception.SenhaInvalidaException;
 import br.edu.ifsudestemg.saapi.model.entity.Usuario;
 import br.edu.ifsudestemg.saapi.security.JwtService;
 import br.edu.ifsudestemg.saapi.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -36,12 +39,23 @@ public class UsuarioController {
     private final UsuarioService service;
 
     @GetMapping()
+    @ApiOperation("Obter detalhes de todos os usuários")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Lista de usuários encontradas"),
+            @ApiResponse(code = 404, message = "Lista de usuários não encontradas")
+    })
     public ResponseEntity get() {
         List<Usuario> usuarios = service.getUsuarios();
         return ResponseEntity.ok(usuarios.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
 
+
     @GetMapping("/{id}")
+    @ApiOperation("Obter detalhes de um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário encontrado"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = service.getUsuarioById(id);
         if (!usuario.isPresent()) {
@@ -51,6 +65,11 @@ public class UsuarioController {
     }
 
     @PostMapping()
+    @ApiOperation("Salva uma novo usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o usuário")
+    })
     public ResponseEntity post(@RequestBody UsuarioDTO dto) {
         try {
             if (dto.getSenha() == null || dto.getSenha().trim().equals("") ||
@@ -71,6 +90,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/auth")
+    @ApiOperation("Autenticação de usuários")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
             Usuario usuario = Usuario.builder()
@@ -85,6 +105,11 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualizar detalhes de um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o usuário")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody UsuarioDTO dto) {
         if (!service.getUsuarioById(id).isPresent()) {
             return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
@@ -107,6 +132,11 @@ public class UsuarioController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Excluir usuário")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Usuário excluído"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o usuário")
+    })
     public ResponseEntity delete(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = service.getUsuarioById(id);
         if (!usuario.isPresent()) {

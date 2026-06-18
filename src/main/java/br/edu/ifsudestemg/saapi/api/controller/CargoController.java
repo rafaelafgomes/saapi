@@ -29,8 +29,8 @@ public class CargoController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os cargo")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cargo encontrado"),
-            @ApiResponse(code = 404, message = "Cargo não encontrado")
+            @ApiResponse(code = 200, message = "Lista de Cargos encontrados"),
+            @ApiResponse(code = 404, message = "Lista de Cargos não encontrados")
     })
     public ResponseEntity get() {
         List<Cargo> cargos = service.getCargo();
@@ -70,8 +70,8 @@ public class CargoController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um cargo")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Cargo encontrado"),
-            @ApiResponse(code = 404, message = "Cargo não encontrado")
+            @ApiResponse(code = 200, message = "Cargo atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o cargo")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CargoDTO dto) {
         if (!service.getCargoById(id).isPresent()) {
@@ -90,8 +90,8 @@ public class CargoController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um cargo")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Cargo encontrado"),
-            @ApiResponse(code = 404, message = "Cargo não encontrado")
+            @ApiResponse(code = 204, message = "Cargo excluido"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o cargo")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);

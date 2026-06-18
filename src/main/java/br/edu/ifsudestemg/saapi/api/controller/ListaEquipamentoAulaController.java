@@ -47,8 +47,8 @@ public class ListaEquipamentoAulaController {
     @GetMapping("aula/{id}")
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas pelo id da Aula")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontrada")
     })
 
     public ResponseEntity getByaula(@PathVariable("id") Long id) {
@@ -64,8 +64,8 @@ public class ListaEquipamentoAulaController {
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontrada")
     })
 
     public ResponseEntity get(@PathVariable("id") Long id) {
@@ -96,8 +96,8 @@ public class ListaEquipamentoAulaController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma lista de equipamentos em aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de equipamentos em aulas atualizada"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de equipamentos em aulas")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaEquipamentoAulaDTO dto) {
         if (!service.getListaEquipamentoAulaById(id).isPresent()) {
@@ -116,8 +116,8 @@ public class ListaEquipamentoAulaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de equipamentos em aulas")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Lista de equipamentos em aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de equipamentos em aulas não encontradas")
+            @ApiResponse(code = 204, message = "Lista de equipamentos em aulas excluída"),
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de equipamentos em aulas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaEquipamentoAula> listaEquipamentoAula = service.getListaEquipamentoAulaById(id);

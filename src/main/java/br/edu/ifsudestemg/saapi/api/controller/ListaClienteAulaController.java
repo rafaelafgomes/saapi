@@ -47,8 +47,8 @@ public class ListaClienteAulaController {
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de clientes com aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
@@ -61,8 +61,8 @@ public class ListaClienteAulaController {
     @GetMapping("aula/{id}")
     @ApiOperation("Obter detalhes de uma lista de clientes em aulas pelo id da Aula")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada")
     })
     public ResponseEntity getByaula(@PathVariable("id") Long id) {
         Optional<Aula> aula = aulaService.getAulaById(id);
@@ -93,8 +93,8 @@ public class ListaClienteAulaController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma lista de clientes com aulas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de clientes com aulas atualizada"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de clientes com aulas")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaClienteAulaDTO dto) {
         if (!service.getListaClienteAulaById(id).isPresent()) {
@@ -113,8 +113,8 @@ public class ListaClienteAulaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de clientes com aulas")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Lista de clientes com aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+            @ApiResponse(code = 204, message = "Lista de clientes com aulas excluída"),
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de clientes com aulas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);

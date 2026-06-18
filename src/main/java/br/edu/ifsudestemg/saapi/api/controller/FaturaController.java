@@ -37,8 +37,8 @@ public class FaturaController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todas as faturas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Fatura encontrada"),
-            @ApiResponse(code = 404, message = "Fatura não encontrada")
+            @ApiResponse(code = 200, message = "Lista de Faturas encontradas"),
+            @ApiResponse(code = 404, message = "Lista de Faturas não encontradas")
     })
     public ResponseEntity get() {
         List<Fatura> faturas = service.getFatura();
@@ -63,7 +63,7 @@ public class FaturaController {
     @ApiOperation("Salva uma nova fatura")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Fatura salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o(a) fatura")
+            @ApiResponse(code = 400, message = "Erro ao salvar a fatura")
     })
     public ResponseEntity post(@RequestBody FaturaDTO dto) {
         try {
@@ -78,8 +78,8 @@ public class FaturaController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma fatura")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Fatura encontrada"),
-            @ApiResponse(code = 404, message = "Fatura não encontrada")
+            @ApiResponse(code = 200, message = "Fatura atualizada"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar a fatura")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FaturaDTO dto) {
         if (!service.getFaturaById(id).isPresent()) {
@@ -98,8 +98,8 @@ public class FaturaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma fatura")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Fatura encontrada"),
-            @ApiResponse(code = 404, message = "Fatura não encontrada")
+            @ApiResponse(code = 204, message = "Fatura excluída"),
+            @ApiResponse(code = 404, message = "Erro ao excluir a fatura")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);
@@ -112,6 +112,13 @@ public class FaturaController {
         } catch (RegraNegocioException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PostMapping("/calcular")
+    @ApiOperation("Calcula o valor total da fatura")
+    public ResponseEntity calcularValor(@RequestBody FaturaDTO dto) {
+        Float valor = service.calcularValorFatura(dto.getIdCliente(), dto.getIdsAjustesFinanceiros());
+        return ResponseEntity.ok(valor);
     }
 
     public Fatura converter(FaturaDTO dto) {
@@ -137,9 +144,4 @@ public class FaturaController {
         return fatura;
     }
 
-    @PostMapping("/calcular")
-    public ResponseEntity calcularValor(@RequestBody FaturaDTO dto) {
-        Float valor = service.calcularValorFatura(dto.getIdCliente(), dto.getIdsAjustesFinanceiros());
-        return ResponseEntity.ok(valor);
-    }
 }

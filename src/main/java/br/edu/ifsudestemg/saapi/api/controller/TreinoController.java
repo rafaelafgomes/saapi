@@ -37,8 +37,8 @@ public class TreinoController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os treinos")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Lista de treinos encontrados"),
+            @ApiResponse(code = 404, message = "Lista de treinos não encontrados")
     })
     public ResponseEntity get() {
         List<Treino> treino = service.getTreino();
@@ -48,8 +48,8 @@ public class TreinoController {
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de um treino")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Treino encontrado"),
+            @ApiResponse(code = 404, message = "Treino não encontrado")
     })
 
     public ResponseEntity get(@PathVariable("id") Long id) {
@@ -63,8 +63,8 @@ public class TreinoController {
     @PostMapping()
     @ApiOperation("Salva uma nova lista de treinos")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Lista de treinos salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a lista de treinos em treinos")
+            @ApiResponse(code = 201, message = "Treino salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar um treino")
     })
     public ResponseEntity post(@RequestBody TreinoDTO dto) {
         try {
@@ -79,8 +79,8 @@ public class TreinoController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar detalhes de um treino")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Treino atualizado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar um treino")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TreinoDTO dto) {
         if (!service.getTreinoById(id).isPresent()) {
@@ -99,8 +99,8 @@ public class TreinoController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir detalhes de um treino")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Lista de treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 204, message = "Treino excluído com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao excluir um treino")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Treino> treino = service.getTreinoById(id);

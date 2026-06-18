@@ -30,8 +30,8 @@ public class AjusteFinanceiroController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os ajustes financeiros")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
-            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+            @ApiResponse(code = 200, message = "Lista de Ajuste financeiro encontrado"),
+            @ApiResponse(code = 404, message = "Lista de Ajuste financeiro não encontrado")
     })
     public ResponseEntity get() {
         List<AjusteFinanceiro> ajusteFinanceiros = service.getAjusteFinanceiros();
@@ -44,7 +44,6 @@ public class AjusteFinanceiroController {
             @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
             @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
         if (!ajusteFinanceiro.isPresent()) {
@@ -56,7 +55,7 @@ public class AjusteFinanceiroController {
     @PostMapping()
     @ApiOperation("Salva um novo ajuste financeiro")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "ajuste financeiro salvo com sucesso"),
+            @ApiResponse(code = 201, message = "Ajuste financeiro salvo com sucesso"),
             @ApiResponse(code = 400, message = "Erro ao salvar o ajuste financeiro")
     })
     public ResponseEntity post(@RequestBody AjusteFinanceiroDTO dto) {
@@ -72,8 +71,8 @@ public class AjusteFinanceiroController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um ajuste financeiro")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
-            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+            @ApiResponse(code = 200, message = "Ajuste financeiro atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o ajuste financeiro")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AjusteFinanceiroDTO dto) {
         if (!service.getAjusteFinanceiroById(id).isPresent()) {
@@ -92,8 +91,8 @@ public class AjusteFinanceiroController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um ajuste financeiro")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Ajuste financeiro encontrado"),
-            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+            @ApiResponse(code = 204, message = "Ajuste financeiro excluído"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o ajuste financeiro")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);

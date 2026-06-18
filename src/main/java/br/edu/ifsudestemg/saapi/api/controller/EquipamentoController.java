@@ -30,8 +30,8 @@ public class EquipamentoController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os equipamentos")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Equipamento encontrado"),
-            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+            @ApiResponse(code = 200, message = "Lista de Equipamentos encontrados"),
+            @ApiResponse(code = 404, message = "Lista de Equipamentos não encontrados")
     })
     public ResponseEntity get() {
         List<Equipamento> equipamentos = service.getEquipamento();
@@ -67,7 +67,7 @@ public class EquipamentoController {
     @ApiOperation("Salva um novo equipamento")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Equipamento salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o(a) equipamento")
+            @ApiResponse(code = 400, message = "Erro ao salvar o equipamento")
     })
     public ResponseEntity post(@RequestBody EquipamentoDTO dto) {
         try {
@@ -82,8 +82,8 @@ public class EquipamentoController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um equipamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Equipamento encontrado"),
-            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+            @ApiResponse(code = 200, message = "Equipamento atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o equipamento")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EquipamentoDTO dto) {
         if (!service.getEquipamentoById(id).isPresent()) {
@@ -100,10 +100,10 @@ public class EquipamentoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Deletar um equipamento")
+    @ApiOperation("Excluir um equipamento")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Equipamento encontrado"),
-            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+            @ApiResponse(code = 204, message = "Equipamento excluído"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o equipamento")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);

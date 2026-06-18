@@ -30,8 +30,8 @@ public class PlanoController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os plano")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Lista de planos encontrados"),
+            @ApiResponse(code = 404, message = "Lista de planos não encontrados")
     })
     public ResponseEntity get() {
         List<Plano> plano = service.getPlano();
@@ -41,10 +41,9 @@ public class PlanoController {
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de um plano")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Plano encontrado"),
+            @ApiResponse(code = 404, message = "Plano não encontrado")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
         if (!plano.isPresent()) {
@@ -54,10 +53,10 @@ public class PlanoController {
     }
 
     @PostMapping()
-    @ApiOperation("Salva uma nova lista de planos")
+    @ApiOperation("Salva um novo plano")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Lista de planos salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a lista de planos em treinos")
+            @ApiResponse(code = 201, message = "Planos salvo com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao salvar o plano")
     })
     public ResponseEntity post(@RequestBody PlanoDTO dto) {
         try {
@@ -72,8 +71,8 @@ public class PlanoController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar detalhes de um plano")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de planos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 200, message = "Planos atualizado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar o plano")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PlanoDTO dto) {
         if (!service.getPlanoById(id).isPresent()) {
@@ -90,10 +89,10 @@ public class PlanoController {
     }
 
     @DeleteMapping("{id}")
-    @ApiOperation("Excluir detalhes de um plano")
+    @ApiOperation("Excluir um plano")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Lista de planos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrada")
+            @ApiResponse(code = 204, message = "Planos excluído com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao excluir o plano")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);

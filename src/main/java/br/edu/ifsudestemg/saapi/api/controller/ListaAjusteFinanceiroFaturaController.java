@@ -51,8 +51,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @GetMapping("fatura/{id}")
     @ApiOperation("Obter detalhes de uma lista de ajustes financeiros pelo id de faturas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada")
     })
 
     public ResponseEntity getByfatura(@PathVariable("id") Long id) {
@@ -68,10 +68,9 @@ public class ListaAjusteFinanceiroFaturaController {
     @GetMapping("/{id}")
     @ApiOperation("Obter detalhes de uma lista de ajustes financeiros e faturas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontrada"),
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada")
     })
-
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFaturaById(id);
         if (!listaAjusteFinanceiro.isPresent()) {
@@ -99,8 +98,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma lista de ajustes financeiros e faturas")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+            @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas atualizado"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de ajustes financeiros e faturas")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
         if (!service.getListaAjusteFinanceiroFaturaById(id).isPresent()) {
@@ -119,8 +118,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma lista de ajustes financeiros e faturas")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Lista de ajustes financeiros e faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+            @ApiResponse(code = 204, message = "Lista de ajustes financeiros e faturas excluído"),
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de ajustes financeiros e faturas")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiroFatura = service.getListaAjusteFinanceiroFaturaById(id);

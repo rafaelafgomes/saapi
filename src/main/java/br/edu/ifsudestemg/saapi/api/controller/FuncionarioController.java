@@ -35,8 +35,8 @@ public class FuncionarioController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todos os funcionários")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
-            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+            @ApiResponse(code = 200, message = "Lista de Funcionários encontrados"),
+            @ApiResponse(code = 404, message = "Lista de Funcionários não encontrados")
     })
     public ResponseEntity get() {
         List<Funcionario> funcionario = service.getFuncionario();
@@ -72,7 +72,7 @@ public class FuncionarioController {
     @ApiOperation("Salva um(a) novo(a) funcionário(a)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Funcionário(a) salvo(a) com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar funcionário(a)")
+            @ApiResponse(code = 400, message = "Erro ao salvar um(a) funcionário(a)")
     })
     public ResponseEntity post(@RequestBody FuncionarioDTO dto) {
         try {
@@ -87,8 +87,8 @@ public class FuncionarioController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar um(a) funcionário(a)")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Funcionário(a) encontrado(a)"),
-            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+            @ApiResponse(code = 204, message = "Funcionário(a) atualizado(a)"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar um(a) funcionário(a)")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FuncionarioDTO dto) {
         if (!service.getFuncionarioById(id).isPresent()) {
@@ -107,8 +107,8 @@ public class FuncionarioController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir um(a) funcionário(a)")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Funcionário(a) encontrado(a)"),
-            @ApiResponse(code = 404, message = "Funcionário(a) não encontrado(a)")
+            @ApiResponse(code = 200, message = "Funcionário(a) excluído(a)"),
+            @ApiResponse(code = 404, message = "Erro ao excluir um(a) funcionário(a)")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Funcionario> funcionario = service.getFuncionarioById(id);

@@ -30,8 +30,8 @@ public class FormaPagamentoController {
     @GetMapping()
     @ApiOperation("Obter detalhes de todas as formas de pagamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Forma de pagamento encontrada"),
-            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+            @ApiResponse(code = 200, message = "Lista de Formas de pagamento encontradas"),
+            @ApiResponse(code = 404, message = "Lista de Formas de pagamento não encontradas")
     })
     public ResponseEntity get() {
         List<FormaPagamento> formaPagamento = service.getFormaPagamento();
@@ -72,8 +72,8 @@ public class FormaPagamentoController {
     @PutMapping("{id}")
     @ApiOperation("Atualizar uma forma de pagamento")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Forma de pagamento encontrada"),
-            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+            @ApiResponse(code = 200, message = "Forma de pagamento atualizada"),
+            @ApiResponse(code = 404, message = "Erro ao atualizar a forma de pagamento")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FormaPagamentoDTO dto) {
         if (!service.getFormaPagamentoById(id).isPresent()) {
@@ -92,8 +92,8 @@ public class FormaPagamentoController {
     @DeleteMapping("{id}")
     @ApiOperation("Excluir uma forma de pagamento")
     @ApiResponses({
-            @ApiResponse(code = 204, message = "Forma de pagamento encontrada"),
-            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+            @ApiResponse(code = 204, message = "Forma de pagamento excluída"),
+            @ApiResponse(code = 404, message = "Erro ao excluir a forma de pagamento")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formaPagamento = service.getFormaPagamentoById(id);
