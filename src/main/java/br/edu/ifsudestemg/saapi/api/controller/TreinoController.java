@@ -38,7 +38,8 @@ public class TreinoController {
     @ApiOperation("Obter detalhes de todos os treinos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de treinos encontrados"),
-            @ApiResponse(code = 404, message = "Lista de treinos não encontrados")
+            @ApiResponse(code = 404, message = "Lista de treinos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Treino> treino = service.getTreino();
@@ -49,7 +50,8 @@ public class TreinoController {
     @ApiOperation("Obter detalhes de um treino")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Treino encontrado"),
-            @ApiResponse(code = 404, message = "Treino não encontrado")
+            @ApiResponse(code = 404, message = "Treino não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
 
     public ResponseEntity get(@PathVariable("id") Long id) {
@@ -64,7 +66,8 @@ public class TreinoController {
     @ApiOperation("Salva uma nova lista de treinos")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Treino salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar um treino")
+            @ApiResponse(code = 400, message = "Erro ao salvar um treino"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody TreinoDTO dto) {
         try {
@@ -80,7 +83,8 @@ public class TreinoController {
     @ApiOperation("Atualizar detalhes de um treino")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Treino atualizado com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar um treino")
+            @ApiResponse(code = 404, message = "Erro ao atualizar um treino"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody TreinoDTO dto) {
         if (!service.getTreinoById(id).isPresent()) {
@@ -100,7 +104,8 @@ public class TreinoController {
     @ApiOperation("Excluir detalhes de um treino")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Treino excluído com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao excluir um treino")
+            @ApiResponse(code = 404, message = "Erro ao excluir um treino"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Treino> treino = service.getTreinoById(id);

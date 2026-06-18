@@ -38,7 +38,8 @@ public class FichaAvaliacaoFisicaController {
     @ApiOperation("Obter detalhes de todas as fichas de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Fichas de avaliação física encontradas"),
-            @ApiResponse(code = 404, message = "Lista de Fichas de avaliação física não encontradas")
+            @ApiResponse(code = 404, message = "Lista de Fichas de avaliação física não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisica();
@@ -49,7 +50,8 @@ public class FichaAvaliacaoFisicaController {
     @ApiOperation("Obter detalhes de uma ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ficha de avaliação física encontrada"),
-            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada")
+            @ApiResponse(code = 404, message = "Ficha de avaliação física não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
 
     public ResponseEntity get(@PathVariable("id") Long id) {
@@ -64,7 +66,8 @@ public class FichaAvaliacaoFisicaController {
     @ApiOperation("Salva uma nova ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Ficha de avaliação física salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a ficha de avaliação física")
+            @ApiResponse(code = 400, message = "Erro ao salvar a ficha de avaliação física"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody FichaAvaliacaoFisicaDTO dto) {
         try {
@@ -98,7 +101,8 @@ public class FichaAvaliacaoFisicaController {
     @ApiOperation("Atualizar uma ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ficha de avaliação física atualizada"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a ficha de avaliação física")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a ficha de avaliação física"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FichaAvaliacaoFisicaDTO dto) {
         if (!service.getFichaAvaliacaoFisicaById(id).isPresent()) {
@@ -118,7 +122,8 @@ public class FichaAvaliacaoFisicaController {
     @ApiOperation("Excluir uma ficha de avaliação física")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Ficha de avaliação física excluída"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a ficha de avaliação física")
+            @ApiResponse(code = 404, message = "Erro ao excluir a ficha de avaliação física"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<FichaAvaliacaoFisica> fichaAvaliacaoFisica = service.getFichaAvaliacaoFisicaById(id);

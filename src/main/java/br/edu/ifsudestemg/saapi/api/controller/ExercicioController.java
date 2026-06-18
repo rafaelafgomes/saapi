@@ -32,7 +32,8 @@ public class ExercicioController {
     @ApiOperation("Obter detalhes de todos os exercícios")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Exercícios encontrados"),
-            @ApiResponse(code = 404, message = "Lista de Exercícios não encontrados")
+            @ApiResponse(code = 404, message = "Lista de Exercícios não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Exercicio> exercicios = service.getExercicio();
@@ -43,7 +44,8 @@ public class ExercicioController {
     @ApiOperation("Obter detalhes de um exercício")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Exercício encontrado"),
-            @ApiResponse(code = 404, message = "Exercício não encontrado")
+            @ApiResponse(code = 404, message = "Exercício não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);
@@ -57,7 +59,8 @@ public class ExercicioController {
     @ApiOperation("Salva um novo exercício")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Exercício salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o exercício")
+            @ApiResponse(code = 400, message = "Erro ao salvar o exercício"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody ExercicioDTO dto) {
         try {
@@ -73,7 +76,8 @@ public class ExercicioController {
     @ApiOperation("Atualizar um exercício")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Exercício atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o exercício")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o exercício"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ExercicioDTO dto) {
         if (!service.getExercicioById(id).isPresent()) {
@@ -93,7 +97,8 @@ public class ExercicioController {
     @ApiOperation("Excluir um exercício")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Exercício excluído"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o exercício")
+            @ApiResponse(code = 404, message = "Erro ao excluir o exercício"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Exercicio> exercicio = service.getExercicioById(id);

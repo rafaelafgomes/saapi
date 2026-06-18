@@ -31,7 +31,8 @@ public class EquipamentoController {
     @ApiOperation("Obter detalhes de todos os equipamentos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Equipamentos encontrados"),
-            @ApiResponse(code = 404, message = "Lista de Equipamentos não encontrados")
+            @ApiResponse(code = 404, message = "Lista de Equipamentos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Equipamento> equipamentos = service.getEquipamento();
@@ -42,7 +43,8 @@ public class EquipamentoController {
     @ApiOperation("Obter detalhes de um equipamento")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Equipamento encontrado"),
-            @ApiResponse(code = 404, message = "Equipamento não encontrado")
+            @ApiResponse(code = 404, message = "Equipamento não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);
@@ -56,7 +58,8 @@ public class EquipamentoController {
     @ApiOperation("Obter equipamentos ativos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Equipamentos ativos encontrados"),
-            @ApiResponse(code = 404, message = "Equipamento ativos não encontrados")
+            @ApiResponse(code = 404, message = "Equipamento ativos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity getEquipamentosAtivos() {
         List<Equipamento> equipamentos = service.getEquipamentosAtivos();
@@ -67,7 +70,8 @@ public class EquipamentoController {
     @ApiOperation("Salva um novo equipamento")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Equipamento salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o equipamento")
+            @ApiResponse(code = 400, message = "Erro ao salvar o equipamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody EquipamentoDTO dto) {
         try {
@@ -83,7 +87,8 @@ public class EquipamentoController {
     @ApiOperation("Atualizar um equipamento")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Equipamento atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o equipamento")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o equipamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EquipamentoDTO dto) {
         if (!service.getEquipamentoById(id).isPresent()) {
@@ -103,7 +108,8 @@ public class EquipamentoController {
     @ApiOperation("Excluir um equipamento")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Equipamento excluído"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o equipamento")
+            @ApiResponse(code = 404, message = "Erro ao excluir o equipamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Equipamento> equipamento = service.getEquipamentoById(id);

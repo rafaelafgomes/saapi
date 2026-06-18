@@ -35,7 +35,8 @@ public class AulaController {
     @ApiOperation("Obter detalhes de todas as aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de Aulas não encontradas")
+            @ApiResponse(code = 404, message = "Lista de Aulas não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Aula> alunos = service.getAula();
@@ -46,7 +47,8 @@ public class AulaController {
     @ApiOperation("Obter detalhes de uma aula")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aula encontrada"),
-            @ApiResponse(code = 404, message = "Aula não encontrada")
+            @ApiResponse(code = 404, message = "Aula não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Aula> aula = service.getAulaById(id);
@@ -60,7 +62,8 @@ public class AulaController {
     @ApiOperation("Salva uma nova aula")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Aula salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a aula")
+            @ApiResponse(code = 400, message = "Erro ao salvar a aula"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody AulaDTO dto) {
         try {
@@ -76,7 +79,8 @@ public class AulaController {
     @ApiOperation("Atualizar uma aula")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Aula atualizada"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a aula")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a aula"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AulaDTO dto) {
         if (!service.getAulaById(id).isPresent()) {
@@ -96,7 +100,8 @@ public class AulaController {
     @ApiOperation("Excluir uma aula")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Aula excluída"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a aula")
+            @ApiResponse(code = 404, message = "Erro ao excluir a aula"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Aula> aula = service.getAulaById(id);

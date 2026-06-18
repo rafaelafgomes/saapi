@@ -31,7 +31,8 @@ public class PlanoController {
     @ApiOperation("Obter detalhes de todos os plano")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de planos encontrados"),
-            @ApiResponse(code = 404, message = "Lista de planos não encontrados")
+            @ApiResponse(code = 404, message = "Lista de planos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Plano> plano = service.getPlano();
@@ -42,7 +43,8 @@ public class PlanoController {
     @ApiOperation("Obter detalhes de um plano")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Plano encontrado"),
-            @ApiResponse(code = 404, message = "Plano não encontrado")
+            @ApiResponse(code = 404, message = "Plano não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);
@@ -56,7 +58,8 @@ public class PlanoController {
     @ApiOperation("Salva um novo plano")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Planos salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o plano")
+            @ApiResponse(code = 400, message = "Erro ao salvar o plano"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody PlanoDTO dto) {
         try {
@@ -72,7 +75,8 @@ public class PlanoController {
     @ApiOperation("Atualizar detalhes de um plano")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Planos atualizado com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o plano")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o plano"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PlanoDTO dto) {
         if (!service.getPlanoById(id).isPresent()) {
@@ -92,7 +96,8 @@ public class PlanoController {
     @ApiOperation("Excluir um plano")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Planos excluído com sucesso"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o plano")
+            @ApiResponse(code = 404, message = "Erro ao excluir o plano"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Plano> plano = service.getPlanoById(id);

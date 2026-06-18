@@ -37,7 +37,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Obter detalhes de todos as listas de clientes com aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de clientes com aulas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas")
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<ListaClienteAula> listaClienteAulas = service.getListaClienteAula();
@@ -48,7 +49,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Obter detalhes de uma lista de clientes com aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de clientes com aulas encontrada"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada")
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);
@@ -62,7 +64,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Obter detalhes de uma lista de clientes em aulas pelo id da Aula")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de clientes com aulas encontrada"),
-            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada")
+            @ApiResponse(code = 404, message = "Lista de clientes com aulas não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity getByaula(@PathVariable("id") Long id) {
         Optional<Aula> aula = aulaService.getAulaById(id);
@@ -78,7 +81,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Salva uma nova lista de clientes com aulas")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Lista de clientes com aulas salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a lista de clientes com aulas")
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de clientes com aulas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody ListaClienteAulaDTO dto) {
         try {
@@ -94,7 +98,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Atualizar uma lista de clientes com aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de clientes com aulas atualizada"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de clientes com aulas")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de clientes com aulas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaClienteAulaDTO dto) {
         if (!service.getListaClienteAulaById(id).isPresent()) {
@@ -114,7 +119,8 @@ public class ListaClienteAulaController {
     @ApiOperation("Excluir uma lista de clientes com aulas")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Lista de clientes com aulas excluída"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a lista de clientes com aulas")
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de clientes com aulas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaClienteAula> listaClienteAula = service.getListaClienteAulaById(id);

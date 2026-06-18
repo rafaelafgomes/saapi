@@ -37,7 +37,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Obter detalhes de todas as listas de equipamentos em aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de exercícios em treinos encontradas"),
-            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontradas")
+            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<ListaExercicioTreino> listaExercicioTreinos = service.getListaExercicioTreino();
@@ -49,7 +50,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas pelo id de treino")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de exercícios em treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontrada")
+            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity getBytreino(@PathVariable("id") Long id) {
         Optional<Treino> treino = treinoService.getTreinoById(id);
@@ -66,7 +68,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Obter detalhes de uma lista de equipamentos em aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de exercícios em treinos encontrada"),
-            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontrada")
+            @ApiResponse(code = 404, message = "Lista de exercícios em treinos não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaExercicioTreino> listaExercicioTreino = service.getListaExercicioTreinoById(id);
@@ -81,7 +84,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Salva uma nova lista de exercícios em treinos")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Lista de exercícios em treinos salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a lista de exercícios em treinos")
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de exercícios em treinos"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody ListaExercicioTreinoDTO dto) {
         try {
@@ -97,7 +101,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Atualizar uma lista de equipamentos em aulas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de exercícios em treinos atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de exercícios em treinos")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de exercícios em treinos"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaExercicioTreinoDTO dto) {
         if (!service.getListaExercicioTreinoById(id).isPresent()) {
@@ -117,7 +122,8 @@ public class ListaExercicioTreinoController {
     @ApiOperation("Excluir uma lista de equipamentos em aulas")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Lista de exercícios em treinos excluído"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a lista de exercícios em treinos")
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de exercícios em treinos"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaExercicioTreino> listaExercicioTreino = service.getListaExercicioTreinoById(id);

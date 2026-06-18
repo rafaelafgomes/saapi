@@ -30,7 +30,8 @@ public class CargoController {
     @ApiOperation("Obter detalhes de todos os cargo")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Cargos encontrados"),
-            @ApiResponse(code = 404, message = "Lista de Cargos não encontrados")
+            @ApiResponse(code = 404, message = "Lista de Cargos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Cargo> cargos = service.getCargo();
@@ -41,7 +42,8 @@ public class CargoController {
     @ApiOperation("Obter detalhes de um cargo")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo encontrado"),
-            @ApiResponse(code = 404, message = "Cargo não encontrado")
+            @ApiResponse(code = 404, message = "Cargo não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);
@@ -55,7 +57,8 @@ public class CargoController {
     @ApiOperation("Salva um novo cargo")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Cargo salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o cargo")
+            @ApiResponse(code = 400, message = "Erro ao salvar o cargo"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody CargoDTO dto) {
         try {
@@ -71,7 +74,8 @@ public class CargoController {
     @ApiOperation("Atualizar um cargo")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cargo atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o cargo")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o cargo"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody CargoDTO dto) {
         if (!service.getCargoById(id).isPresent()) {
@@ -91,7 +95,8 @@ public class CargoController {
     @ApiOperation("Excluir um cargo")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Cargo excluido"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o cargo")
+            @ApiResponse(code = 404, message = "Erro ao excluir o cargo"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cargo> cargo = service.getCargoById(id);

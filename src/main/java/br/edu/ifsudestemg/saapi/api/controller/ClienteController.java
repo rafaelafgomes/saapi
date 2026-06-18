@@ -35,7 +35,8 @@ public class ClienteController {
     @ApiOperation("Obter detalhes de todos os clientes")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Clientes encontrados"),
-            @ApiResponse(code = 404, message = "Lista de Clientes não encontrados")
+            @ApiResponse(code = 404, message = "Lista de Clientes não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Cliente> clientes = service.getCliente();
@@ -46,7 +47,8 @@ public class ClienteController {
     @ApiOperation("Obter detalhes de um cliente")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cliente encontrado(a)"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado(a)")
+            @ApiResponse(code = 404, message = "Cliente não encontrado(a)"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);
@@ -60,7 +62,8 @@ public class ClienteController {
     @ApiOperation("Obter clientes ativos")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Clientes ativos encontrados"),
-            @ApiResponse(code = 404, message = "Clientes ativos não encontrados")
+            @ApiResponse(code = 404, message = "Clientes ativos não encontrados"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity getClientesAtivos() {
         List<Cliente> clientes = service.getClientesAtivos();
@@ -71,7 +74,8 @@ public class ClienteController {
     @ApiOperation("Salva um novo(a) cliente")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Cliente salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o(a) cliente")
+            @ApiResponse(code = 400, message = "Erro ao salvar o(a) cliente"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody ClienteDTO dto) {
         try {
@@ -87,7 +91,8 @@ public class ClienteController {
     @ApiOperation("Atualizar um cliente")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Cliente atualizado(a)"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o(a) cliente")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o(a) cliente"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ClienteDTO dto) {
         if (!service.getClienteById(id).isPresent()) {
@@ -107,7 +112,8 @@ public class ClienteController {
     @ApiOperation("Excluir um cliente")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Cliente excluído(a)"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o(a) cliente")
+            @ApiResponse(code = 404, message = "Erro ao excluir o(a) cliente"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cliente> cliente = service.getClienteById(id);

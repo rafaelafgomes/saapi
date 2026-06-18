@@ -38,7 +38,8 @@ public class FaturaController {
     @ApiOperation("Obter detalhes de todas as faturas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de Faturas não encontradas")
+            @ApiResponse(code = 404, message = "Lista de Faturas não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<Fatura> faturas = service.getFatura();
@@ -49,7 +50,8 @@ public class FaturaController {
     @ApiOperation("Obter detalhes de uma fatura")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Fatura encontrada"),
-            @ApiResponse(code = 404, message = "Fatura não encontrada")
+            @ApiResponse(code = 404, message = "Fatura não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);
@@ -63,7 +65,8 @@ public class FaturaController {
     @ApiOperation("Salva uma nova fatura")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Fatura salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a fatura")
+            @ApiResponse(code = 400, message = "Erro ao salvar a fatura"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody FaturaDTO dto) {
         try {
@@ -79,7 +82,8 @@ public class FaturaController {
     @ApiOperation("Atualizar uma fatura")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Fatura atualizada"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a fatura")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a fatura"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FaturaDTO dto) {
         if (!service.getFaturaById(id).isPresent()) {
@@ -99,7 +103,8 @@ public class FaturaController {
     @ApiOperation("Excluir uma fatura")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Fatura excluída"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a fatura")
+            @ApiResponse(code = 404, message = "Erro ao excluir a fatura"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Fatura> fatura = service.getFaturaById(id);

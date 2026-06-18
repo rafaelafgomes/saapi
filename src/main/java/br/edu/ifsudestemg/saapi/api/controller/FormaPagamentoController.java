@@ -31,7 +31,8 @@ public class FormaPagamentoController {
     @ApiOperation("Obter detalhes de todas as formas de pagamento")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Formas de pagamento encontradas"),
-            @ApiResponse(code = 404, message = "Lista de Formas de pagamento não encontradas")
+            @ApiResponse(code = 404, message = "Lista de Formas de pagamento não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<FormaPagamento> formaPagamento = service.getFormaPagamento();
@@ -42,7 +43,8 @@ public class FormaPagamentoController {
     @ApiOperation("Obter detalhes de uma forma de pagamento")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Forma de pagamento encontrada"),
-            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada")
+            @ApiResponse(code = 404, message = "Forma de pagamento não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
 
     public ResponseEntity get(@PathVariable("id") Long id) {
@@ -57,7 +59,8 @@ public class FormaPagamentoController {
     @ApiOperation("Salva uma nova forma de pagamento")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Forma de pagamento salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a forma de pagamento")
+            @ApiResponse(code = 400, message = "Erro ao salvar a forma de pagamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody FormaPagamentoDTO dto) {
         try {
@@ -73,7 +76,8 @@ public class FormaPagamentoController {
     @ApiOperation("Atualizar uma forma de pagamento")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Forma de pagamento atualizada"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a forma de pagamento")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a forma de pagamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody FormaPagamentoDTO dto) {
         if (!service.getFormaPagamentoById(id).isPresent()) {
@@ -93,7 +97,8 @@ public class FormaPagamentoController {
     @ApiOperation("Excluir uma forma de pagamento")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Forma de pagamento excluída"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a forma de pagamento")
+            @ApiResponse(code = 404, message = "Erro ao excluir a forma de pagamento"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<FormaPagamento> formaPagamento = service.getFormaPagamentoById(id);

@@ -39,7 +39,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Obter detalhes de todas as listas de ajustes financeiros e faturas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontradas"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas")
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontradas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get()
     {
@@ -52,7 +53,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Obter detalhes de uma lista de ajustes financeiros pelo id de faturas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontrada"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada")
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
 
     public ResponseEntity getByfatura(@PathVariable("id") Long id) {
@@ -69,7 +71,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Obter detalhes de uma lista de ajustes financeiros e faturas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas encontrada"),
-            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada")
+            @ApiResponse(code = 404, message = "Lista de ajustes financeiros e faturas não encontrada"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiro = service.getListaAjusteFinanceiroFaturaById(id);
@@ -83,7 +86,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Salva uma nova lista de ajustes financeiros e faturas")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Lista de ajustes financeiros e faturas salva com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar a lista de ajustes financeiros e faturas")
+            @ApiResponse(code = 400, message = "Erro ao salvar a lista de ajustes financeiros e faturas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
         try {
@@ -99,7 +103,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Atualizar uma lista de ajustes financeiros e faturas")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de ajustes financeiros e faturas atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de ajustes financeiros e faturas")
+            @ApiResponse(code = 404, message = "Erro ao atualizar a lista de ajustes financeiros e faturas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ListaAjusteFinanceiroFaturaDTO dto) {
         if (!service.getListaAjusteFinanceiroFaturaById(id).isPresent()) {
@@ -119,7 +124,8 @@ public class ListaAjusteFinanceiroFaturaController {
     @ApiOperation("Excluir uma lista de ajustes financeiros e faturas")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Lista de ajustes financeiros e faturas excluído"),
-            @ApiResponse(code = 404, message = "Erro ao excluir a lista de ajustes financeiros e faturas")
+            @ApiResponse(code = 404, message = "Erro ao excluir a lista de ajustes financeiros e faturas"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ListaAjusteFinanceiroFatura> listaAjusteFinanceiroFatura = service.getListaAjusteFinanceiroFaturaById(id);

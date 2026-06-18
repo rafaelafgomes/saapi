@@ -31,7 +31,8 @@ public class AjusteFinanceiroController {
     @ApiOperation("Obter detalhes de todos os ajustes financeiros")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Lista de Ajuste financeiro encontrado"),
-            @ApiResponse(code = 404, message = "Lista de Ajuste financeiro não encontrado")
+            @ApiResponse(code = 404, message = "Lista de Ajuste financeiro não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get() {
         List<AjusteFinanceiro> ajusteFinanceiros = service.getAjusteFinanceiros();
@@ -42,7 +43,8 @@ public class AjusteFinanceiroController {
     @ApiOperation("Obter detalhes de um ajuste financeiro")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ajuste financeiro encontrado"),
-            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado")
+            @ApiResponse(code = 404, message = "Ajuste financeiro não encontrado"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
@@ -56,7 +58,8 @@ public class AjusteFinanceiroController {
     @ApiOperation("Salva um novo ajuste financeiro")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Ajuste financeiro salvo com sucesso"),
-            @ApiResponse(code = 400, message = "Erro ao salvar o ajuste financeiro")
+            @ApiResponse(code = 400, message = "Erro ao salvar o ajuste financeiro"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity post(@RequestBody AjusteFinanceiroDTO dto) {
         try {
@@ -72,7 +75,8 @@ public class AjusteFinanceiroController {
     @ApiOperation("Atualizar um ajuste financeiro")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Ajuste financeiro atualizado"),
-            @ApiResponse(code = 404, message = "Erro ao atualizar o ajuste financeiro")
+            @ApiResponse(code = 404, message = "Erro ao atualizar o ajuste financeiro"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AjusteFinanceiroDTO dto) {
         if (!service.getAjusteFinanceiroById(id).isPresent()) {
@@ -92,7 +96,8 @@ public class AjusteFinanceiroController {
     @ApiOperation("Excluir um ajuste financeiro")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Ajuste financeiro excluído"),
-            @ApiResponse(code = 404, message = "Erro ao excluir o ajuste financeiro")
+            @ApiResponse(code = 404, message = "Erro ao excluir o ajuste financeiro"),
+            @ApiResponse(code = 403, message = "Usuário não permitido")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AjusteFinanceiro> ajusteFinanceiro = service.getAjusteFinanceiroById(id);
