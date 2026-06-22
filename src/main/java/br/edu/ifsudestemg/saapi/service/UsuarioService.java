@@ -34,6 +34,10 @@ public class UsuarioService implements UserDetailsService {
         return repository.findById(id);
     }
 
+    public Optional<Usuario> getUsuarioByLogin(String login) {
+        return repository.findByLogin(login);
+    }
+
     @Transactional
     public Usuario salvar(Usuario usuario){
         validar(usuario);
