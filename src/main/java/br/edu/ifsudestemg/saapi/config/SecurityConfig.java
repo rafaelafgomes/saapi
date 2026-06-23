@@ -45,19 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return new JwtAuthFilter(jwtService, usuarioService);
     }
 
-
-    // 3. Define as regras do CORS que o navegador do React exige
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // URL exata do seu React (ex: http://localhost:3000 ou http://localhost:5173)
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
 
-        // Métodos permitidos
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-        // OBRIGATÓRIO para o JWT: Permitir o cabeçalho Authorization
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -158,6 +153,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/swagger-ui.html",
                 "/webjars/**");
     }
-
-
 }
