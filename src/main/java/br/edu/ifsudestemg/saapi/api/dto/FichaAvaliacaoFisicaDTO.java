@@ -21,6 +21,7 @@ public class FichaAvaliacaoFisicaDTO {
 
     private Long idCliente;
     private String nomeCliente;
+    private Boolean sexoCliente;
     private Long idFuncionario;
     private String nomeFuncionario;
 
@@ -29,6 +30,7 @@ public class FichaAvaliacaoFisicaDTO {
        FichaAvaliacaoFisicaDTO dto = modelMapper.map(fichaAvaliacaoFisica, FichaAvaliacaoFisicaDTO.class);
         dto.nomeFuncionario = fichaAvaliacaoFisica.getFuncionario().getNome();
         dto.nomeCliente = fichaAvaliacaoFisica.getCliente().getNome();
+        dto.sexoCliente = fichaAvaliacaoFisica.getCliente().getSexo();
         return dto;
     }
 

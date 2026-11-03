@@ -60,15 +60,48 @@ public class FichaAvaliacaoFisicaService {
         }
     }
 
-    public String calcularIMC(Float peso, Float altura) {
+    public String calcularIMC(Float peso, Float altura, Boolean sexo) {
         float imc = peso / (altura * altura);
         String classificacao;
-        if (imc < 18.5f) { classificacao = "Abaixo do peso";
-        } else if (imc < 25f) { classificacao = "Peso normal";
-        } else if (imc < 30f) { classificacao = "Sobrepeso";
-        } else if (imc < 35f) { classificacao = "Obesidade Grau I";
-        } else if (imc < 40f) { classificacao = "Obesidade Grau II";
-        } else { classificacao = "Obesidade Grau III";
+        if (sexo) {
+            if (imc < 20.7f) {
+                classificacao = "Abaixo do peso";
+            }
+            else
+                if (imc < 26.5f) {
+                    classificacao = "Peso normal";
+                }
+                else
+                    if (imc < 27.9f) {
+                        classificacao = "Marginalmente acima do peso";
+                    }
+                    else
+                        if (imc < 31.2f) {
+                            classificacao = "Acima do peso ideal";
+                        }
+                        else {
+                            classificacao = "Obesidade";
+                        }
+        }
+        else {
+            if (imc < 19.1f) {
+                classificacao = "Abaixo do peso";
+            }
+            else
+                if (imc < 25.9f) {
+                    classificacao = "Peso normal";
+                }
+                else
+                    if (imc < 27.4f) {
+                        classificacao = "Marginalmente acima do peso";
+                    }
+                    else
+                        if (imc < 32.4f) {
+                            classificacao = "Acima do peso ideal";
+                        }
+                        else {
+                            classificacao = "Obesidade";
+                        }
         }
         return String.format("IMC: %.2f - %s", imc, classificacao);
     }

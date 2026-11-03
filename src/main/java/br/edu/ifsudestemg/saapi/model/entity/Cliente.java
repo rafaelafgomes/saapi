@@ -13,6 +13,8 @@ import javax.persistence.*;
 
 public class Cliente extends Pessoa {
 
+    private Boolean sexo;
+
     @ManyToOne
     private Plano plano;
 }

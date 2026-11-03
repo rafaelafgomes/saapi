@@ -90,7 +90,10 @@ public class FichaAvaliacaoFisicaController {
             if (dto.getAltura() == null || dto.getAltura() <= 0) {
                 return ResponseEntity.badRequest().body("Altura inválida");
             }
-            String resultado = service.calcularIMC(dto.getPeso(), dto.getAltura());
+            if (dto.getSexoCliente() == null) {
+                return ResponseEntity.badRequest().body("Sexo inválida");
+            }
+            String resultado = service.calcularIMC(dto.getPeso(), dto.getAltura(), dto.getSexoCliente());
             return ResponseEntity.ok(resultado);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

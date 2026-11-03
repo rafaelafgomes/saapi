@@ -60,6 +60,10 @@ public class ClienteService {
             throw new RegraNegocioException("Status inválido");
         }
 
+        if (cliente.getSexo() == null) {
+            throw new RegraNegocioException("Sexo inválido");
+        }
+
         if (cliente.getLogradouro() == null || cliente.getLogradouro().trim().equals("")) {
             throw new RegraNegocioException("Logradouro inválido");
         }
