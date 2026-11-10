@@ -122,8 +122,12 @@ public class FaturaController {
     @PostMapping("/calcular")
     @ApiOperation("Calcula o valor total da fatura")
     public ResponseEntity calcularValor(@RequestBody FaturaDTO dto) {
-        Float valor = service.calcularValorFatura(dto.getIdCliente(), dto.getIdsAjustesFinanceiros());
-        return ResponseEntity.ok(valor);
+        try {
+            Float valor = service.calcularValorFatura(dto.getIdCliente(), dto.getIdsAjustesFinanceiros());
+            return ResponseEntity.ok(valor);
+        }catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     public Fatura converter(FaturaDTO dto) {

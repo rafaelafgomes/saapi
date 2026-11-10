@@ -79,9 +79,17 @@ public class FichaAvaliacaoFisicaService {
                         if (imc < 31.2f) {
                             classificacao = "Acima do peso ideal";
                         }
-                        else {
-                            classificacao = "Obesidade";
-                        }
+                        else
+                            if (imc < 35.0f){
+                                classificacao = "Obesidade Grau I";
+                            }
+                            else
+                                if (imc < 40.0f){
+                                    classificacao = "Obesidade Grau II";
+                                }
+                                else {
+                                    classificacao = "Obesidade Grau III";
+                                }
         }
         else {
             if (imc < 19.1f) {
@@ -99,9 +107,17 @@ public class FichaAvaliacaoFisicaService {
                         if (imc < 32.4f) {
                             classificacao = "Acima do peso ideal";
                         }
-                        else {
-                            classificacao = "Obesidade";
-                        }
+                        else
+                            if (imc < 35.0f){
+                                classificacao = "Obesidade Grau I";
+                            }
+                            else
+                                if (imc < 40.0f){
+                                    classificacao = "Obesidade Grau II";
+                                }
+                                else {
+                                    classificacao = "Obesidade Grau III";
+                                }
         }
         return String.format("IMC: %.2f - %s", imc, classificacao);
     }

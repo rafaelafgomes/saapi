@@ -69,14 +69,23 @@ public class FaturaService {
     }
 
     public Float calcularValorFatura(Long idCliente, List<Long> idsAjustes) {
+        if (idCliente == null || idCliente <= 0) {
+            throw new RegraNegocioException("ID do cliente inválido");
+        }
         Optional<Cliente> clienteOptional = clienteService.getClienteById(idCliente);
         if(!clienteOptional.isPresent()){
             throw new RegraNegocioException("Cliente não encontrado");
         }
         Cliente cliente = clienteOptional.get();
+        if(cliente.getPlano() == null || cliente.getPlano().getValor() == null) {
+            throw new RegraNegocioException("Cliente não possui um plano válido associado");
+        }
         Float total = cliente.getPlano().getValor();
-        if(idsAjustes != null){
+        if(idsAjustes != null && !idsAjustes.isEmpty()) {
             for(Long idAjuste: idsAjustes){
+                if(idAjuste == null){
+                    continue;
+                }
                 Optional<AjusteFinanceiro> ajusteOptional = ajusteFinanceiroRepository.findById(idAjuste);
                 if(!ajusteOptional.isPresent()){
                     continue;
@@ -84,10 +93,15 @@ public class FaturaService {
                 AjusteFinanceiro ajuste = ajusteOptional.get();
                 if("DESCONTO".equalsIgnoreCase(ajuste.getTipo())){
                     total -= ajuste.getValor();
-                } else {
-                    total += ajuste.getValor();
                 }
+                else
+                    if ("ACRESCIMO".equalsIgnoreCase(ajuste.getTipo())){
+                        total += ajuste.getValor();
+                   }
             }
+        }
+        if (total < 0) {
+            total = 0.0f;
         }
         return total;
     }

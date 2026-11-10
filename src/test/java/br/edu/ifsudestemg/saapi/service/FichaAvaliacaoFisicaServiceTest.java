@@ -188,7 +188,7 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCMasculinoAbaixoDoPeso() {
         replayAll();
-        String resultado = service.calcularIMC(50.0f, 1.80f, true); // IMC ~ 15.43
+        String resultado = service.calcularIMC(20.6f, 1.0f, true); // IMC ~ 15.43
         assertTrue(resultado.contains("Abaixo do peso"));
         verifyAll();
     }
@@ -196,7 +196,7 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCMasculinoPesoNormal() {
         replayAll();
-        String resultado = service.calcularIMC(75.0f, 1.80f, true); // IMC ~ 23.15
+        String resultado = service.calcularIMC(26.4f, 1.0f, true); // IMC ~ 23.15
         assertTrue(resultado.contains("Peso normal"));
         verifyAll();
     }
@@ -204,7 +204,7 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCMasculinoMarginalmenteAcimaDoPeso() {
         replayAll();
-        String resultado = service.calcularIMC(88.0f, 1.80f, true); // IMC ~ 27.16
+        String resultado = service.calcularIMC(27.8f, 1.0f, true); // IMC ~ 27.16
         assertTrue(resultado.contains("Marginalmente acima do peso"));
         verifyAll();
     }
@@ -212,23 +212,39 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCMasculinoAcimaDoPesoIdeal() {
         replayAll();
-        String resultado = service.calcularIMC(95.0f, 1.80f, true); // IMC ~ 29.32
+        String resultado = service.calcularIMC(31.1f, 1.0f, true); // IMC ~ 29.32
         assertTrue(resultado.contains("Acima do peso ideal"));
         verifyAll();
     }
 
     @Test
-    public void deveCalcularIMCMasculinoObesidade() {
+    public void deveCalcularIMCMasculinoObesidadeGrauI() {
         replayAll();
-        String resultado = service.calcularIMC(110.0f, 1.80f, true); // IMC ~ 33.95
-        assertTrue(resultado.contains("Obesidade"));
+        String resultado = service.calcularIMC(34.9f, 1.0f, true); // IMC ~ 33.95
+        assertTrue(resultado.contains("Obesidade Grau I"));
+        verifyAll();
+    }
+
+    @Test
+    public void deveCalcularIMCMasculinoObesidadeGrauII() {
+        replayAll();
+        String resultado = service.calcularIMC(39.9f, 1.0f, true); // IMC ~ 33.95
+        assertTrue(resultado.contains("Obesidade Grau II"));
+        verifyAll();
+    }
+
+    @Test
+    public void deveCalcularIMCMasculinoObesidadeGrauIII() {
+        replayAll();
+        String resultado = service.calcularIMC(40.0f, 1.0f, true); // IMC ~ 33.95
+        assertTrue(resultado.contains("Obesidade Grau III"));
         verifyAll();
     }
 
     @Test
     public void deveCalcularIMCFemininoAbaixoDoPeso() {
         replayAll();
-        String resultado = service.calcularIMC(45.0f, 1.65f, false); // IMC ~ 16.53
+        String resultado = service.calcularIMC(19.0f, 1.0f, false); // IMC ~ 16.53
         assertTrue(resultado.contains("Abaixo do peso"));
         verifyAll();
     }
@@ -236,7 +252,7 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCFemininoPesoNormal() {
         replayAll();
-        String resultado = service.calcularIMC(60.0f, 1.65f, false); // IMC ~ 22.04
+        String resultado = service.calcularIMC(25.8f, 1.0f, false); // IMC ~ 22.04
         assertTrue(resultado.contains("Peso normal"));
         verifyAll();
     }
@@ -244,7 +260,7 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCFemininoMarginalmenteAcimaDoPeso() {
         replayAll();
-        String resultado = service.calcularIMC(72.0f, 1.65f, false); // IMC ~ 26.45
+        String resultado = service.calcularIMC(27.3f, 1.0f, false); // IMC ~ 26.45
         assertTrue(resultado.contains("Marginalmente acima do peso"));
         verifyAll();
     }
@@ -252,16 +268,32 @@ class FichaAvaliacaoFisicaServiceTest extends EasyMockSupport {
     @Test
     public void deveCalcularIMCFemininoAcimaDoPesoIdeal() {
         replayAll();
-        String resultado = service.calcularIMC(80.0f, 1.65f, false); // IMC ~ 29.38
+        String resultado = service.calcularIMC(32.3f, 1.0f, false); // IMC ~ 29.38
         assertTrue(resultado.contains("Acima do peso ideal"));
         verifyAll();
     }
 
     @Test
-    public void deveCalcularIMCFemininoObesidade() {
+    public void deveCalcularIMCFemininoObesidadeGrauI() {
         replayAll();
-        String resultado = service.calcularIMC(95.0f, 1.65f, false); // IMC ~ 34.89
-        assertTrue(resultado.contains("Obesidade"));
+        String resultado = service.calcularIMC(34.9f, 1.0f, false); // IMC ~ 34.89
+        assertTrue(resultado.contains("Obesidade Grau I"));
+        verifyAll();
+    }
+
+    @Test
+    public void deveCalcularIMCFemininoObesidadeGrauII() {
+        replayAll();
+        String resultado = service.calcularIMC(39.9f, 1.0f, false); // IMC ~ 34.89
+        assertTrue(resultado.contains("Obesidade Grau II"));
+        verifyAll();
+    }
+
+    @Test
+    public void deveCalcularIMCFemininoObesidadeGrauIII() {
+        replayAll();
+        String resultado = service.calcularIMC(40.0f, 1.0f, false); // IMC ~ 34.89
+        assertTrue(resultado.contains("Obesidade Grau III"));
         verifyAll();
     }
 

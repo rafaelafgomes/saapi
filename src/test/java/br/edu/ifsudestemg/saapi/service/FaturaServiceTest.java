@@ -186,6 +186,22 @@ class FaturaServiceTest extends EasyMockSupport {
     }
 
     @Test
+    public void deveLancarExcecaoQuandoIdClienteNuloNoCalculo() {
+        replayAll();
+        Exception e = assertThrows(RegraNegocioException.class, () -> service.calcularValorFatura(null, List.of(1L)));
+        assertEquals("ID do cliente inválido", e.getMessage());
+        verifyAll();
+    }
+
+    @Test
+    public void deveLancarExcecaoQuandoIdClienteIgualZeroOuNegativoNoCalculo() {
+        replayAll();
+        Exception e = assertThrows(RegraNegocioException.class, () -> service.calcularValorFatura(0L, List.of(1L)));
+        assertEquals("ID do cliente inválido", e.getMessage());
+        verifyAll();
+    }
+
+    @Test
     public void deveLancarExcecaoQuandoClienteNaoEncontradoNoCalculo() {
         expect(clienteService.getClienteById(1L)).andReturn(Optional.empty());
         replayAll();
@@ -195,10 +211,60 @@ class FaturaServiceTest extends EasyMockSupport {
     }
 
     @Test
+    public void deveLancarExcecaoQuandoPlanoDoClienteForNuloNoCalculo() {
+        Cliente clienteSemPlano = new Cliente();
+        clienteSemPlano.setId(1L);
+        clienteSemPlano.setPlano(null);
+
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(clienteSemPlano));
+        replayAll();
+
+        Exception e = assertThrows(RegraNegocioException.class, () -> service.calcularValorFatura(1L, null));
+        assertEquals("Cliente não possui um plano válido associado", e.getMessage());
+        verifyAll();
+    }
+
+    @Test
+    public void deveLancarExcecaoQuandoValorDoPlanoForNuloNoCalculo() {
+        Plano planoSemValor = new Plano();
+        planoSemValor.setId(1L);
+        planoSemValor.setValor(null);
+
+        Cliente clientePlanoSemValor = new Cliente();
+        clientePlanoSemValor.setId(1L);
+        clientePlanoSemValor.setPlano(planoSemValor);
+
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(clientePlanoSemValor));
+        replayAll();
+
+        Exception e = assertThrows(RegraNegocioException.class, () -> service.calcularValorFatura(1L, null));
+        assertEquals("Cliente não possui um plano válido associado", e.getMessage());
+        verifyAll();
+    }
+
+    @Test
     public void deveCalcularValorFaturaSemAjustes() {
         expect(clienteService.getClienteById(1L)).andReturn(Optional.of(cliente));
         replayAll();
         Float resultado = service.calcularValorFatura(1L, null);
+        assertEquals(100.0f, resultado);
+        verifyAll();
+    }
+
+    @Test
+    public void deveIgnorarElementoNuloNaListaDeAjustes() {
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(cliente));
+        replayAll();
+        Float resultado = service.calcularValorFatura(1L, java.util.Arrays.asList((Long) null));
+        assertEquals(100.0f, resultado);
+        verifyAll();
+    }
+
+    @Test
+    public void deveCalcularValorFaturaComListaDeAjustesVazia() {
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(cliente));
+        replayAll();
+        Float resultado = service.calcularValorFatura(1L, List.of());
         assertEquals(100.0f, resultado);
         verifyAll();
     }
@@ -219,6 +285,22 @@ class FaturaServiceTest extends EasyMockSupport {
         replayAll();
         Float resultado = service.calcularValorFatura(1L, List.of(1L, 2L));
         assertEquals(95.0f, resultado);
+        verifyAll();
+    }
+
+    @Test
+    public void deveIgnorarAjusteComTipoDiferenteDeDescontoEAcrescimo() {
+        AjusteFinanceiro ajusteInvalido = new AjusteFinanceiro();
+        ajusteInvalido.setId(1L);
+        ajusteInvalido.setTipo("OUTRO");
+        ajusteInvalido.setValor(50.0f);
+
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(cliente));
+        expect(ajusteFinanceiroRepository.findById(1L)).andReturn(Optional.of(ajusteInvalido));
+        replayAll();
+
+        Float resultado = service.calcularValorFatura(1L, List.of(1L));
+        assertEquals(100.0f, resultado);
         verifyAll();
     }
 
@@ -282,6 +364,22 @@ class FaturaServiceTest extends EasyMockSupport {
         Fatura faturaSemId = new Fatura();
         replayAll();
         assertThrows(NullPointerException.class, () -> service.excluir(faturaSemId));
+        verifyAll();
+    }
+
+    @Test
+    public void deveGarantirQueValorTotalNaoSejaNegativo() {
+        AjusteFinanceiro descontoGrande = new AjusteFinanceiro();
+        descontoGrande.setId(1L);
+        descontoGrande.setTipo("DESCONTO");
+        descontoGrande.setValor(200.0f);
+
+        expect(clienteService.getClienteById(1L)).andReturn(Optional.of(cliente));
+        expect(ajusteFinanceiroRepository.findById(1L)).andReturn(Optional.of(descontoGrande));
+        replayAll();
+
+        Float resultado = service.calcularValorFatura(1L, List.of(1L));
+        assertEquals(0.0f, resultado);
         verifyAll();
     }
 }
