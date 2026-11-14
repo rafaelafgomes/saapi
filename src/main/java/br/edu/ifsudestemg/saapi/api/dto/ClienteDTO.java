@@ -1,7 +1,6 @@
 package br.edu.ifsudestemg.saapi.api.dto;
 
 import br.edu.ifsudestemg.saapi.model.entity.Cliente;
-import br.edu.ifsudestemg.saapi.model.entity.Plano;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
